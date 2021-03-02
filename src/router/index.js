@@ -6,6 +6,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/tweets',
+    name: 'tweets',
+    component: Tweets,
+  },
+  {
     path: '*',
     name: 'not-found',
     component: NotFound,
