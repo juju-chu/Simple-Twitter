@@ -2,12 +2,12 @@
   <div class="container">
     <SideBar class="side-bar" />
 
-    <!-- <div class="header">
+    <div class="header">
       <div class="header-title">首頁</div>
     </div>
     <PostTweet class="post-tweet" />
 
-    <div class="divider"></div> -->
+    <div class="divider"></div>
 
     <!-- Tweet list -->
     <!-- <TweetList class="tweet-list" /> -->
@@ -19,14 +19,14 @@
 
 <script>
 import SideBar from './../components/SideBar'
-// import PostTweet from './../components/PostTweet'
+import PostTweet from './../components/PostTweet'
 // import TweetList from './../components/TweetList'
 
 export default {
   name: 'Tweets',
   components: {
     SideBar,
-    // PostTweet,
+    PostTweet,
     // TweetList,
   }
 }
