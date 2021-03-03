@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import NotFound from '../views/NotFound.vue'
-import SignIn from '../views/SignIn.vue'
+import UserSignIn from '../views/UserSignIn.vue'
 import Tweets from '../views/Tweets.vue'
 import AdminSignin from '../views/AdminSignin'
 import AdminTweets from './../views/AdminTweets.vue'
@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/signin',
     name: 'signin',
-    component: SignIn,
+    component: UserSignIn,
   },
   {
     path: '/tweets',
