@@ -11,7 +11,7 @@
       <div class="divider"></div>
 
       <!-- Tweet list -->
-      <TweetList class="tweet-list" />
+      <TweetsList class="tweet-list" />
     </div>
 
     <!-- Recommendation -->
@@ -22,14 +22,14 @@
 <script>
 import SideBar from './../components/SideBar'
 import PostTweet from './../components/PostTweet'
-import TweetList from './../components/TweetList'
+import TweetsList from './../components/TweetsList'
 
 export default {
   name: 'Tweets',
   components: {
     SideBar,
     PostTweet,
-    TweetList,
+    TweetsList,
   },
 }
 </script>
