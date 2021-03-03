@@ -2,15 +2,17 @@
   <div class="container">
     <SideBar class="side-bar" />
 
-    <div class="header">
-      <div class="header-title">首頁</div>
+    <div class="center-column">
+      <div class="header">
+        <div class="header-title">首頁</div>
+      </div>
+      <PostTweet class="post-tweet" />
+
+      <div class="divider"></div>
+
+      <!-- Tweet list -->
+      <TweetList class="tweet-list" />
     </div>
-    <PostTweet class="post-tweet" />
-
-    <div class="divider"></div>
-
-    <!-- Tweet list -->
-    <!-- <TweetList class="tweet-list" /> -->
 
     <!-- Recommendation -->
     <!-- <div class="recommendation">Recommendation</div> -->
@@ -20,15 +22,15 @@
 <script>
 import SideBar from './../components/SideBar'
 import PostTweet from './../components/PostTweet'
-// import TweetList from './../components/TweetList'
+import TweetList from './../components/TweetList'
 
 export default {
   name: 'Tweets',
   components: {
     SideBar,
     PostTweet,
-    // TweetList,
-  }
+    TweetList,
+  },
 }
 </script>
 
@@ -36,19 +38,24 @@ export default {
 .container {
   display: grid;
   grid-template-columns: 378px 600px 462px;
-  grid-template-rows: 55px 120px 10px 1fr;
+  grid-template-rows: 1200px;
 }
 .side-bar {
   grid-column: 1 / 2;
-  grid-row: 1 / 4;
+  grid-row: 1 / 2;
   margin-top: 4px;
   margin-left: 103px;
   width: 235px;
   height: 1196px;
 }
-.header {
+.center-column {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+  border: 1px solid #e6ecf0;
+}
+.header {
+  width: 600px;
+  height: 55px;
   border: 1px solid #e6ecf0;
 }
 .header-title {
@@ -61,24 +68,18 @@ export default {
   color: #1c1c1c;
 }
 .post-tweet {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
+  width: 600px;
+  height: 120px;
   border: 1px solid #e6ecf0;
 }
 .divider {
-  grid-column: 2 / 3;
-  grid-row: 3 / 4;
-
+  width: 600px;
+  height: 10px;
+  margin-bottom: 10px;
   background: #e6ecf0;
-}
-.tweet-list {
-  grid-column: 2 / 3;
-  grid-row: 4 / 5;
-  background: #888888;
 }
 .recommendation {
   grid-column: 3 / 4;
-  grid-row: 1 / 4;
-  background: #666;
+  grid-row: 1 / 2;
 }
 </style>
