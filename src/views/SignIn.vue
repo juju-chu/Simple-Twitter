@@ -150,7 +150,7 @@ export default {
         //透過setCurrentUser把使用者資料待到vuex的state中
         //this.$store.commit('setCurrentUser', data.user) //mark temporarily since vuex not ready
 
-        this.$router.push("/restaurants")
+        this.$router.push("/tweets")
       }
       catch (e) {
         console.log(e)
