@@ -65,6 +65,7 @@ export default {
   border-radius: 50%;
 }
 .tweet {
+  margin-top: 15px;
   margin-left: 10px;
 }
 .tweet-user {
@@ -78,6 +79,7 @@ export default {
   margin-top: 6px;
 }
 .tweet-actions {
+  margin-bottom: 10px;
   width: 130px;
 }
 .action {
