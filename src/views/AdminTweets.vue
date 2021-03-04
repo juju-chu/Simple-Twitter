@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <AdminSidebar class="admin-side-bar" />
+    <AdminSidebar class="admin-side-bar" iconColorController="AdminTweets" />
 
     <div class="center-column">
       <div class="header">

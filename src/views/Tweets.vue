@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <SideBar class="side-bar" />
+    <SideBar class="side-bar" iconColorController="Tweets" />
 
     <div class="center-column">
       <div class="header">
