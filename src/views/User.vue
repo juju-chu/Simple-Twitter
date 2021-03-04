@@ -551,7 +551,7 @@ import usersAPI from './../apis/users'
 import { Toast } from './../utils/helpers'
 
 export default {
-  name: 'Tweets',
+  name: 'User',
   components: {
     SideBar,
     UserCard,
