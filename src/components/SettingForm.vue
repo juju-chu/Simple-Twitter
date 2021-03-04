@@ -71,7 +71,13 @@
       />
     </div>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">註冊</button>
+    <button
+      :disabled="isProcessing"
+      class="btn btn-lg btn-primary btn-block"
+      type="submit"
+    >
+      註冊
+    </button>
 
     <div class="signup-admin-link">
       <p>
@@ -140,6 +146,12 @@ import { Toast } from '../utils/helpers'
 
 export default {
   name: 'SettingForm',
+  props: {
+    isProcessing: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       account: '',

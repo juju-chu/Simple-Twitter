@@ -5,7 +5,10 @@
       <h1>建立你的帳號</h1>
     </div>
     <!-- SettingForm -->
-    <SettingForm @after-submit="handleAfterSubmit" />
+    <SettingForm
+      @after-submit="handleAfterSubmit"
+      :is-processing="isProcessing"
+    />
   </div>
 </template>
 
@@ -32,10 +35,16 @@ export default {
   components: {
     SettingForm
   },
+  data () {
+    return {
+      isProcessing: false
+    }
+  },
   methods: {
     async handleAfterSubmit ({ account, name, email, password, checkPassword }) {
 
       try {
+        this.isProcessing = true
         const { data } = await authorizationAPI.signUp({ account, name, email, password, checkPassword })
         if (data.status !== 'success') {
           throw new Error(data.message)
@@ -43,6 +52,7 @@ export default {
         this.$router.push('/signin')
 
       } catch (error) {
+        this.isProcessing = false
         console.log(error)
         Toast.fire({
           icon: 'error',
