@@ -68,7 +68,11 @@
         </div>
       </div>
       <div class="nav-item">
-        <button class="sidebar-btn btn" type="button">
+        <button
+          class="sidebar-btn btn"
+          type="button"
+          @click.stop.prevent="showModal"
+        >
           <span class="sidebar-btn-text">推文</span>
         </button>
       </div>
@@ -79,16 +83,60 @@
         <span class="text logout-text">登出</span>
       </div>
     </div>
+
+    <!-- modal -->
+    <div class="post-tweet" v-if="isShowModal">
+      <div class="post-tweet-modal">
+        <div class="post-tweet-modal-header">
+          <button @click.stop.prevent="cancelModal">
+            <svg
+              class="icon-close"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13.414 12.0001L19.207 6.20712C19.597 5.81712 19.597 5.18412 19.207 4.79312C18.817 4.40212 18.184 4.40312 17.793 4.79312L12 10.5861L6.207 4.79312C5.817 4.40312 5.184 4.40312 4.793 4.79312C4.402 5.18312 4.403 5.81612 4.793 6.20712L10.586 12.0001L4.793 17.7931C4.403 18.1831 4.403 18.8161 4.793 19.2071C4.988 19.4021 5.243 19.5001 5.5 19.5001C5.757 19.5001 6.012 19.4021 6.207 19.2071L12 13.4141L17.793 19.2071C17.988 19.4021 18.243 19.5001 18.5 19.5001C18.757 19.5001 19.012 19.4021 19.207 19.2071C19.597 18.8171 19.597 18.1841 19.207 17.7931L13.414 12.0001Z"
+                fill="#FF6600"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="post-tweet-modal-tweet">
+          <img class="tweet-avatar" :src="userAvatar | emptyImage" />
+          <input
+            type="text"
+            class="tweet-text"
+            placeholder="有什麼新鮮事？"
+            autofocus
+            v-model="newTweet"
+          />
+        </div>
+        <div class="post-tweet-model-button">
+          <button class="post-tweet-model-btn" @click.stop.prevent="postTweet">
+            <span class="post-tweet-model-btn-text">推文</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import tweetsAPI from './../apis/tweets'
+import { emptyImageFilter } from './../utils/mixins'
+import { Toast } from './../utils/helpers'
 export default {
+  mixins: [emptyImageFilter],
   name: 'SideBar',
   data() {
     return {
       iconColor: ['black', 'black', 'black'],
       active: ['normal', 'normal', 'normal'],
+      isShowModal: false,
+      newTweet: '',
     }
   },
   props: {
@@ -98,6 +146,10 @@ export default {
     },
     userId: {
       type: Number,
+      required: true,
+    },
+    userAvatar: {
+      type: String,
       required: true,
     },
   },
@@ -121,6 +173,27 @@ export default {
           break
       }
     },
+    showModal() {
+      this.isShowModal = true
+    },
+    cancelModal() {
+      this.isShowModal = false
+    },
+    async postTweet() {
+      try {
+        const { data } = await tweetsAPI.post({ newTweet: this.newTweet })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.isShowModal = false
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法新增推文，請稍後再試',
+        })
+      }
+    },
   },
 }
 </script>
@@ -128,6 +201,7 @@ export default {
 <style scoped>
 .sidebar-wrapper {
   position: relative;
+  margin: 0;
 }
 .sidebar-logo {
   margin-top: 14px;
@@ -162,21 +236,71 @@ export default {
 .activeIcon {
   color: #ff6600;
 }
-.sidebar-btn {
+.sidebar-btn,
+.post-tweet-model-btn {
   width: 210px;
   height: 45px;
   background: #ff6600;
   border: none;
   border-radius: 100px;
 }
-.sidebar-btn-text {
+.sidebar-btn-text,
+.post-tweet-model-btn-text {
   color: #ffffff;
+}
+.post-tweet-model-button {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+.post-tweet-model-btn {
+  width: 64px;
+  height: 40px;
+}
+.post-tweet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+}
+.post-tweet-modal {
+  position: absolute;
+  top: 54px;
+  left: 50vh;
+  transform: translate(0, 0);
+
+  width: 600px;
+  height: 300px;
+  background: #ffffff;
+  border-radius: 14px;
+}
+.post-tweet-modal-header {
+  margin-top: 15px;
+  height: 40px;
+  border-bottom: 1px solid #e6ecf0;
+}
+.icon-close {
+  margin-left: 15px;
+}
+.post-tweet-modal-tweet {
+  display: flex;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+.tweet-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.tweet-text {
+  margin-left: 10px;
+  border: none;
 }
 .logout {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  /* bottom: 17px;
-  left: 111px; */
+  bottom: 17px;
+  left: 111px;
 }
 </style>

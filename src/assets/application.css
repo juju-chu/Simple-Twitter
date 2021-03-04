@@ -10,3 +10,7 @@
 .container {
   padding: 0;
 }
+button {
+  border: none;
+  background: none;
+}

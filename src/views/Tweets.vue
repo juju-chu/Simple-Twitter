@@ -1,9 +1,10 @@
 <template>
-  <div class="container">
+  <div class="wrapper">
     <SideBar
       class="side-bar"
       iconColorController="Tweets"
       :user-id="currentUser.id"
+      :user-avatar="currentUser.avatar"
     />
 
     <div class="center-column">
@@ -82,18 +83,18 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.wrapper {
   display: grid;
   grid-template-columns: 378px 600px 462px;
-  grid-template-rows: 1200px;
+  grid-template-rows: 100vh;
 }
 .side-bar {
   position: fixed;
+  z-index: 2;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
-  margin-top: 4px;
-  margin-left: 103px;
-  width: 275px;
+  padding-left: 103px;
+  width: 378px;
   height: 100vh;
   border-right: 1px solid #e6ecf0;
 }
@@ -103,7 +104,7 @@ export default {
 }
 .header {
   position: fixed;
-  z-index: 999;
+  z-index: 1;
   width: 600px;
   height: 55px;
   border: 1px solid #e6ecf0;
