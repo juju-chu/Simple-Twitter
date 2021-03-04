@@ -15,6 +15,18 @@
 
       <UserCard class="User-card" :user="user" />
 
+      <div class="tab">
+        <div class="tab-item tab-item-active">
+          <span class="tab-item-text">推文</span>
+        </div>
+        <div class="tab-item">
+          <span class="tab-item-text">推文與回覆</span>
+        </div>
+        <div class="tab-item">
+          <span class="tab-item-text">喜歡的內容</span>
+        </div>
+      </div>
+
       <!-- Tweet list -->
       <TweetsList class="tweet-list" :tweets="tweets" />
     </div>
@@ -625,22 +637,26 @@ export default {
   grid-template-rows: 100vh;
 }
 .side-bar {
+  position: fixed;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
   margin-top: 4px;
   margin-left: 103px;
-  width: 235px;
-  height: 1196px;
+  width: 275px;
+  height: 100vh;
+  border-right: 1px solid #e6ecf0;
 }
 .center-column {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
-  border: 1px solid #e6ecf0;
 }
 .header {
+  position: fixed;
+  z-index: 999;
   display: flex;
   width: 600px;
   height: 55px;
+  background: #fff;
 }
 .header-back-icon {
   margin-top: 15px;
@@ -668,7 +684,34 @@ export default {
   color: #657786;
 }
 .User-card {
+  margin-top: 55px;
   height: auto;
+}
+.tab {
+  display: flex;
+  width: 390px;
+  height: 54px;
+}
+.tab-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 54px;
+}
+.tab-item-text {
+  font-weight: bold;
+  font-size: 15px;
+  color: #657786;
+}
+.tab-item-active {
+  border-bottom: 2px solid #ff6600;
+}
+.tab-item-active span {
+  color: #ff6600;
+}
+.tweet-list {
+  border-top: 1px solid #e6ecf0;
 }
 .recommendation {
   grid-column: 3 / 4;

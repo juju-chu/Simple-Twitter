@@ -98,7 +98,7 @@ img {
 .follow {
   display: flex;
   margin-top: 10px;
-  margin-bottom: 36px;
+  margin-bottom: 20px;
 }
 .followings-count {
   margin-right: 20px;

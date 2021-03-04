@@ -119,6 +119,9 @@ export default {
 </script>
 
 <style scoped>
+.sidebar-wrapper {
+  position: relative;
+}
 .sidebar-logo {
   margin-top: 14px;
   width: 30px;
@@ -164,7 +167,9 @@ export default {
 }
 .logout {
   position: absolute;
-  bottom: 17px;
-  left: 111px;
+  bottom: 0;
+  left: 0;
+  /* bottom: 17px;
+  left: 111px; */
 }
 </style>
