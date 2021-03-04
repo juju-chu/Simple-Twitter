@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import NotFound from '../views/NotFound.vue'
 import UserSignIn from '../views/UserSignIn.vue'
 import Tweets from '../views/Tweets.vue'
+import User from '../views/User.vue'
 import AdminSignin from '../views/AdminSignin'
 import AdminTweets from './../views/AdminTweets.vue'
 
@@ -18,6 +19,11 @@ const routes = [
     path: '/signin',
     name: 'signin',
     component: UserSignIn,
+  },
+  {
+    path: '/users/:id',
+    name: 'user',
+    component: User,
   },
   {
     path: '/tweets',

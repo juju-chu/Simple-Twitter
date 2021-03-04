@@ -104,7 +104,7 @@ export default {
           this.iconColor[0] = '#FF6600'
           this.active[0] = 'activeIcon'
           break
-        case 'UserSelf':
+        case 'User':
           this.iconColor[1] = '#FF6600'
           this.active[1] = 'activeIcon'
           break

@@ -11,7 +11,7 @@
       <div class="divider"></div>
 
       <!-- Tweet list -->
-      <TweetsList class="tweet-list" />
+      <TweetsList class="tweet-list" :tweets="tweets" />
     </div>
 
     <!-- Recommendation -->
@@ -23,6 +23,8 @@
 import SideBar from './../components/SideBar'
 import PostTweet from './../components/PostTweet'
 import TweetsList from './../components/TweetsList'
+import tweetsAPI from './../apis/tweets'
+import { Toast } from './../utils/helpers'
 
 export default {
   name: 'Tweets',
@@ -30,6 +32,36 @@ export default {
     SideBar,
     PostTweet,
     TweetsList,
+  },
+  data() {
+    return {
+      tweets: [],
+    }
+  },
+  created() {
+    this.fetchTweets()
+  },
+  methods: {
+    async fetchTweets() {
+      try {
+        const { data } = await tweetsAPI.get()
+        this.tweets = data.map((tweet) => ({
+          id: tweet.id,
+          avatar: tweet.User.avatar,
+          name: tweet.User.name,
+          createdAt: tweet.createdAt,
+          description: tweet.description,
+          replyCount: tweet.replyCount,
+          likeCount: tweet.likeCount,
+        }))
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得推文，請稍後再試',
+        })
+      }
+    },
   },
 }
 </script>
