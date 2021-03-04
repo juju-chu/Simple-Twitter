@@ -105,29 +105,29 @@
 </style>
 
 <script>
-import authorizationAPI from "../apis/authorization";
-import { Toast } from "../utils/helpers";
+import authorizationAPI from '../apis/authorization'
+import { Toast } from '../utils/helpers'
 
 export default {
   data () {
     return {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       isProcessing: false,
-    };
+    }
   },
   methods: {
     async handleSubmit () {
       try {
         if (!this.email || !this.password) {
           Toast.fire({
-            icon: "warning",
-            title: "請輸入帳號密碼",
-          });
-          return;
+            icon: 'warning',
+            title: '請輸入帳號密碼',
+          })
+          return
         }
 
-        this.isProcessing = true;
+        this.isProcessing = true
 
         //將authorizationAPI.signIn回傳的response解構賦值給data
         const { data } = await authorizationAPI
@@ -136,29 +136,27 @@ export default {
             password: this.password,
           })
 
-        console.log('status', data.status)
-
-        if (data.status !== "success") {
-          throw new Error(data.message);
+        if (data.status !== 'success') {
+          throw new Error(data.message)
         }
 
         //把token保留在local storage中
-        localStorage.setItem("token", data.token);
+        localStorage.setItem('token', data.token)
 
         //透過setCurrentUser把使用者資料待到vuex的state中
         //this.$store.commit('setCurrentUser', data.user) //mark temporarily since vuex not ready
 
-        this.$router.push("/admin/tweets")
+        this.$router.push('/admin/tweets')
       }
       catch (e) {
         console.log(e)
-        this.isProcessing = false;
-        this.password = "";
+        this.isProcessing = false
+        this.password = ''
 
         Toast.fire({
-          icon: "warning",
-          title: "輸入的帳號密碼有誤",
-        });
+          icon: 'warning',
+          title: '輸入的帳號密碼有誤',
+        })
       }
     }
   },

@@ -3,7 +3,7 @@
   <div class="container py-5">
     <div class="title text-center">
       <img class="mb-4" src="../assets/Logo.svg" alt="" />
-      <h1 class="h3 font-weight-normal">登入 Alphitter</h1>
+      <h1>登入 Alphitter</h1>
     </div>
     <form class="w-100" @submit.prevent.stop="handleSubmit">
       <div class="signin-form">
@@ -61,6 +61,12 @@
   box-sizing: border-box;
 }
 
+h1 {
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 33px;
+}
+
 .signin-form {
   position: relative;
   max-width: 540px;
@@ -82,7 +88,6 @@
   max-width: 540px;
   max-height: 26px;
   margin: 41px auto;
-  color: #007bff;
 }
 
 .form-control {
@@ -103,20 +108,27 @@
 
 .link {
   text-decoration: underline;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+p {
+  color: #0099ff;
 }
 </style>
 
 <script>
-import authorizationAPI from "../apis/authorization";
-import { Toast } from "../utils/helpers";
+import authorizationAPI from "../apis/authorization"
+import { Toast } from "../utils/helpers"
 
 export default {
+  name: 'UserSignIn',
   data () {
     return {
       email: "",
       password: "",
       isProcessing: false,
-    };
+    }
   },
   methods: {
     async handleSubmit () {
@@ -125,11 +137,11 @@ export default {
           Toast.fire({
             icon: "warning",
             title: "請輸入帳號密碼",
-          });
-          return;
+          })
+          return
         }
 
-        this.isProcessing = true;
+        this.isProcessing = true
 
         //將authorizationAPI.signIn回傳的response解構賦值給data
         const { data } = await authorizationAPI
@@ -138,14 +150,12 @@ export default {
             password: this.password,
           })
 
-        console.log('status', data.status)
-
         if (data.status !== "success") {
-          throw new Error(data.message);
+          throw new Error(data.message)
         }
 
         //把token保留在local storage中
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.token)
 
         //透過setCurrentUser把使用者資料待到vuex的state中
         //this.$store.commit('setCurrentUser', data.user) //mark temporarily since vuex not ready
@@ -154,16 +164,16 @@ export default {
       }
       catch (e) {
         console.log(e)
-        this.isProcessing = false;
-        this.password = "";
+        this.isProcessing = false
+        this.password = ""
 
         Toast.fire({
           icon: "warning",
           title: "輸入的帳號密碼有誤",
-        });
+        })
       }
     }
   },
-};
+}
 
 </script>
