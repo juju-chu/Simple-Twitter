@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <SideBar class="side-bar" iconColorController="Tweets" />
+    <SideBar
+      class="side-bar"
+      iconColorController="Tweets"
+      :user-id="currentUser.id"
+    />
 
     <div class="center-column">
       <div class="header">
@@ -20,6 +24,12 @@
 </template>
 
 <script>
+const dummyCurrentUser = {
+  id: 5,
+  name: 'Tracy Towne',
+  account: 'user5',
+  avatar: 'https://loremflickr.com/320/240/dog/?lock=37.8808195638617',
+}
 import SideBar from './../components/SideBar'
 import PostTweet from './../components/PostTweet'
 import TweetsList from './../components/TweetsList'
@@ -36,10 +46,12 @@ export default {
   data() {
     return {
       tweets: [],
+      currentUser: {},
     }
   },
   created() {
     this.fetchTweets()
+    this.fetchCurrentUser()
   },
   methods: {
     async fetchTweets() {
@@ -61,6 +73,9 @@ export default {
           title: '無法取得推文，請稍後再試',
         })
       }
+    },
+    fetchCurrentUser() {
+      this.currentUser = dummyCurrentUser
     },
   },
 }

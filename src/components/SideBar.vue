@@ -3,7 +3,7 @@
     <img class="sidebar-logo" alt="logo" src="./../assets/Logo.svg" />
     <div class="navigation">
       <div class="nav-item sidebar-tweets">
-        <div class="item">
+        <router-link to="/tweets" class="item">
           <svg
             class="sidebar-tweets-icon icon"
             width="24"
@@ -18,10 +18,13 @@
             />
           </svg>
           <span class="text sidebar-tweets-text" :class="active[0]">首頁</span>
-        </div>
+        </router-link>
       </div>
       <div class="nav-item sidebar-user-self">
-        <div class="item">
+        <router-link
+          class="item"
+          :to="{ name: 'user', params: { id: userId } }"
+        >
           <svg
             class="sidebar-user-self-icon icon"
             width="18"
@@ -38,8 +41,8 @@
 
           <span class="text sidebar-user-self-text" :class="active[1]"
             >個人資料</span
-          >
-        </div>
+          ></router-link
+        >
       </div>
       <div class="nav-item sidebar-user-setting">
         <div class="item">
@@ -91,6 +94,10 @@ export default {
   props: {
     iconColorController: {
       type: String,
+      required: true,
+    },
+    userId: {
+      type: Number,
       required: true,
     },
   },

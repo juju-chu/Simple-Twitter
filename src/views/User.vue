@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <SideBar class="side-bar" iconColorController="User" />
+    <SideBar
+      class="side-bar"
+      iconColorController="User"
+      :user-id="currentUser.id"
+    />
 
     <div class="center-column">
       <div class="header">
@@ -37,6 +41,12 @@
 </template>
 
 <script>
+const dummyCurrentUser = {
+  id: 5,
+  name: 'Tracy Towne',
+  account: 'user5',
+  avatar: 'https://loremflickr.com/320/240/dog/?lock=37.8808195638617',
+}
 const dummyTweets = [
   {
     id: 1,
@@ -561,12 +571,14 @@ export default {
         followersCount: -1,
       },
       tweets: [],
+      currentUser: {},
     }
   },
   created() {
     const { id: userId } = this.$route.params
     this.fetchUser(userId)
     this.fetchTweets()
+    this.fetchCurrentUser()
   },
   methods: {
     async fetchUser(userId) {
@@ -625,6 +637,9 @@ export default {
           avatar,
         }
       })
+    },
+    fetchCurrentUser() {
+      this.currentUser = dummyCurrentUser
     },
   },
 }
