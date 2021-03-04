@@ -73,22 +73,26 @@ export default {
   grid-template-rows: 1200px;
 }
 .side-bar {
+  position: fixed;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
   margin-top: 4px;
   margin-left: 103px;
-  width: 235px;
-  height: 1196px;
+  width: 275px;
+  height: 100vh;
+  border-right: 1px solid #e6ecf0;
 }
 .center-column {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
-  border: 1px solid #e6ecf0;
 }
 .header {
+  position: fixed;
+  z-index: 999;
   width: 600px;
   height: 55px;
   border: 1px solid #e6ecf0;
+  background: #fff;
 }
 .header-title {
   margin-left: 15px;
@@ -100,6 +104,7 @@ export default {
   color: #1c1c1c;
 }
 .post-tweet {
+  margin-top: 55px;
   width: 600px;
   height: 120px;
   border: 1px solid #e6ecf0;
