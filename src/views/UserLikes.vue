@@ -21,7 +21,7 @@
 
       <div class="tab">
         <router-link
-          class="tab-item tab-item-active"
+          class="tab-item"
           :to="{ name: 'user', params: { id: user.id } }"
         >
           <span class="tab-item-text">推文</span>
@@ -30,7 +30,7 @@
           <span class="tab-item-text">推文與回覆</span>
         </div>
         <router-link
-          class="tab-item"
+          class="tab-item tab-item-active"
           :to="{ name: 'user-likes', params: { id: user.id } }"
         >
           <span class="tab-item-text">喜歡的內容</span>
@@ -557,7 +557,7 @@ import usersAPI from './../apis/users'
 import { Toast } from './../utils/helpers'
 
 export default {
-  name: 'User',
+  name: 'UserLikes',
   components: {
     SideBar,
     UserCard,
