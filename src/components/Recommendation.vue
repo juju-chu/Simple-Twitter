@@ -13,11 +13,16 @@
         <div class="action">
           <button
             v-if="user.isFollowed"
-            class="followed-btn btn btn-lg btn-primary btn-block"
+            @click.stop.prevent="removeFollowing(user.id)"
+            class="followed-btn"
           >
             正在跟隨
           </button>
-          <button v-else class="to-follow-btn btn btn-lg btn-primary btn-block">
+          <button
+            @click.stop.prevent="addFollowing(user.id)"
+            v-else
+            class="to-follow-btn"
+          >
             跟隨
           </button>
         </div>
@@ -93,7 +98,7 @@ header {
   width: auto;
 }
 
-.followed-btn {
+button.followed-btn {
   width: 92px;
   height: 30px;
   margin-right: 15px;
@@ -104,9 +109,10 @@ header {
   line-height: 30px;
   border-radius: 100px;
   border: none;
+  outline: none;
 }
 
-.to-follow-btn {
+button.to-follow-btn {
   width: 62px;
   height: 30px;
   margin-right: 15px;
@@ -117,6 +123,7 @@ header {
   line-height: 30px;
   border-radius: 100px;
   border: 1px solid #ff6600;
+  outline: none;
 }
 
 footer {
@@ -196,7 +203,25 @@ export default {
     },
     showMoreUser () {
       console.log('show more user')
-    }
+    },
+    addFollowing (userId) {
+      //Todo: 透過API發送請求新增follow
+      this.users = this.users.map(user => {
+        if (user.id === userId) {
+          user.isFollowed = true
+        }
+        return user
+      })
+    },
+    removeFollowing (userId) {
+      //Todo: 透過API發送請求移除follow
+      this.users = this.users.map(user => {
+        if (user.id === userId) {
+          user.isFollowed = false
+        }
+        return user
+      })
+    },
   },
   created () {
     this.fetchUsers()
