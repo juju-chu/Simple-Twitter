@@ -5,7 +5,6 @@ import UserSignIn from '../views/UserSignIn.vue'
 import UserSignUp from '../views/UserSignUp.vue'
 import Tweets from '../views/Tweets.vue'
 import User from '../views/User.vue'
-import UserLikes from './../views/UserLikes.vue'
 import AdminSignin from '../views/AdminSignin'
 import AdminTweets from './../views/AdminTweets.vue'
 
@@ -31,11 +30,6 @@ const routes = [
     path: '/users/:id',
     name: 'user',
     component: User,
-  },
-  {
-    path: '/users/:id/likes',
-    name: 'user-likes',
-    component: UserLikes,
   },
   {
     path: '/tweets',

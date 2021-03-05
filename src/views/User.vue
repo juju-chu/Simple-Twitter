@@ -21,21 +21,23 @@
       <UserCard class="User-card" :user="user" />
 
       <div class="tab">
-        <router-link
-          class="tab-item tab-item-active"
-          :to="{ name: 'user', params: { id: user.id } }"
+        <button
+          class="tab-item"
+          :class="{ active: tab === 'tweets' }"
+          @click.stop.prevent="clickTab('tweets')"
         >
           <span class="tab-item-text">推文</span>
-        </router-link>
+        </button>
         <div class="tab-item">
           <span class="tab-item-text">推文與回覆</span>
         </div>
-        <router-link
+        <button
           class="tab-item"
-          :to="{ name: 'user-likes', params: { id: user.id } }"
+          :class="{ active: tab === 'likes' }"
+          @click.stop.prevent="clickTab('likes')"
         >
           <span class="tab-item-text">喜歡的內容</span>
-        </router-link>
+        </button>
       </div>
 
       <!-- Tweet list -->
@@ -579,6 +581,7 @@ export default {
       },
       tweets: [],
       currentUser: {},
+      tab: 'tweets',
     }
   },
   created() {
@@ -623,6 +626,32 @@ export default {
     },
     fetchTweets() {
       // TODO: 取得 API 請求後的資料
+      console.log('fetchTweets')
+      this.tweets = dummyTweets.map((tweet) => {
+        const {
+          id,
+          description,
+          createdAt,
+          likeCount,
+          replyCount,
+          User,
+        } = tweet
+        const { name, account, avatar } = User
+        return {
+          id,
+          description,
+          createdAt,
+          likeCount,
+          replyCount,
+          name,
+          account,
+          avatar,
+        }
+      })
+    },
+    fetchLikes() {
+      // TODO: 取得 API 請求後的資料
+      console.log('fetchLikes')
       this.tweets = dummyTweets.map((tweet) => {
         const {
           id,
@@ -647,6 +676,18 @@ export default {
     },
     fetchCurrentUser() {
       this.currentUser = dummyCurrentUser
+    },
+    clickTab(tab) {
+      switch (tab) {
+        case 'tweets':
+          this.fetchTweets()
+          this.tab = 'tweets'
+          break
+        case 'likes':
+          this.fetchLikes()
+          this.tab = 'likes'
+          break
+      }
     },
   },
 }
@@ -727,10 +768,10 @@ export default {
   font-size: 15px;
   color: #657786;
 }
-.tab-item-active {
+.active {
   border-bottom: 2px solid #ff6600;
 }
-.tab-item-active span {
+.active span {
   color: #ff6600;
 }
 .tweet-list {
