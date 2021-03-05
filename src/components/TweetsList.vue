@@ -56,6 +56,7 @@ export default {
   display: flex;
   margin-bottom: 10px;
   border-bottom: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
 }
 .tweet-user-photo {
   margin-top: 13px;
