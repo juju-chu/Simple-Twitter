@@ -16,7 +16,7 @@
     </div>
     <div v-if="isUserSetting" class="user-setting-margin"></div>
     <div class="signin-form">
-      <label class="input-label" for="account">名稱</label>
+      <label class="input-label" for="name">名稱</label>
       <input
         id="name"
         name="name"
@@ -31,7 +31,7 @@
     </div>
     <div v-if="isUserSetting" class="user-setting-margin"></div>
     <div class="signin-form">
-      <label class="input-label" for="account">Email</label>
+      <label class="input-label" for="email">Email</label>
       <input
         id="email"
         name="email"
@@ -61,7 +61,7 @@
     </div>
     <div v-if="isUserSetting" class="user-setting-margin"></div>
     <div class="signin-form">
-      <label class="input-label" for="password">密碼確認</label>
+      <label class="input-label" for="check-password">密碼確認</label>
       <input
         id="check-password"
         name="checkPassword"
