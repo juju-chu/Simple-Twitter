@@ -7,7 +7,7 @@
           <div class="tweet-user">
             <span class="tweet-user-name">{{ tweet.name }}</span>
             <span class="tweet-user-info"
-              >{{ tweet.account }}・{{ tweet.createdAt | fromNow }}</span
+              >@{{ tweet.account }}・{{ tweet.createdAt | fromNow }}</span
             >
           </div>
           <div class="tweet-description">{{ tweet.description }}</div>
