@@ -44,22 +44,23 @@ export default {
     PostTweet,
     TweetsList,
   },
-  data () {
+  data() {
     return {
       tweets: [],
       currentUser: {},
     }
   },
-  created () {
+  created() {
     this.fetchTweets()
     this.fetchCurrentUser()
   },
   methods: {
-    async fetchTweets () {
+    async fetchTweets() {
       try {
         const { data } = await tweetsAPI.get()
         this.tweets = data.map((tweet) => ({
           id: tweet.id,
+          account: tweet.User.account,
           avatar: tweet.User.avatar,
           name: tweet.User.name,
           createdAt: tweet.createdAt,
@@ -75,7 +76,7 @@ export default {
         })
       }
     },
-    fetchCurrentUser () {
+    fetchCurrentUser() {
       this.currentUser = dummyCurrentUser
     },
   },
