@@ -101,7 +101,6 @@
                 v-focus
                 @keyup.esc="cancelModal"
                 @keyup.enter="handleSubmit"
-                @blur="cancelModal"
               />
             </div>
 
@@ -114,6 +113,8 @@
                 cols="50"
                 v-model="user.introduction"
                 class="form-control form-control-introduction"
+                @keyup.esc="cancelModal"
+                @keyup.enter="handleSubmit"
               ></textarea>
             </div>
 
