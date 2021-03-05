@@ -44,7 +44,7 @@ export default {
     SideBar,
     PostTweet,
     TweetsList,
-    Recommendation
+    Recommendation,
   },
   data() {
     return {
@@ -104,13 +104,14 @@ export default {
 .center-column {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+  border-right: 1px solid #e6ecf0;
 }
 .recommendation-list {
+  position: fixed;
+  top: 15px;
+  left: 1008px;
   grid-column: 3 / 4;
   grid-row: 1 / 2;
-
-  margin-top: 15px;
-  margin-left: 30px;
 }
 .header {
   position: fixed;
@@ -140,9 +141,5 @@ export default {
   height: 10px;
   margin-bottom: 10px;
   background: #e6ecf0;
-}
-.recommendation {
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
 }
 </style>
