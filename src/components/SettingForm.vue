@@ -59,9 +59,9 @@
     <div class="signin-form">
       <label class="input-label" for="password">密碼確認</label>
       <input
-        id="password-check"
-        name="passwordCheck"
-        v-model="passwordCheck"
+        id="check-password"
+        name="checkPassword"
+        v-model="checkPassword"
         type="password"
         class="form-control"
         placeholder=""
@@ -158,13 +158,13 @@ export default {
       name: '',
       email: '',
       password: '',
-      passwordCheck: '',
+      checkPassword: '',
       //isProcessing: false,
     }
   },
   methods: {
     handleSubmit () {
-      if (!this.account || !this.name || !this.email || !this.password || !this.passwordCheck) {
+      if (!this.account || !this.name || !this.email || !this.password || !this.checkPassword) {
         Toast.fire({
           icon: 'warning',
           title: '請輸入所有欄位',
@@ -195,7 +195,7 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password,
-        checkPassword: this.passwordCheck
+        checkPassword: this.checkPassword
       })
     }
   },
