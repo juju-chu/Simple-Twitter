@@ -604,7 +604,7 @@ export default {
           userTweetsCount,
           FollowingsCount: followingsCount,
           FollowersCount: followersCount,
-        } = data.user
+        } = data
         this.user = {
           id,
           account,
