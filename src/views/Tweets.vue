@@ -118,7 +118,7 @@ export default {
   z-index: 1;
   width: 600px;
   height: 55px;
-  border: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
   background: #fff;
 }
 .header-title {
