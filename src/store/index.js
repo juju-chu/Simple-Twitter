@@ -11,7 +11,7 @@ export default new Vuex.Store({
       account: '',
       name: '',
       email: '',
-      image: '',
+      avatar: '',
       isAdmin: false
     },
     isAuthenticated: false,

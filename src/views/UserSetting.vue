@@ -8,7 +8,7 @@
     />
 
     <div class="center-column">
-      <div class="header">帳戶設定</div>
+      <header>帳戶設定</header>
       <div class="form-wrapper">
         <SettingForm
           :initial-user-data="userData"
@@ -47,7 +47,7 @@
   height: 100vh;
 }
 
-.header {
+header {
   height: 55px;
   padding-top: 13px;
   padding-bottom: 14px;

@@ -20,7 +20,7 @@
     </div>
 
     <!-- Recommendation -->
-    <!-- <div class="recommendation">Recommendation</div> -->
+    <Recommendation class="recommendation-list" />
   </div>
 </template>
 
@@ -34,6 +34,7 @@ const dummyCurrentUser = {
 import SideBar from './../components/SideBar'
 import PostTweet from './../components/PostTweet'
 import TweetsList from './../components/TweetsList'
+import Recommendation from '../components/Recommendation'
 import tweetsAPI from './../apis/tweets'
 import { Toast } from './../utils/helpers'
 
@@ -43,6 +44,7 @@ export default {
     SideBar,
     PostTweet,
     TweetsList,
+    Recommendation
   },
   data() {
     return {
@@ -102,6 +104,13 @@ export default {
 .center-column {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+}
+.recommendation-list {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+
+  margin-top: 15px;
+  margin-left: 30px;
 }
 .header {
   position: fixed;

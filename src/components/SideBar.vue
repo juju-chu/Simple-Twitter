@@ -171,7 +171,6 @@ export default {
   },
   methods: {
     controlIconColor () {
-      console.log('sidebar id', this.userId)
       switch (this.iconColorController) {
         case 'Tweets':
           this.iconColor[0] = '#FF6600'
