@@ -1,14 +1,16 @@
 <template>
-  <div class="container py-5">
+  <div class="wrapper py-5">
     <div class="title text-center">
       <img class="mb-4" src="../assets/Logo.svg" alt="" />
       <h1>建立你的帳號</h1>
     </div>
     <!-- SettingForm -->
-    <SettingForm
-      @after-submit="handleAfterSubmit"
-      :is-processing="isProcessing"
-    />
+    <div class="center-column">
+      <SettingForm
+        @after-submit="handleAfterSubmit"
+        :is-processing="isProcessing"
+      />
+    </div>
   </div>
 </template>
 
@@ -19,9 +21,15 @@
 }
 
 h1 {
+  margin-bottom: 20px;
   font-weight: bold;
   font-size: 23px;
   line-height: 33px;
+}
+
+.center-column {
+  display: flex;
+  justify-content: center;
 }
 </style>
 

@@ -1,11 +1,11 @@
 <template>
-  <form class="w-100" @submit.prevent.stop="handleSubmit">
+  <form class="forms" @submit.prevent.stop="handleSubmit">
     <div class="signin-form">
       <label class="input-label" for="account">帳號</label>
       <input
         id="account"
         name="account"
-        v-model="account"
+        v-model="userData.account"
         type="text"
         class="form-control"
         placeholder=""
@@ -14,12 +14,13 @@
         autofocus
       />
     </div>
+    <div v-if="isUserSetting" class="user-setting-margin"></div>
     <div class="signin-form">
       <label class="input-label" for="account">名稱</label>
       <input
         id="name"
         name="name"
-        v-model="name"
+        v-model="userData.name"
         type="text"
         class="form-control"
         placeholder=""
@@ -28,12 +29,13 @@
         autofocus
       />
     </div>
+    <div v-if="isUserSetting" class="user-setting-margin"></div>
     <div class="signin-form">
       <label class="input-label" for="account">Email</label>
       <input
         id="email"
         name="email"
-        v-model="email"
+        v-model="userData.email"
         type="email"
         class="form-control"
         placeholder=""
@@ -42,12 +44,13 @@
         autofocus
       />
     </div>
+    <div v-if="isUserSetting" class="user-setting-margin"></div>
     <div class="signin-form">
       <label class="input-label" for="password">密碼</label>
       <input
         id="password"
         name="password"
-        v-model="password"
+        v-model="userData.password"
         type="password"
         class="form-control"
         placeholder=""
@@ -56,12 +59,13 @@
         required
       />
     </div>
+    <div v-if="isUserSetting" class="user-setting-margin"></div>
     <div class="signin-form">
       <label class="input-label" for="password">密碼確認</label>
       <input
         id="check-password"
         name="checkPassword"
-        v-model="checkPassword"
+        v-model="userData.checkPassword"
         type="password"
         class="form-control"
         placeholder=""
@@ -71,18 +75,30 @@
       />
     </div>
 
-    <button
-      :disabled="isProcessing"
-      class="btn btn-lg btn-primary btn-block"
-      type="submit"
-    >
-      註冊
-    </button>
+    <div class="action-btns">
+      <button
+        v-if="!isUserSetting"
+        :disabled="isProcessing"
+        class="regist-btn btn btn-lg btn-primary btn-block"
+        type="submit"
+      >
+        註冊
+      </button>
 
-    <div class="signup-admin-link">
-      <p>
-        <router-link to="/signin" class="link">取消</router-link>
-      </p>
+      <div v-if="!isUserSetting" class="signup-admin-link">
+        <p>
+          <router-link to="/signin" class="link">取消</router-link>
+        </p>
+      </div>
+
+      <button
+        v-if="isUserSetting"
+        :disabled="isProcessing"
+        class="save-btn btn btn-lg btn-primary btn-block"
+        type="submit"
+      >
+        儲存
+      </button>
     </div>
   </form>
 </template>
@@ -92,20 +108,22 @@
   box-sizing: border-box;
 }
 
-.signin-form {
-  position: relative;
-  max-width: 540px;
-  max-height: 212px;
-  margin: 0 auto;
+.forms {
+  width: 540px;
 }
 
-.btn {
+.signin-form {
+  position: relative;
+  max-height: 212px;
+  margin-bottom: 20px;
+}
+
+.regist-btn {
   border-radius: 50px;
   background: #ff6600;
   border: none;
   max-width: 540px;
   margin: 0 auto;
-  margin-top: 30px;
 }
 
 .signup-admin-link {
@@ -121,7 +139,6 @@
   background: #f5f8fa;
   border: none;
   box-shadow: 0 2px 0px 0 #657786;
-  margin-top: 20px;
   text-align: right;
 }
 
@@ -139,6 +156,26 @@
   line-height: 26px;
   color: #0099ff;
 }
+
+.user-setting-margin {
+  height: 12px;
+}
+
+.action-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 30px;
+}
+
+.save-btn {
+  background: #ff6600;
+  color: white;
+  width: 122px;
+  height: 50px;
+  border-radius: 50px;
+  border: none;
+}
 </style>
 
 <script>
@@ -147,24 +184,43 @@ import { Toast } from '../utils/helpers'
 export default {
   name: 'SettingForm',
   props: {
+    initialUserData: {
+      type: Object,
+      default: () => ({
+        id: -1,
+        account: '',
+        name: '',
+        email: '',
+        password: ''
+      })
+    },
     isProcessing: {
+      type: Boolean,
+      default: false
+    },
+    isUserSetting: {
       type: Boolean,
       default: false
     }
   },
   data () {
     return {
-      account: '',
-      name: '',
-      email: '',
-      password: '',
-      checkPassword: '',
-      //isProcessing: false,
+      userData: {
+        ...this.initialUserData,
+      }
+    }
+  },
+  watch: {
+    initialUserData (newValue) {
+      this.userData = {
+        ...this.userData,
+        ...newValue
+      }
     }
   },
   methods: {
     handleSubmit () {
-      if (!this.account || !this.name || !this.email || !this.password || !this.checkPassword) {
+      if (!this.userData.account || !this.userData.name || !this.userData.email || !this.userData.password || !this.userData.checkPassword) {
         Toast.fire({
           icon: 'warning',
           title: '請輸入所有欄位',
@@ -172,7 +228,7 @@ export default {
         return
       }
 
-      if (this.password.length < 6) {
+      if (this.userData.password.length < 6) {
         Toast.fire({
           icon: 'warning',
           title: '密碼長度不足'
@@ -180,7 +236,7 @@ export default {
         return
       }
 
-      if (this.passwordCheck !== this.password) {
+      if (this.userData.checkPassword !== this.userData.password) {
         Toast.fire({
           icon: 'warning',
           title: '密碼與密碼確認不同'
@@ -191,11 +247,11 @@ export default {
       //this.isProcessing = true
 
       this.$emit('after-submit', {
-        account: this.account,
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        checkPassword: this.checkPassword
+        account: this.userData.account,
+        name: this.userData.name,
+        email: this.userData.email,
+        password: this.userData.password,
+        checkPassword: this.userData.checkPassword
       })
     }
   },

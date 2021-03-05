@@ -48,7 +48,7 @@
         <p>
           <router-link to="/signup" class="link">註冊 Alphitter</router-link>
           ・
-          <router-link to="/signup" class="link">後台登入</router-link>
+          <router-link to="/admin/signin" class="link">後台登入</router-link>
         </p>
       </div>
     </form>

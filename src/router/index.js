@@ -5,7 +5,8 @@ import UserSignIn from '../views/UserSignIn.vue'
 import UserSignUp from '../views/UserSignUp.vue'
 import Tweets from '../views/Tweets.vue'
 import User from '../views/User.vue'
-import AdminSignin from '../views/AdminSignin'
+import UserSetting from '../views/UserSetting.vue'
+import AdminSignin from '../views/AdminSignin.vue'
 import AdminTweets from './../views/AdminTweets.vue'
 
 Vue.use(VueRouter)
@@ -25,6 +26,11 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: UserSignUp,
+  },
+  {
+    path: '/users/:id/setting',
+    name: 'user-setting',
+    component: UserSetting,
   },
   {
     path: '/users/:id',

@@ -45,7 +45,10 @@
         >
       </div>
       <div class="nav-item sidebar-user-setting">
-        <div class="item">
+        <router-link
+          class="item"
+          :to="{ name: 'user-setting', params: { id: userId } }"
+        >
           <svg
             class="sidebar-user-icon icon"
             width="24"
@@ -65,7 +68,7 @@
           </svg>
 
           <span class="text sidebar-user-text" :class="active[2]">設定</span>
-        </div>
+        </router-link>
       </div>
       <div class="nav-item">
         <button
@@ -134,7 +137,7 @@ import { Toast } from './../utils/helpers'
 export default {
   mixins: [emptyImageFilter],
   name: 'SideBar',
-  data() {
+  data () {
     return {
       iconColor: ['black', 'black', 'black'],
       active: ['normal', 'normal', 'normal'],
@@ -156,18 +159,19 @@ export default {
       required: true,
     },
   },
-  created() {
+  created () {
     this.controlIconColor()
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.focus()
       },
     },
   },
   methods: {
-    controlIconColor() {
+    controlIconColor () {
+      console.log('sidebar id', this.userId)
       switch (this.iconColorController) {
         case 'Tweets':
           this.iconColor[0] = '#FF6600'
@@ -183,13 +187,13 @@ export default {
           break
       }
     },
-    showModal() {
+    showModal () {
       this.isShowModal = true
     },
-    cancelModal() {
+    cancelModal () {
       this.isShowModal = false
     },
-    async postTweet() {
+    async postTweet () {
       if (this.newTweet.trim() === '') {
         Toast.fire({
           icon: 'warning',
