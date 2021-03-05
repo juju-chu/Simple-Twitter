@@ -6,5 +6,8 @@ export default {
   },
   updateUser ({ id, account, name, email, password, checkPassword }) {
     return apiHelper.put(`users/${id}`, { account, name, email, password, checkPassword })
-  }
+  },
+  editInfo({ userId, formData }) {
+    return apiHelper.put(`/users/${userId}`, formData)
+  },
 }

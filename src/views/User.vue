@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <UserCard class="User-card" :user="user" />
+      <UserCard class="User-card" :initial-user="user" />
 
       <div class="tab">
         <button
