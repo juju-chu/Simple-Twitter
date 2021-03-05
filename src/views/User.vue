@@ -9,7 +9,9 @@
 
     <div class="center-column">
       <div class="header">
-        <img class="header-back-icon" src="./../assets/icon_back.svg" />
+        <button @click="$router.back()">
+          <img class="header-back-icon" src="./../assets/icon_back.svg" />
+        </button>
         <div class="header-user">
           <div class="header-user-name">{{ user.name }}</div>
           <div class="header-user-tweets-count">
