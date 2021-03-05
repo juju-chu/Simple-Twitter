@@ -110,8 +110,11 @@
             type="text"
             class="tweet-text"
             placeholder="有什麼新鮮事？"
-            autofocus
             v-model="newTweet"
+            v-focus
+            @keyup.esc="cancelModal"
+            @keyup.enter="postTweet"
+            @blur="cancelModal"
           />
         </div>
         <div class="post-tweet-model-button">
@@ -155,6 +158,13 @@ export default {
   },
   created() {
     this.controlIconColor()
+  },
+  directives: {
+    focus: {
+      inserted: function(el) {
+        el.focus()
+      },
+    },
   },
   methods: {
     controlIconColor() {
