@@ -4,6 +4,7 @@
       class="side-bar"
       iconColorController="User"
       :user-id="currentUser.id"
+      :user-avatar="currentUser.avatar"
     />
 
     <div class="center-column">
@@ -654,16 +655,17 @@ export default {
 <style scoped>
 .container {
   display: grid;
+  margin: 0;
   grid-template-columns: 378px 600px 462px;
   grid-template-rows: 100vh;
 }
 .side-bar {
   position: fixed;
+  z-index: 2;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
-  margin-top: 4px;
-  margin-left: 103px;
-  width: 275px;
+  padding-left: 103px;
+  width: 378px;
   height: 100vh;
   border-right: 1px solid #e6ecf0;
 }
@@ -673,7 +675,7 @@ export default {
 }
 .header {
   position: fixed;
-  z-index: 999;
+  z-index: 1;
   display: flex;
   width: 600px;
   height: 55px;
