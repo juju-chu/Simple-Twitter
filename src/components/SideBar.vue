@@ -190,6 +190,13 @@ export default {
       this.isShowModal = false
     },
     async postTweet() {
+      if (this.newTweet.trim() === '') {
+        Toast.fire({
+          icon: 'warning',
+          title: '尚未輸入內容',
+        })
+        return
+      }
       try {
         const { data } = await tweetsAPI.post({ newTweet: this.newTweet })
         if (data.status !== 'success') {
