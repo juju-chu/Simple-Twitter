@@ -45,7 +45,7 @@
     </div>
 
     <!-- Recommendation -->
-    <!-- <div class="recommendation">Recommendation</div> -->
+    <Recommendation class="recommendation-list" />
   </div>
 </template>
 
@@ -557,6 +557,7 @@ import SideBar from './../components/SideBar'
 import UserCard from './../components/UserCard'
 import TweetsList from './../components/TweetsList'
 import usersAPI from './../apis/users'
+import Recommendation from '../components/Recommendation'
 import { Toast } from './../utils/helpers'
 
 export default {
@@ -565,6 +566,7 @@ export default {
     SideBar,
     UserCard,
     TweetsList,
+    Recommendation,
   },
   data() {
     return {
@@ -713,6 +715,7 @@ export default {
 .center-column {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+  border-right: 1px solid #e6ecf0;
 }
 .header {
   position: fixed;
@@ -721,6 +724,7 @@ export default {
   width: 600px;
   height: 55px;
   background: #fff;
+  border-right: 1px solid #e6ecf0;
 }
 .header-back-icon {
   margin-top: 15px;
@@ -777,7 +781,10 @@ export default {
 .tweet-list {
   border-top: 1px solid #e6ecf0;
 }
-.recommendation {
+.recommendation-list {
+  position: fixed;
+  top: 15px;
+  left: 1008px;
   grid-column: 3 / 4;
   grid-row: 1 / 2;
 }
