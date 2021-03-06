@@ -3,7 +3,7 @@
     <SideBar
       icon-color-controller="UserSetting"
       :user-id="currentUser.id"
-      :user-avatar="currentUser.image"
+      :user-avatar="currentUser.avatar"
       class="side-bar"
     />
 
@@ -98,7 +98,7 @@ export default {
     SettingForm
   },
   computed: {
-    ...mapState(['currentUser', 'isAuthenticated'])
+    ...mapState(['currentUser'])
   },
   methods: {
     async fetchUserData (userId) {
