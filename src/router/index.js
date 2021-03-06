@@ -6,6 +6,7 @@ import UserSignUp from '../views/UserSignUp.vue'
 import Tweets from '../views/Tweets.vue'
 import User from '../views/User.vue'
 import UserSetting from '../views/UserSetting.vue'
+import UserFollowShip from '../views/UserFollowShip.vue'
 import AdminSignin from '../views/AdminSignin.vue'
 import AdminTweets from './../views/AdminTweets.vue'
 import store from './../store'
@@ -37,6 +38,16 @@ const routes = [
     path: '/users/:id',
     name: 'user',
     component: User,
+  },
+  {
+    path: '/users/:id/:tab',
+    name: 'user-followers',
+    component: UserFollowShip,
+  },
+  {
+    path: '/users/:id/:tab',
+    name: 'user-followings',
+    component: UserFollowShip,
   },
   {
     path: '/tweets',

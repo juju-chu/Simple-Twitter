@@ -19,7 +19,13 @@ export default {
       checkPassword,
     })
   },
-  editInfo({ userId, formData }) {
+  editInfo ({ userId, formData }) {
     return apiHelper.put(`/users/${userId}`, formData)
   },
+  getFollowings ({ userId }) {
+    return apiHelper.get(`/users/${userId}/followings`)
+  },
+  getFollowers ({ userId }) {
+    return apiHelper.get(`/users/${userId}/followers`)
+  }
 }

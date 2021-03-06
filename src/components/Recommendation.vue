@@ -106,7 +106,6 @@ button.followed-btn {
   background: #ff6600;
   font-size: 15px;
   color: white;
-  line-height: 30px;
   border-radius: 100px;
   border: none;
   outline: none;
@@ -120,7 +119,6 @@ button.to-follow-btn {
   background: #f5f8fa;
   font-size: 15px;
   color: #ff6600;
-  line-height: 30px;
   border-radius: 100px;
   border: 1px solid #ff6600;
   outline: none;
