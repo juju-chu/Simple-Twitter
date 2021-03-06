@@ -81,10 +81,10 @@
       </div>
     </div>
     <div class="nav-item logout">
-      <div class="item">
+      <button class="item" @click="logout">
         <img class="icon logout-icon" src="./../assets/logoutIcon.svg" />
         <span class="text logout-text">登出</span>
-      </div>
+      </button>
     </div>
 
     <!-- modal -->
@@ -137,7 +137,7 @@ import { Toast } from './../utils/helpers'
 export default {
   mixins: [emptyImageFilter],
   name: 'SideBar',
-  data () {
+  data() {
     return {
       iconColor: ['black', 'black', 'black'],
       active: ['normal', 'normal', 'normal'],
@@ -159,18 +159,18 @@ export default {
       required: true,
     },
   },
-  created () {
+  created() {
     this.controlIconColor()
   },
   directives: {
     focus: {
-      inserted: function (el) {
+      inserted: function(el) {
         el.focus()
       },
     },
   },
   methods: {
-    controlIconColor () {
+    controlIconColor() {
       switch (this.iconColorController) {
         case 'Tweets':
           this.iconColor[0] = '#FF6600'
@@ -188,13 +188,13 @@ export default {
           break
       }
     },
-    showModal () {
+    showModal() {
       this.isShowModal = true
     },
-    cancelModal () {
+    cancelModal() {
       this.isShowModal = false
     },
-    async postTweet () {
+    async postTweet() {
       if (this.newTweet.trim() === '') {
         Toast.fire({
           icon: 'warning',
@@ -215,6 +215,10 @@ export default {
           title: '無法新增推文，請稍後再試',
         })
       }
+    },
+    logout() {
+      this.$store.commit('revokeCurrentUser')
+      this.$router.push('/signin')
     },
   },
 }
