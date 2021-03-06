@@ -729,13 +729,11 @@ export default {
   border-right: 1px solid #e6ecf0;
 }
 .header-back-icon {
-  margin-top: 15px;
   margin-left: 15px;
   width: 24px;
   height: 24px;
 }
 .header-user {
-  margin-top: 6px;
   margin-left: 43px;
   margin-bottom: 7px;
   display: flex;

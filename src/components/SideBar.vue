@@ -184,6 +184,8 @@ export default {
           this.iconColor[2] = '#FF6600'
           this.active[2] = 'activeIcon'
           break
+        default:
+          break
       }
     },
     showModal () {
