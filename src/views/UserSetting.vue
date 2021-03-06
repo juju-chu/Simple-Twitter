@@ -80,30 +80,32 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'UserSetting',
-  data() {
+  data () {
     return {
       userData: {
         id: -1,
         account: '',
         name: '',
         email: '',
-        password: '',
+        password: ''
       },
       isUserSetting: true,
-      isProcessing: false,
+      isProcessing: false
     }
   },
   components: {
     SideBar,
-    SettingForm,
+    SettingForm
   },
   computed: {
-    ...mapState(['currentUser']),
+    ...mapState(['currentUser'])
   },
   methods: {
-    async fetchUserData(userId) {
+    async fetchUserData (userId) {
       try {
         const { data } = await usersAPI.get({ userId })
+
+        console.log('User Data', data)
 
         this.userData = {
           ...this.userData,
@@ -111,49 +113,45 @@ export default {
           account: data.account,
           name: data.name,
           email: data.email,
-          password: data.password,
+          password: data.password
         }
-      } catch (error) {
+
+      }
+      catch (error) {
         console.log(error)
         Toast.fire({
           icon: 'error',
-          title: '無法取得使用者資訊，請稍後再試',
+          title: '無法取得使用者資訊，請稍後再試'
         })
       }
     },
-    async handleAfterSubmit({ account, name, email, password, checkPassword }) {
+    async handleAfterSubmit ({ account, name, email, password, checkPassword }) {
       try {
         this.isProcessing = true
-        const { data } = await usersAPI.updateUser({
-          id: this.$route.params,
-          account,
-          name,
-          email,
-          password,
-          checkPassword,
-        })
+        const { data } = await usersAPI.updateUser({ id: this.$route.params, account, name, email, password, checkPassword })
         if (data.status !== 'success') {
           throw new Error(data.message)
         }
         this.$router.push('/signin')
+
       } catch (error) {
         this.isProcessing = false
         console.log(error)
         Toast.fire({
           icon: 'error',
-          title: '無法更新用戶資訊，請稍後再試',
+          title: '無法更新用戶資訊，請稍後再試'
         })
       }
-    },
+    }
   },
-  created() {
+  created () {
     const { id } = this.$route.params
     this.fetchUserData(id)
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate (to, from, next) {
     const { id } = this.$route.params
     this.fetchUserData(id)
     next()
-  },
+  }
 }
 </script>
