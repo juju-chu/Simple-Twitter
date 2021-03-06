@@ -131,6 +131,7 @@
 <script>
 import { emptyImageFilter } from './../utils/mixins'
 import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
 import usersAPI from './../apis/users'
 
 export default {
@@ -151,6 +152,9 @@ export default {
       initialCover: '',
       initialAvatar: '',
     }
+  },
+  computed: {
+    ...mapState(['currentUser']),
   },
   directives: {
     focus: {

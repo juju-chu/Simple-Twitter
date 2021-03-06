@@ -16,7 +16,7 @@
       <div class="divider"></div>
 
       <!-- Tweet list -->
-      <TweetsList class="tweet-list" :tweets="tweets" />
+      <TweetsList class="tweet-list" :initial-tweets="tweets" />
     </div>
 
     <!-- Recommendation -->
@@ -25,17 +25,12 @@
 </template>
 
 <script>
-const dummyCurrentUser = {
-  id: 5,
-  name: 'Tracy Towne',
-  account: 'user5',
-  avatar: 'https://loremflickr.com/320/240/dog/?lock=37.8808195638617',
-}
 import SideBar from './../components/SideBar'
 import PostTweet from './../components/PostTweet'
 import TweetsList from './../components/TweetsList'
 import Recommendation from '../components/Recommendation'
 import tweetsAPI from './../apis/tweets'
+import { mapState } from 'vuex'
 import { Toast } from './../utils/helpers'
 
 export default {
@@ -49,12 +44,13 @@ export default {
   data() {
     return {
       tweets: [],
-      currentUser: {},
     }
+  },
+  computed: {
+    ...mapState(['currentUser']),
   },
   created() {
     this.fetchTweets()
-    this.fetchCurrentUser()
   },
   methods: {
     async fetchTweets() {
@@ -77,9 +73,6 @@ export default {
           title: '無法取得推文，請稍後再試',
         })
       }
-    },
-    fetchCurrentUser() {
-      this.currentUser = dummyCurrentUser
     },
   },
 }

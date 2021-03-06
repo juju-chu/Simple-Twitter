@@ -8,6 +8,7 @@ import User from '../views/User.vue'
 import UserSetting from '../views/UserSetting.vue'
 import AdminSignin from '../views/AdminSignin.vue'
 import AdminTweets from './../views/AdminTweets.vue'
+import store from './../store'
 
 Vue.use(VueRouter)
 
@@ -61,6 +62,29 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+})
+
+router.beforeEach(async (to, from, next) => {
+  const token = localStorage.getItem('token')
+  const tokenInStore = store.state.token
+  const pathsWithoutAuthentication = ['signup', 'signin']
+  let isAuthenticated = store.state.isAuthenticated
+
+  if (token && token !== tokenInStore) {
+    isAuthenticated = await store.dispatch('fetchCurrentUser')
+  }
+
+  if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
+    next('/signin')
+    return
+  }
+
+  if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
+    next('/tweets')
+    return
+  }
+
+  next()
 })
 
 export default router

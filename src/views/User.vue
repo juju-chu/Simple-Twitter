@@ -43,7 +43,7 @@
       </div>
 
       <!-- Tweet list -->
-      <TweetsList class="tweet-list" :tweets="tweets" />
+      <TweetsList class="tweet-list" :initial-tweets="tweets" />
     </div>
 
     <!-- Recommendation -->
@@ -52,12 +52,6 @@
 </template>
 
 <script>
-const dummyCurrentUser = {
-  id: 5,
-  name: 'Tracy Towne',
-  account: 'user5',
-  avatar: 'https://loremflickr.com/320/240/dog/?lock=37.8808195638617',
-}
 const dummyTweets = [
   {
     id: 1,
@@ -561,6 +555,7 @@ import TweetsList from './../components/TweetsList'
 import usersAPI from './../apis/users'
 import Recommendation from '../components/Recommendation'
 import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
 
 export default {
   name: 'User',
@@ -584,15 +579,15 @@ export default {
         followersCount: -1,
       },
       tweets: [],
-      currentUser: {},
       tab: 'tweets',
     }
+  },
+  computed: {
+    ...mapState(['currentUser']),
   },
   created() {
     const { id: userId } = this.$route.params
     this.fetchUser(userId)
-    this.fetchTweets()
-    this.fetchCurrentUser()
   },
   methods: {
     async fetchUser(userId) {
@@ -620,6 +615,7 @@ export default {
           followingsCount,
           followersCount,
         }
+        this.fetchTweets(userId)
       } catch (error) {
         console.log(error)
         Toast.fire({
@@ -628,30 +624,25 @@ export default {
         })
       }
     },
-    fetchTweets() {
-      // TODO: 取得 API 請求後的資料
-      console.log('fetchTweets')
-      this.tweets = dummyTweets.map((tweet) => {
-        const {
-          id,
-          description,
-          createdAt,
-          likeCount,
-          replyCount,
-          User,
-        } = tweet
-        const { name, account, avatar } = User
-        return {
-          id,
-          description,
-          createdAt,
-          likeCount,
-          replyCount,
-          name,
-          account,
-          avatar,
-        }
-      })
+    async fetchTweets(userId) {
+      try {
+        const { data } = await usersAPI.getUsersTweets({ userId })
+        this.tweets = data.map((tweet) => ({
+          id: tweet.id,
+          account: this.user.account,
+          avatar: this.user.avatar,
+          description: tweet.description,
+          createdAt: tweet.createdAt,
+          likeCount: tweet.likeCount,
+          replyCount: tweet.replyCount,
+        }))
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得推文，請稍後再試',
+        })
+      }
     },
     fetchLikes() {
       // TODO: 取得 API 請求後的資料
@@ -678,13 +669,10 @@ export default {
         }
       })
     },
-    fetchCurrentUser() {
-      this.currentUser = dummyCurrentUser
-    },
     clickTab(tab) {
       switch (tab) {
         case 'tweets':
-          this.fetchTweets()
+          this.fetchTweets(this.user.id)
           this.tab = 'tweets'
           break
         case 'likes':

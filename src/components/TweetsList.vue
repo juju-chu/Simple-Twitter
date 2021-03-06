@@ -39,10 +39,40 @@ export default {
   mixins: [fromNowFilter],
   name: 'PostTweet',
   props: {
-    tweets: {
+    initialTweets: {
       type: Array,
-      required: true,
+      default: () => ({
+        id: -1,
+        avatar: '',
+        description: '',
+        createdAt: '',
+        likeCount: -1,
+        replyCount: -1,
+      }),
     },
+  },
+  data() {
+    return {
+      tweets: {
+        id: -1,
+        avatar: '',
+        description: '',
+        createdAt: '',
+        likeCount: -1,
+        replyCount: -1,
+      },
+    }
+  },
+  watch: {
+    initialTweets(newValue) {
+      this.tweets = newValue
+    },
+  },
+  created() {
+    this.tweets = {
+      ...this.tweets,
+      ...this.initialTweets,
+    }
   },
 }
 </script>
