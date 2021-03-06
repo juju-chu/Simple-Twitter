@@ -80,6 +80,7 @@ router.beforeEach(async (to, from, next) => {
   const tokenInStore = store.state.token
   const pathsWithoutAuthentication = ['signup', 'signin']
   let isAuthenticated = store.state.isAuthenticated
+  const { id, tab } = to.params
 
   if (token && token !== tokenInStore) {
     isAuthenticated = await store.dispatch('fetchCurrentUser')
@@ -93,6 +94,18 @@ router.beforeEach(async (to, from, next) => {
   if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
     next('/tweets')
     return
+  }
+
+  //Redirect only when tab is followings and next id is different with current id(prevent infinite redirect loop)
+  if (tab === from.params.tab && id !== from.params.id) {
+    from.params.id = id //set current id to next id for preventing next forEach redirect again
+    if (tab === 'followings') {
+      next({ name: 'user-followings', params: { id, tab } })
+      return
+    } else if (tab === 'followers') {
+      next({ name: 'user-followers', params: { id, tab } })
+      return
+    }
   }
 
   next()

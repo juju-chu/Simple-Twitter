@@ -105,8 +105,6 @@ export default {
       try {
         const { data } = await usersAPI.get({ userId })
 
-        console.log('User Data', data)
-
         this.userData = {
           ...this.userData,
           id: data.id,

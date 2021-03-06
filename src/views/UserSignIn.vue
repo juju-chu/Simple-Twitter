@@ -156,7 +156,6 @@ export default {
 
         //把token保留在local storage中
         localStorage.setItem("token", data.token)
-        console.log('user', data.user)
 
         //透過setCurrentUser把使用者資料待到vuex的state中
         this.$store.commit('setCurrentUser', data.user)

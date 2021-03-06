@@ -23,14 +23,14 @@
       <!-- tab -->
       <div class="tabs">
         <button
-          @click.stop.prevent="setTab('followers')"
+          @click.stop.prevent="redirectTab('followers')"
           class="followers-btn"
           :class="{ active: tab === 'followers' }"
         >
           跟隨者
         </button>
         <button
-          @click.stop.prevent="setTab('followings')"
+          @click.stop.prevent="redirectTab('followings')"
           class="followings-btn"
           :class="{ active: tab === 'followings' }"
         >
@@ -50,11 +50,11 @@
             <div class="profile-action-wrapper">
               <div class="profile">
                 <div class="user-name">{{ follow.name }}</div>
-                <div class="user-account">@{{ user.account }}</div>
+                <div class="user-account">@{{ follow.account }}</div>
               </div>
               <div class="action">
                 <button
-                  v-if="user.isFollowed"
+                  v-if="follow.isFollowed"
                   @click.stop.prevent="removeFollowing(follow.id)"
                   class="followed-btn"
                 >
@@ -70,8 +70,7 @@
               </div>
             </div>
             <div class="introduction">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint. Velit officia consequat duis enim velit mollit.
+              {{ follow.introduction }}
             </div>
           </div>
         </div>
@@ -182,8 +181,9 @@ div.tabs {
 .follow-card {
   display: flex;
   width: 600px;
-  height: 95px;
+  min-height: 50px;
   margin-top: 10px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #e6ecf0;
 }
 
@@ -351,8 +351,16 @@ export default {
         this.$router.push('/*')
       }
     },
+    redirectTab (tab) {
+      if (tab === 'followings') {
+        this.$router.push({ name: 'user-followings', params: { id: this.user.id, tab } })
+      } else if (tab === 'followers') {
+        this.$router.push({ name: 'user-followers', params: { id: this.user.id, tab } })
+      }
+      this.setTab(tab)
+    },
     addFollowing (userId) {
-      //Todo: 透過API發送請求新增follow
+      //TODO: 透過API發送請求新增follow
       this.followShipData = this.followShipData.map(follow => {
         if (follow.id === userId) {
           follow.isFollowed = true
@@ -361,7 +369,7 @@ export default {
       })
     },
     removeFollowing (userId) {
-      //Todo: 透過API發送請求移除follow
+      //TODO: 透過API發送請求移除follow
       this.followShipData = this.followShipData.map(follow => {
         if (follow.id === userId) {
           follow.isFollowed = false

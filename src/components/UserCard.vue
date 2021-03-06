@@ -6,12 +6,24 @@
       <div class="account">@{{ user.account }}</div>
       <div class="introduction">{{ user.introduction }}</div>
       <div class="follow">
-        <div class="followings-count">
+        <router-link
+          class="followings-count"
+          :to="{
+            name: 'user-followings',
+            params: { id: user.id, tab: 'followings' },
+          }"
+        >
           {{ user.followingsCount }} 個<span>跟隨中</span>
-        </div>
-        <div class="followers-count">
+        </router-link>
+        <router-link
+          class="followers-count"
+          :to="{
+            name: 'user-followers',
+            params: { id: user.id, tab: 'followers' },
+          }"
+        >
           {{ user.followersCount }} 位<span>跟隨者</span>
-        </div>
+        </router-link>
       </div>
     </div>
     <img class="avatar" :src="user.avatar" />
@@ -166,7 +178,9 @@ export default {
   data() {
     return {
       isShowModal: false,
-      user: {},
+      user: {
+        id: -1
+      },
       initialName: '',
       initialIntroduction: '',
       initialCover: '',
@@ -180,14 +194,17 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.focus()
       },
     },
   },
   watch: {
     initialUser(newValue) {
-      this.user = newValue
+      this.user = {
+        ...this.user,
+        ...newValue
+      }
       this.checkIsSelf()
     },
   },
@@ -332,13 +349,11 @@ img {
   margin-top: 10px;
   margin-bottom: 20px;
 }
-.followings-count {
-  margin-right: 20px;
-  font-weight: 500;
-  font-size: 14px;
-}
+.followings-count,
 .followers-count {
   margin-right: 20px;
+  color: #1c1c1c;
+  text-decoration: none;
   font-weight: 500;
   font-size: 14px;
 }

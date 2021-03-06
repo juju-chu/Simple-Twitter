@@ -196,14 +196,15 @@ export default {
   },
   methods: {
     fetchUsers () {
-      //Todo: 用API取得random users資料，先使用dummy users
+      //TODO: 用API取得random users資料，先使用dummy users
       this.users = [...dummyUsers]
     },
     showMoreUser () {
+      //TODO: 顯示更多用戶
       console.log('show more user')
     },
     addFollowing (userId) {
-      //Todo: 透過API發送請求新增follow
+      //TODO: 透過API發送請求新增follow
       this.users = this.users.map(user => {
         if (user.id === userId) {
           user.isFollowed = true
@@ -212,7 +213,7 @@ export default {
       })
     },
     removeFollowing (userId) {
-      //Todo: 透過API發送請求移除follow
+      //TODO: 透過API發送請求移除follow
       this.users = this.users.map(user => {
         if (user.id === userId) {
           user.isFollowed = false
