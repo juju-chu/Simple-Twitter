@@ -15,10 +15,30 @@
       </div>
     </div>
     <img class="avatar" :src="user.avatar" />
-    <div class="btn">
+    <div class="btn btn-edit" v-if="isSelf">
       <button class="btn-button" @click.stop.prevent="showModal">
         <span class="btn-text">編輯個人資料</span>
       </button>
+    </div>
+    <div class="btn-other" v-else>
+      <div class="btn btn-message">
+        <button>
+          <img src="./../assets/btn_messege.svg" />
+        </button>
+      </div>
+      <div class="btn btn-noti">
+        <button v-if="!isNoti" @click.stop.prevent="clickNoti">
+          <img src="./../assets/btn_noti.svg" />
+        </button>
+        <button v-else @click.stop.prevent="clickNotiChcek">
+          <img src="./../assets/btn_noti_check.svg" />
+        </button>
+      </div>
+      <div class="btn btn-follow-wrapper">
+        <button class="btn-follow">
+          <span class="btn-text-white">正在跟隨</span>
+        </button>
+      </div>
     </div>
 
     <!-- modal -->
@@ -151,6 +171,8 @@ export default {
       initialIntroduction: '',
       initialCover: '',
       initialAvatar: '',
+      isSelf: false,
+      isNoti: false,
     }
   },
   computed: {
@@ -166,9 +188,21 @@ export default {
   watch: {
     initialUser(newValue) {
       this.user = newValue
+      this.checkIsSelf()
     },
   },
   methods: {
+    checkIsSelf() {
+      if (this.user.id === this.currentUser.id) {
+        this.isSelf = true
+      }
+    },
+    clickNoti() {
+      this.isNoti = true
+    },
+    clickNotiChcek() {
+      this.isNoti = false
+    },
     showModal() {
       this.isShowModal = true
       this.initialName = this.user.name
@@ -254,10 +288,12 @@ img {
   border: 4px solid #ffffff;
 }
 .btn {
+  padding: 0;
+}
+.btn-edit {
   position: absolute;
   top: 264px;
   left: 841px;
-  padding: 0;
 }
 .btn-button {
   width: 122px;
@@ -308,6 +344,31 @@ img {
 }
 .follow span {
   color: #657786;
+}
+.btn-other {
+  position: absolute;
+  top: 264px;
+  left: 771px;
+
+  display: flex;
+  justify-content: flex-end;
+
+  width: auto;
+}
+.btn-follow-wrapper {
+  padding: 0;
+  width: 92px;
+  height: 40px;
+  margin-left: 4px;
+  background: #ff6600;
+  border: 1px solid #ff6600;
+  border-radius: 100px;
+}
+.btn-text-white {
+  line-height: 40px;
+  font-weight: bold;
+  font-size: 15px;
+  color: #ffffff;
 }
 .modal-edit {
   position: absolute;

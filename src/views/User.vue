@@ -578,6 +578,7 @@ export default {
         followingsCount: -1,
         followersCount: -1,
       },
+      isSelf: false,
       tweets: [],
       tab: 'tweets',
     }
@@ -590,6 +591,11 @@ export default {
     this.fetchUser(userId)
   },
   methods: {
+    checkIsSelf() {
+      if (this.user.id === this.currentUser.id) {
+        this.isSelf = true
+      }
+    },
     async fetchUser(userId) {
       try {
         const { data } = await usersAPI.get({ userId })
@@ -616,6 +622,7 @@ export default {
           followersCount,
         }
         this.fetchTweets(userId)
+        this.checkIsSelf()
       } catch (error) {
         console.log(error)
         Toast.fire({
