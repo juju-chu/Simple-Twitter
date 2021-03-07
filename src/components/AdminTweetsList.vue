@@ -521,7 +521,7 @@ const dummyTweets = [
 import { fromNowFilter } from './../utils/mixins'
 export default {
   mixins: [fromNowFilter],
-  name: 'PostTweet',
+  name: 'AdminTweetsList',
   props: {
     noActions: {
       type: Boolean,
