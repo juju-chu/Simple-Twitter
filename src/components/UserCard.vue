@@ -179,7 +179,7 @@ export default {
     return {
       isShowModal: false,
       user: {
-        id: -1
+        id: -1,
       },
       initialName: '',
       initialIntroduction: '',
@@ -194,7 +194,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
+      inserted: function(el) {
         el.focus()
       },
     },
@@ -203,7 +203,7 @@ export default {
     initialUser(newValue) {
       this.user = {
         ...this.user,
-        ...newValue
+        ...newValue,
       }
       this.checkIsSelf()
     },
@@ -364,17 +364,17 @@ img {
   position: absolute;
   top: 264px;
   left: 771px;
-
   display: flex;
   justify-content: flex-end;
-
   width: auto;
+}
+.btn-noti {
+  margin: 0 10px 0 10px;
 }
 .btn-follow-wrapper {
   padding: 0;
   width: 92px;
   height: 40px;
-  margin-left: 4px;
   background: #ff6600;
   border: 1px solid #ff6600;
   border-radius: 100px;
