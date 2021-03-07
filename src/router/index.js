@@ -84,7 +84,7 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   const token = localStorage.getItem('token')
   const tokenInStore = store.state.token
-  const pathsWithoutAuthentication = ['signup', 'signin']
+  const pathsWithoutAuthentication = ['signup', 'signin', 'admin-signin']
   let isAuthenticated = store.state.isAuthenticated
   const { id, tab } = to.params
 

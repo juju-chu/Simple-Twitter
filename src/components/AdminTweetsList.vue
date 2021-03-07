@@ -599,6 +599,7 @@ export default {
 }
 button {
   margin-left: auto;
+  margin-right: 15px;
   border: none;
   background: none;
 }

@@ -168,6 +168,62 @@ export default {
 </script>
 
 <style scoped>
+.tweet-wrapper {
+  width: 600px;
+  height: 136px;
+}
+.tweet-content {
+  display: flex;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
+}
+.tweet-user-photo {
+  margin-top: 13px;
+  margin-left: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.tweet {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.tweet-user {
+  height: 22px;
+}
+.tweet-user-info {
+  margin-left: 5px;
+  color: #657786;
+}
+.tweet-description {
+  margin-top: 6px;
+}
+.tweet-actions {
+  margin-bottom: 10px;
+  width: 130px;
+}
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40px;
+  height: 15px;
+}
+.tweet-actions {
+  display: flex;
+  margin-top: 10px;
+  height: 21px;
+}
+.tweet-actions-like {
+  margin-left: 50px;
+}
+.icon {
+  width: 15px;
+  height: 15px;
+  color: #657786;
+}
+
 /* Modal Style */
 .modal-background-wrapper {
   position: fixed;
@@ -314,60 +370,4 @@ textarea.reply-comment {
 }
 
 /* Modal Style End*/
-
-.tweet-wrapper {
-  width: 600px;
-  height: 136px;
-}
-.tweet-content {
-  display: flex;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0;
-}
-.tweet-user-photo {
-  margin-top: 13px;
-  margin-left: 15px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-.tweet {
-  margin-top: 15px;
-  margin-left: 10px;
-}
-.tweet-user {
-  height: 22px;
-}
-.tweet-user-info {
-  margin-left: 5px;
-  color: #657786;
-}
-.tweet-description {
-  margin-top: 6px;
-}
-.tweet-actions {
-  margin-bottom: 10px;
-  width: 130px;
-}
-.action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 40px;
-  height: 15px;
-}
-.tweet-actions {
-  display: flex;
-  margin-top: 10px;
-  height: 21px;
-}
-.tweet-actions-like {
-  margin-left: 50px;
-}
-.icon {
-  width: 15px;
-  height: 15px;
-  color: #657786;
-}
 </style>

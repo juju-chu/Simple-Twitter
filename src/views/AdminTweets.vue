@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="wrapper">
     <AdminSidebar class="admin-side-bar" iconColorController="AdminTweets" />
 
     <div class="center-column">
@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.wrapper {
   display: grid;
   grid-template-columns: 378px 1062px;
   grid-template-rows: auto;
