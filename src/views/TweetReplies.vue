@@ -1,11 +1,6 @@
 <template>
   <div class="wrapper">
-    <SideBar
-      class="side-bar"
-      iconColorController=""
-      :user-id="currentUser.id"
-      :user-avatar="currentUser.avatar"
-    />
+    <SideBar class="side-bar" iconColorController="" />
 
     <div class="center-column">
       <div class="header">
@@ -38,7 +33,6 @@ import Replies from './../components/Replies'
 import Recommendation from '../components/Recommendation'
 import tweetsAPI from './../apis/tweets'
 import { Toast } from './../utils/helpers'
-import { mapState } from 'vuex'
 
 export default {
   name: 'TweetRepliesList',
@@ -53,9 +47,6 @@ export default {
       tweet: {},
       user: {},
     }
-  },
-  computed: {
-    ...mapState(['currentUser']),
   },
   created() {
     this.fetchTweet()

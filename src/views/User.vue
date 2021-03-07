@@ -1,11 +1,6 @@
 <template>
   <div class="container">
-    <SideBar
-      class="side-bar"
-      iconColorController="User"
-      :user-id="currentUser.id"
-      :user-avatar="currentUser.avatar"
-    />
+    <SideBar class="side-bar" iconColorController="User" />
 
     <div class="center-column">
       <div class="header">

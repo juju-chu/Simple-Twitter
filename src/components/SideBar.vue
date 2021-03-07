@@ -23,7 +23,7 @@
       <div class="nav-item sidebar-user-self">
         <router-link
           class="item"
-          :to="{ name: 'user', params: { id: userId } }"
+          :to="{ name: 'user', params: { id: currentUser.id } }"
         >
           <svg
             class="sidebar-user-self-icon icon"
@@ -47,7 +47,7 @@
       <div class="nav-item sidebar-user-setting">
         <router-link
           class="item"
-          :to="{ name: 'user-setting', params: { id: userId } }"
+          :to="{ name: 'user-setting', params: { id: currentUser.id } }"
         >
           <svg
             class="sidebar-user-icon icon"
@@ -108,7 +108,7 @@
           </button>
         </div>
         <div class="post-tweet-modal-tweet">
-          <img class="tweet-avatar" :src="userAvatar | emptyImage" />
+          <img class="tweet-avatar" :src="currentUser.avatar | emptyImage" />
           <input
             type="text"
             class="tweet-text"
@@ -132,6 +132,7 @@
 
 <script>
 import tweetsAPI from './../apis/tweets'
+import { mapState } from 'vuex'
 import { emptyImageFilter } from './../utils/mixins'
 import { Toast } from './../utils/helpers'
 export default {
@@ -150,21 +151,16 @@ export default {
       type: String,
       required: true,
     },
-    userId: {
-      type: Number,
-      required: true,
-    },
-    userAvatar: {
-      type: String,
-      required: true,
-    },
+  },
+  computed: {
+    ...mapState(['currentUser']),
   },
   created() {
     this.controlIconColor()
   },
   directives: {
     focus: {
-      inserted: function (el) {
+      inserted: function(el) {
         el.focus()
       },
     },

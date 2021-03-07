@@ -1,11 +1,6 @@
 <template>
   <div class="wrapper">
-    <SideBar
-      class="side-bar"
-      iconColorController=""
-      :user-id="currentUser.id"
-      :user-avatar="currentUser.avatar"
-    />
+    <SideBar class="side-bar" iconColorController="" />
     <div class="center-column">
       <!-- header -->
       <header>
@@ -258,21 +253,19 @@ button.to-follow-btn {
 }
 </style>
 
-
 <script>
 import SideBar from '../components/SideBar'
 import Recommendation from '../components/Recommendation'
 import usersAPI from '../apis/users'
 import { Toast } from './../utils/helpers'
-import { mapState } from 'vuex'
 
 export default {
   name: 'UserFollowShip',
   components: {
     SideBar,
-    Recommendation
+    Recommendation,
   },
-  data () {
+  data() {
     return {
       user: {
         id: -1,
@@ -286,11 +279,11 @@ export default {
         followersCount: -1,
       },
       followShipData: [],
-      tab: 'followers'
+      tab: 'followers',
     }
   },
   methods: {
-    async fetchUser (userId) {
+    async fetchUser(userId) {
       try {
         const { data } = await usersAPI.get({ userId })
         const {
@@ -323,7 +316,7 @@ export default {
         })
       }
     },
-    async fetchFollowData (userId, tab) {
+    async fetchFollowData(userId, tab) {
       try {
         let data = {}
         if (tab === 'followings') {
@@ -333,16 +326,15 @@ export default {
         }
 
         this.followShipData = [...data.data]
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error)
         Toast.fire({
           icon: 'error',
-          title: '無法取得follow ship資訊，請稍後再試'
+          title: '無法取得follow ship資訊，請稍後再試',
         })
       }
     },
-    setTab (tab) {
+    setTab(tab) {
       if (tab === 'followings') {
         this.tab = 'followings'
       } else if (tab === 'followers') {
@@ -351,26 +343,32 @@ export default {
         this.$router.push('/*')
       }
     },
-    redirectTab (tab) {
+    redirectTab(tab) {
       if (tab === 'followings') {
-        this.$router.push({ name: 'user-followings', params: { id: this.user.id, tab } })
+        this.$router.push({
+          name: 'user-followings',
+          params: { id: this.user.id, tab },
+        })
       } else if (tab === 'followers') {
-        this.$router.push({ name: 'user-followers', params: { id: this.user.id, tab } })
+        this.$router.push({
+          name: 'user-followers',
+          params: { id: this.user.id, tab },
+        })
       }
       this.setTab(tab)
     },
-    addFollowing (userId) {
+    addFollowing(userId) {
       //TODO: 透過API發送請求新增follow
-      this.followShipData = this.followShipData.map(follow => {
+      this.followShipData = this.followShipData.map((follow) => {
         if (follow.id === userId) {
           follow.isFollowed = true
         }
         return follow
       })
     },
-    removeFollowing (userId) {
+    removeFollowing(userId) {
       //TODO: 透過API發送請求移除follow
-      this.followShipData = this.followShipData.map(follow => {
+      this.followShipData = this.followShipData.map((follow) => {
         if (follow.id === userId) {
           follow.isFollowed = false
         }
@@ -378,23 +376,20 @@ export default {
       })
     },
   },
-  created () {
+  created() {
     const { id: userId, tab } = this.$route.params
     this.fetchUser(userId)
     this.setTab(tab)
     this.fetchFollowData(userId, tab)
   },
-  computed: {
-    ...mapState(['currentUser'])
-  },
   watch: {
-    tab (newValue) {
+    tab(newValue) {
       if (this.user.id !== -1) {
         this.fetchFollowData(this.user.id, newValue)
       }
-    }
+    },
   },
-  beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     const { id: userId, tab } = to.params
     this.setTab(tab)
 
@@ -405,6 +400,6 @@ export default {
     }
 
     next()
-  }
+  },
 }
 </script>
