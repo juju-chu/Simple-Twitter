@@ -4,6 +4,7 @@ import NotFound from '../views/NotFound.vue'
 import UserSignIn from '../views/UserSignIn.vue'
 import UserSignUp from '../views/UserSignUp.vue'
 import Tweets from '../views/Tweets.vue'
+import TweetReplies from './../views/TweetReplies.vue'
 import User from '../views/User.vue'
 import UserSetting from '../views/UserSetting.vue'
 import UserFollowShip from '../views/UserFollowShip.vue'
@@ -53,6 +54,11 @@ const routes = [
     path: '/tweets',
     name: 'tweets',
     component: Tweets,
+  },
+  {
+    path: '/tweets/:id',
+    name: 'tweets-replies',
+    component: TweetReplies,
   },
   {
     path: '/admin/signin',
