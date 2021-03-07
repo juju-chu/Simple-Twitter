@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <SideBar class="side-bar" iconColorController="Tweets" />
+    <SideBar class="side-bar" />
 
     <div class="center-column">
       <div class="header">
@@ -56,7 +56,7 @@ export default {
           description: tweet.description,
           replyCount: tweet.replyCount,
           likeCount: tweet.likeCount,
-          createdAt: tweet.createdAt
+          createdAt: tweet.createdAt,
         }))
       } catch (error) {
         console.log(error)

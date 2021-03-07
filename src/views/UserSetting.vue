@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <SideBar icon-color-controller="UserSetting" class="side-bar" />
+    <SideBar class="side-bar" />
 
     <div class="center-column">
       <header>帳戶設定</header>
