@@ -637,6 +637,7 @@ export default {
         this.tweets = data.map((tweet) => ({
           id: tweet.id,
           account: this.user.account,
+          name: tweet.User.name,
           avatar: this.user.avatar,
           description: tweet.description,
           time: tweet.Time,

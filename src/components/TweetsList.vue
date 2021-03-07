@@ -2,33 +2,35 @@
   <div class="tweet-wrapper">
     <div v-for="tweet in tweets" :key="tweet.id">
       <div class="tweet-content">
-        <img class="tweet-user-photo" :src="tweet.avatar" alt="" />
-        <div class="tweet">
-          <div class="tweet-user">
-            <span class="tweet-user-name">{{ tweet.name }}</span>
-            <span class="tweet-user-info"
-              >@{{ tweet.account }}・{{ tweet.time }}</span
-            >
-          </div>
-          <div class="tweet-description">{{ tweet.description }}</div>
-          <div class="tweet-actions">
-            <button
-              @click.stop.prevent="toggleReplyModal(tweet)"
-              class="action tweet-actions-reply"
-            >
-              <img
-                class="icon tweet-actions-reply-icon"
-                src="./../assets/icon_reply.svg"
-              />
-              <span>{{ tweet.replyCount }}</span>
-            </button>
-            <div class="action tweet-actions-like">
-              <img
-                class="icon tweet-actions-like-icon"
-                src="./../assets/icon_like.svg"
-              />
-              <span>{{ tweet.likeCount }}</span>
+        <div class="tweet-detail" @click.stop.prevent="openReplies(tweet.id)">
+          <img class="tweet-user-photo" :src="tweet.avatar" alt="" />
+          <div class="tweet">
+            <div class="tweet-user">
+              <span class="tweet-user-name">{{ tweet.name }}</span>
+              <span class="tweet-user-info"
+                >@{{ tweet.account }}・{{ tweet.time }}</span
+              >
             </div>
+            <div class="tweet-description">{{ tweet.description }}</div>
+          </div>
+        </div>
+        <div class="tweet-actions">
+          <button
+            @click.stop.prevent="toggleReplyModal(tweet)"
+            class="action tweet-actions-reply"
+          >
+            <img
+              class="icon tweet-actions-reply-icon"
+              src="./../assets/icon_reply.svg"
+            />
+            <span>{{ tweet.replyCount }}</span>
+          </button>
+          <div class="action tweet-actions-like">
+            <img
+              class="icon tweet-actions-like-icon"
+              src="./../assets/icon_like.svg"
+            />
+            <span>{{ tweet.likeCount }}</span>
           </div>
         </div>
       </div>
@@ -113,29 +115,29 @@ export default {
   props: {
     initialTweets: {
       type: Array,
-      default: () => ({
-        id: -1,
-        avatar: '',
-        description: '',
-        time: '',
-        likeCount: -1,
-        replyCount: -1,
-      }),
+      required: true,
     },
   },
   data() {
     return {
-      tweets: {
-        id: -1,
-        avatar: '',
-        description: '',
-        time: '',
-        likeCount: -1,
-        replyCount: -1,
-      },
+      tweets: this.initialTweets,
       modalTweet: {},
       isReplyModalToggle: false,
       replyComment: '',
+    }
+  },
+  watch: {
+    initialTweets(newValue) {
+      this.tweets = newValue
+    },
+  },
+  computed: {
+    ...mapState(['currentUser']),
+  },
+  created() {
+    this.tweets = {
+      ...this.tweets,
+      ...this.initialTweets,
     }
   },
   methods: {
@@ -146,20 +148,9 @@ export default {
     closeReplyModal() {
       this.isReplyModalToggle = false
     },
-  },
-  watch: {
-    initialTweets(newValue) {
-      this.tweets = newValue
+    openReplies(tweetId) {
+      this.$router.push({ name: 'tweets-replies', params: { id: tweetId } })
     },
-  },
-  created() {
-    this.tweets = {
-      ...this.tweets,
-      ...this.initialTweets,
-    }
-  },
-  computed: {
-    ...mapState(['currentUser']),
   },
 }
 </script>
@@ -167,27 +158,29 @@ export default {
 <style scoped>
 .tweet-wrapper {
   width: 600px;
-  height: 136px;
 }
 .tweet-content {
   display: flex;
-  margin-bottom: 10px;
+  flex-direction: column;
+  padding: 13px 15px 6px 15px;
   border-bottom: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
 }
+.tweet-detail {
+  display: flex;
+  cursor: pointer;
+}
 .tweet-user-photo {
-  margin-top: 13px;
-  margin-left: 15px;
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
 .tweet {
-  margin-top: 15px;
   margin-left: 10px;
 }
-.tweet-user {
-  height: 22px;
+.weet-user-name {
+  font-weight: bold;
+  font-size: 15px;
 }
 .tweet-user-info {
   margin-left: 5px;
@@ -195,10 +188,11 @@ export default {
 }
 .tweet-description {
   margin-top: 6px;
+  font-weight: 500;
+  font-size: 15px;
 }
 .tweet-actions {
-  margin-bottom: 10px;
-  width: 130px;
+  margin-left: 60px;
 }
 .action {
   display: flex;
