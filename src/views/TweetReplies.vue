@@ -35,7 +35,7 @@ import tweetsAPI from './../apis/tweets'
 import { Toast } from './../utils/helpers'
 
 export default {
-  name: 'TweetRepliesList',
+  name: 'TweetReplies',
   components: {
     SideBar,
     TweetDetail,
@@ -69,6 +69,7 @@ export default {
           time,
           likeCount,
           replyCount,
+          createdAt,
         }
         this.user = user
       } catch (error) {

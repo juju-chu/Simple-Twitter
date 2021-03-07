@@ -56,6 +56,7 @@ export default {
           description: tweet.description,
           replyCount: tweet.replyCount,
           likeCount: tweet.likeCount,
+          createdAt: tweet.createdAt
         }))
       } catch (error) {
         console.log(error)

@@ -203,7 +203,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       userData: {
         ...this.initialUserData,
@@ -211,7 +211,7 @@ export default {
     }
   },
   watch: {
-    initialUserData (newValue) {
+    initialUserData(newValue) {
       this.userData = {
         ...this.userData,
         ...newValue
@@ -219,7 +219,7 @@ export default {
     }
   },
   methods: {
-    handleSubmit () {
+    handleSubmit() {
       if (!this.userData.account || !this.userData.name || !this.userData.email || !this.userData.password || !this.userData.checkPassword) {
         Toast.fire({
           icon: 'warning',

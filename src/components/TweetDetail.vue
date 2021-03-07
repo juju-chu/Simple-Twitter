@@ -20,19 +20,33 @@
     </div>
     <div class="divider-2"></div>
     <div class="action">
-      <div class="action-replies">
+      <button
+        @click.stop.prevent="toggleReplyModal(tweet)"
+        class="action-replies"
+      >
         <img src="./../assets/reply.svg" />
-      </div>
+      </button>
       <div class="action-likes">
         <img src="./../assets/like.svg" />
       </div>
     </div>
+    <!-- ReplyModal -->
+    <ReplyModal
+      :initial-is-reply-modal-toggle="isReplyModalToggle"
+      :modal-tweet="modalTweet"
+      @after-close-modal="closeReplyModal"
+    />
   </div>
 </template>
 
 <script>
+import ReplyModal from '../components/ReplyModal'
+
 export default {
   name: 'TweetDetail',
+  components: {
+    ReplyModal
+  },
   props: {
     initialTweet: {
       type: Object,
@@ -41,6 +55,9 @@ export default {
         time: '',
         replyCount: -1,
         likeCount: -1,
+        avatar: '',
+        name: '',
+        account: ''
       }),
     },
     initialUser: {
@@ -56,19 +73,39 @@ export default {
     return {
       tweet: this.initialTweet,
       user: this.initialUser,
+      modalTweet: {},
+      isReplyModalToggle: false,
     }
+  },
+  methods: {
+    toggleReplyModal(tweet) {
+      this.isReplyModalToggle = true
+      this.modalTweet = tweet
+    },
+    closeReplyModal(isReplyModalToggle) {
+      this.isReplyModalToggle = isReplyModalToggle
+    },
   },
   watch: {
     initialTweet(newValue) {
       this.tweet = {
         ...this.tweet,
         ...newValue,
+        avatar: this.user.avatar,
+        name: this.user.name,
+        account: this.user.account
       }
     },
     initialUser(newValue) {
       this.user = {
         ...this.user,
         ...newValue,
+      }
+      this.tweet = {
+        ...this.tweet,
+        avatar: this.user.avatar,
+        name: this.user.name,
+        account: this.user.account
       }
     },
   },
