@@ -639,7 +639,7 @@ export default {
           account: this.user.account,
           avatar: this.user.avatar,
           description: tweet.description,
-          createdAt: tweet.createdAt,
+          time: tweet.Time,
           likeCount: tweet.likeCount,
           replyCount: tweet.replyCount,
         }))

@@ -7,7 +7,7 @@
           <div class="tweet-user">
             <span class="tweet-user-name">{{ tweet.name }}</span>
             <span class="tweet-user-info"
-              >@{{ tweet.account }}・{{ tweet.createdAt | fromNow }}</span
+              >@{{ tweet.account }}・{{ tweet.time }}</span
             >
           </div>
           <div class="tweet-description">{{ tweet.description }}</div>
@@ -106,11 +106,9 @@
 </template>
 
 <script>
-import { fromNowFilter } from './../utils/mixins'
 import { mapState } from 'vuex'
 
 export default {
-  mixins: [fromNowFilter],
   name: 'TweetList',
   props: {
     initialTweets: {
@@ -119,7 +117,7 @@ export default {
         id: -1,
         avatar: '',
         description: '',
-        createdAt: '',
+        time: '',
         likeCount: -1,
         replyCount: -1,
       }),
@@ -131,24 +129,23 @@ export default {
         id: -1,
         avatar: '',
         description: '',
-        createdAt: '',
+        time: '',
         likeCount: -1,
         replyCount: -1,
       },
       modalTweet: {},
       isReplyModalToggle: false,
-      replyComment: ''
+      replyComment: '',
     }
   },
   methods: {
     toggleReplyModal(tweet) {
       this.isReplyModalToggle = true
-      console.log('toggle tweet', tweet)
       this.modalTweet = tweet
     },
     closeReplyModal() {
       this.isReplyModalToggle = false
-    }
+    },
   },
   watch: {
     initialTweets(newValue) {
@@ -162,8 +159,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentUser'])
-  }
+    ...mapState(['currentUser']),
+  },
 }
 </script>
 
