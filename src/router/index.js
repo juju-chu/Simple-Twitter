@@ -10,6 +10,7 @@ import UserSetting from '../views/UserSetting.vue'
 import UserFollowShip from '../views/UserFollowShip.vue'
 import AdminSignin from '../views/AdminSignin.vue'
 import AdminTweets from './../views/AdminTweets.vue'
+import AdminUsers from '../views/AdminUsers.vue'
 import store from './../store'
 
 Vue.use(VueRouter)
@@ -69,6 +70,11 @@ const routes = [
     path: '/admin/tweets',
     name: 'admin-tweets',
     component: AdminTweets,
+  },
+  {
+    path: '/admin/users',
+    name: 'admin-users',
+    component: AdminUsers,
   },
   {
     path: '*',

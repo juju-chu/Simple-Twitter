@@ -3,7 +3,7 @@
     <img class="admin-sidebar-logo" alt="logo" src="./../assets/Logo.svg" />
     <div class="navigation">
       <div class="nav-item admin-sidebar-tweets">
-        <div class="item">
+        <router-link to="/admin/tweets" class="item">
           <svg
             class="admin-sidebar-tweets-icon icon"
             width="24"
@@ -20,10 +20,10 @@
           <span class="text admin-sidebar-tweets-text" :class="active[0]"
             >推文清單</span
           >
-        </div>
+        </router-link>
       </div>
       <div class="nav-item admin-sidebar-user-list">
-        <div class="item">
+        <router-link to="/admin/users" class="item">
           <svg
             class="admin-sidebar-user-self-icon icon"
             width="18"
@@ -40,7 +40,7 @@
           <span class="text admin-sidebar-user-list-text" :class="active[1]"
             >使用者列表</span
           >
-        </div>
+        </router-link>
       </div>
     </div>
     <div class="nav-item logout">

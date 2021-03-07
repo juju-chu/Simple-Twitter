@@ -105,6 +105,7 @@
       </div>
     </div>
   </div>
+  <!-- Modal HTML End-->
 </template>
 
 <script>
@@ -215,7 +216,7 @@ export default {
   color: #657786;
 }
 
-/* Modal Style */
+/* ==========Modal Style============= */
 .modal-background-wrapper {
   position: fixed;
   top: 0px;
@@ -360,5 +361,5 @@ textarea.reply-comment {
   color: #ffffff;
 }
 
-/* Modal Style End*/
+/* ==========Modal Style End============= */
 </style>
