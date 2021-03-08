@@ -21,7 +21,7 @@
         <button
           class="tab-item"
           :class="{ active: tab === 'tweets' }"
-          @click.stop.prevent="clickTab('tweets')"
+          @click.stop.prevent="redirectTab('tweets')"
         >
           <span class="tab-item-text">推文</span>
         </button>
@@ -31,7 +31,7 @@
         <button
           class="tab-item"
           :class="{ active: tab === 'likes' }"
-          @click.stop.prevent="clickTab('likes')"
+          @click.stop.prevent="redirectTab('likes')"
         >
           <span class="tab-item-text">喜歡的內容</span>
         </button>
@@ -585,6 +585,13 @@ export default {
     const { id: userId } = this.$route.params
     this.fetchUser(userId)
   },
+  watch: {
+    $route(to, from) {
+      if (to.name !== from.name || to.params.id !== from.params.id) {
+        this.fetchUser(to.params.id)
+      }
+    },
+  },
   methods: {
     checkIsSelf() {
       if (this.user.id === this.currentUser.id) {
@@ -592,6 +599,11 @@ export default {
       }
     },
     async fetchUser(userId) {
+      if (this.$route.name.includes('likes')) {
+        this.tab = 'likes'
+      } else {
+        this.tab = 'tweets'
+      }
       try {
         const { data } = await usersAPI.get({ userId })
         const {
@@ -616,7 +628,7 @@ export default {
           followingsCount,
           followersCount,
         }
-        this.fetchTweets(userId)
+        this.setTab(userId, this.tab)
         this.checkIsSelf()
       } catch (error) {
         console.log(error)
@@ -672,15 +684,30 @@ export default {
         }
       })
     },
-    clickTab(tab) {
+    setTab(userId, tab) {
+      if (tab === 'likes') {
+        this.fetchLikes()
+      } else {
+        this.fetchTweets(userId)
+      }
+    },
+    redirectTab(tab) {
       switch (tab) {
         case 'tweets':
           this.fetchTweets(this.user.id)
           this.tab = 'tweets'
+          this.$router.push({
+            name: 'user',
+            params: { id: this.user.id },
+          })
           break
         case 'likes':
           this.fetchLikes()
           this.tab = 'likes'
+          this.$router.push({
+            name: 'user-likes',
+            params: { id: this.user.id, tab },
+          })
           break
       }
     },

@@ -144,16 +144,20 @@ export default {
       active: '',
       isShowModal: false,
       newTweet: '',
+      userId: -1,
     }
-  },
-  props: {
-    iconColorController: {
-      type: String,
-      default: '',
-    },
   },
   computed: {
     ...mapState(['currentUser']),
+  },
+  watch: {
+    $route(to) {
+      if (this.userId !== to.params.id) {
+        this.controlIconColor()
+      }
+
+      this.userId = to.params.id
+    },
   },
   created() {
     this.controlIconColor()
@@ -168,9 +172,16 @@ export default {
   methods: {
     controlIconColor() {
       const { id } = this.$route.params
-      if (this.iconColorController === 'User' && id === this.currentUser.id) {
+      if (
+        this.$route.name.includes('user') &&
+        Number(id) === this.currentUser.id &&
+        !this.$route.name.includes('setting')
+      ) {
         this.iconColor = '#FF6600'
         this.active = 'activeIcon'
+      } else {
+        this.iconColor = '#1C1C1C'
+        this.active = ''
       }
     },
     showModal() {

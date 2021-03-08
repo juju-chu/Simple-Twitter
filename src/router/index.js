@@ -42,6 +42,11 @@ const routes = [
     component: User,
   },
   {
+    path: '/users/:id/likes',
+    name: 'user-likes',
+    component: User,
+  },
+  {
     path: '/users/:id/:tab',
     name: 'user-followers',
     component: UserFollowShip,

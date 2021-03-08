@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <SideBar class="side-bar" iconColorController="User" />
+    <SideBar class="side-bar" />
     <div class="center-column">
       <!-- header -->
       <header>
