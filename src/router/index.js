@@ -97,6 +97,7 @@ router.beforeEach(async (to, from, next) => {
   const tokenInStore = store.state.token
   const pathsWithoutAuthentication = ['signup', 'signin', 'admin-signin']
   let isAuthenticated = store.state.isAuthenticated
+  let isAdmin = store.state.currentUser.isAdmin
   const { id, tab } = to.params
 
   if (token && token !== tokenInStore) {
@@ -109,7 +110,12 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
-    next('/tweets')
+    if (!isAdmin) {
+      next('/tweets')
+    } else if (isAdmin) {
+      next('/admin/tweets')
+    }
+
     return
   }
 
