@@ -81,7 +81,7 @@
       </div>
     </div>
     <div class="nav-item logout">
-      <button class="item" @click="logout">
+      <button class="item" @click.stop.prevent="logout">
         <img class="icon logout-icon" src="./../assets/logoutIcon.svg" />
         <span class="text logout-text">登出</span>
       </button>
@@ -164,7 +164,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.focus()
       },
     },
