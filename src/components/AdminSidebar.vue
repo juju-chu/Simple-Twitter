@@ -44,10 +44,10 @@
       </div>
     </div>
     <div class="nav-item logout">
-      <div class="item">
+      <button class="item" @click.stop.prevent="logout">
         <img class="icon logout-icon" src="./../assets/logoutIcon.svg" />
         <span class="text logout-text">登出</span>
-      </div>
+      </button>
     </div>
   </div>
 </template>
@@ -82,6 +82,10 @@ export default {
           this.active[1] = 'activeIcon'
           break
       }
+    },
+    logout() {
+      this.$store.commit('revokeCurrentUser')
+      this.$router.push('/admin/signin')
     },
   },
 }
