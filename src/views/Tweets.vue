@@ -114,6 +114,7 @@ export default {
   width: 600px;
   height: 55px;
   border-right: 1px solid #e6ecf0;
+  border-bottom: 1px solid #e6ecf0;
   background: #fff;
 }
 .header-title {
@@ -129,7 +130,6 @@ export default {
   margin-top: 55px;
   width: 600px;
   height: 120px;
-  border: 1px solid #e6ecf0;
 }
 .divider {
   width: 600px;

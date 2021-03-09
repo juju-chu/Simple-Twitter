@@ -84,7 +84,6 @@ export default {
 .wrapper {
   position: relative;
   display: flex;
-  border: 1px solid #e6ecf0;
 }
 .user-image {
   margin-top: 10px;
