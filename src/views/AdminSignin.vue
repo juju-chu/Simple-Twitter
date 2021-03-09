@@ -46,7 +46,7 @@
 
       <div class="signup-admin-link">
         <p>
-          <router-link to="/signup" class="link">前台登入</router-link>
+          <router-link to="/signin" class="link">前台登入</router-link>
         </p>
       </div>
     </form>
@@ -109,7 +109,7 @@ import authorizationAPI from '../apis/authorization'
 import { Toast } from '../utils/helpers'
 
 export default {
-  data () {
+  data() {
     return {
       email: '',
       password: '',
@@ -117,7 +117,7 @@ export default {
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       try {
         if (!this.email || !this.password) {
           Toast.fire({
@@ -143,10 +143,18 @@ export default {
         //把token保留在local storage中
         localStorage.setItem('token', data.token)
 
-        //透過setCurrentUser把使用者資料待到vuex的state中
-        //this.$store.commit('setCurrentUser', data.user) //mark temporarily since vuex not ready
-
-        this.$router.push('/admin/tweets')
+        if (!data.user.isAdmin) {
+          Toast.fire({
+            icon: 'warning',
+            title: '非管理者帳號，自動前往前台登入頁'
+          })
+          this.$store.commit('revokeCurrentUser')
+          this.$router.push('/signin')
+        } else {
+          //透過setCurrentUser把使用者資料待到vuex的state中
+          this.$store.commit('setCurrentUser', data.user)
+          this.$router.push("/admin/tweets")
+        }
       }
       catch (e) {
         console.log(e)

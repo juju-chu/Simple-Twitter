@@ -43,13 +43,13 @@ export default {
   components: {
     SettingForm
   },
-  data () {
+  data() {
     return {
       isProcessing: false
     }
   },
   methods: {
-    async handleAfterSubmit ({ account, name, email, password, checkPassword }) {
+    async handleAfterSubmit({ account, name, email, password, checkPassword }) {
 
       try {
         this.isProcessing = true

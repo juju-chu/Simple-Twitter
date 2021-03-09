@@ -123,7 +123,7 @@ import { Toast } from "../utils/helpers"
 
 export default {
   name: 'UserSignIn',
-  data () {
+  data() {
     return {
       email: "",
       password: "",
@@ -131,7 +131,7 @@ export default {
     }
   },
   methods: {
-    async handleSubmit () {
+    async handleSubmit() {
       try {
         if (!this.email || !this.password) {
           Toast.fire({
@@ -157,12 +157,21 @@ export default {
         //把token保留在local storage中
         localStorage.setItem("token", data.token)
 
-        //透過setCurrentUser把使用者資料待到vuex的state中
-        this.$store.commit('setCurrentUser', data.user)
-        this.$router.push("/tweets")
+        if (data.user.isAdmin) {
+          Toast.fire({
+            icon: 'warning',
+            title: '非一般使用者帳號，自動前往後台登入頁'
+          })
+          this.$store.commit('revokeCurrentUser')
+          this.$router.push('/admin/signin')
+        } else {
+          //透過setCurrentUser把使用者資料待到vuex的state中
+          this.$store.commit('setCurrentUser', data.user)
+          this.$router.push("/tweets")
+        }
       }
-      catch (e) {
-        console.log(e)
+      catch (error) {
+        console.log(error)
         this.isProcessing = false
         this.password = ""
 
