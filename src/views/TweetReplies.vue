@@ -11,14 +11,10 @@
       </div>
 
       <!-- TweetDetail -->
-      <TweetDetail
-        class="tweet-detail"
-        :initial-tweet="tweet"
-        :initial-user="user"
-      />
+      <TweetDetail class="tweet-detail" :initial-tweet="tweet" />
 
       <!-- Replies -->
-      <Replies class="replies" :initial-user="user" />
+      <Replies class="replies" :initial-tweet="tweet" />
     </div>
 
     <!-- Recommendation -->
@@ -45,7 +41,6 @@ export default {
   data() {
     return {
       tweet: {},
-      user: {},
     }
   },
   created() {
@@ -67,13 +62,15 @@ export default {
         const time = this.transformTime(createdAt)
         this.tweet = {
           userId,
+          avatar: user.avatar,
+          name: user.name,
+          account: user.account,
           description,
           time,
           likeCount,
           replyCount,
           createdAt,
         }
-        this.user = user
       } catch (error) {
         console.log(error)
         Toast.fire({

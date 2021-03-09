@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper-center">
     <div class="user">
-      <img class="user-avatar" :src="user.avatar" />
+      <img class="user-avatar" :src="tweet.avatar" />
       <div class="user-info">
         <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
-          <span class="user-name">{{ user.name }}</span>
+          <span class="user-name">{{ tweet.name }}</span>
         </router-link>
         <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
-          <span class="user-account">@{{ user.account }}</span>
+          <span class="user-account">@{{ tweet.account }}</span>
         </router-link>
       </div>
     </div>
@@ -56,15 +56,10 @@ export default {
       type: Object,
       required: true,
     },
-    initialUser: {
-      type: Object,
-      required: true,
-    },
   },
   data() {
     return {
       tweet: this.initialTweet,
-      user: this.initialUser,
       modalTweet: {},
       isReplyModalToggle: false,
     }
@@ -81,9 +76,6 @@ export default {
   watch: {
     initialTweet(newValue) {
       this.tweet = newValue
-    },
-    initialUser(newValue) {
-      this.user = newValue
     },
   },
 }

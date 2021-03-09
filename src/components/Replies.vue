@@ -22,8 +22,8 @@
           </div>
           <div class="reply-to">
             回覆
-            <router-link :to="{ name: 'user', params: { id: user.id } }">
-              <span>@{{ user.name }}</span>
+            <router-link :to="{ name: 'user', params: { id: tweet.id } }">
+              <span>@{{ tweet.name }}</span>
             </router-link>
           </div>
           <div class="comment">{{ reply.comment }}</div>
@@ -40,18 +40,14 @@ import { Toast } from './../utils/helpers'
 export default {
   name: 'Replies',
   props: {
-    initialUser: {
+    initialTweet: {
       type: Object,
-      default: () => ({
-        avatar: '',
-        name: '',
-        account: '',
-      }),
+      required: true,
     },
   },
   data() {
     return {
-      user: this.initialUser,
+      tweet: this.initialTweet,
       replies: {
         id: -1,
         userId: -1,
@@ -64,11 +60,8 @@ export default {
     }
   },
   watch: {
-    initialUser(newValue) {
-      this.user = {
-        ...this.user,
-        ...newValue,
-      }
+    initialTweet(newValue) {
+      this.tweet = newValue
     },
   },
   created() {
