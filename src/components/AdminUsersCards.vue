@@ -20,7 +20,7 @@
                 fill="#657786"
               />
             </svg>
-            <span class="reply-count">{{ user.replyCount }}</span>
+            <span class="reply-count">{{ user.tweetCount }}</span>
           </div>
           <div class="activity-like">
             <svg
@@ -174,7 +174,7 @@ export default {
           avatar: user.avatar,
           name: user.name,
           account: user.account,
-          replyCount: user.replyCount,
+          tweetCount: user.tweetCount,
           likeCount: user.likeCount,
           followingCount: user.FollowingCount,
           followerCount: user.FollowerCount
