@@ -1,12 +1,12 @@
 <template>
   <div class="wrapper">
-    <SideBar class="side-bar" />
+    <SideBar class="side-bar" @after-post-tweet="afterPostTweet" />
 
     <div class="center-column">
       <div class="header">
         <div class="header-title">首頁</div>
       </div>
-      <PostTweet class="post-tweet" />
+      <PostTweet class="post-tweet" @after-post-tweet="afterPostTweet" />
 
       <div class="divider"></div>
 
@@ -72,6 +72,9 @@ export default {
           title: '無法取得推文，請稍後再試',
         })
       }
+    },
+    afterPostTweet() {
+      this.fetchTweets()
     },
   },
 }

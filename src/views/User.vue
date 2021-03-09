@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <SideBar class="side-bar" />
+    <SideBar class="side-bar" @after-post-tweet="afterPostTweet" />
 
     <div class="center-column">
       <div class="header">
@@ -217,10 +217,13 @@ export default {
           break
       }
     },
+    afterPostTweet() {
+      const { id: userId } = this.$route.params
+      this.fetchUser(userId)
+    },
   },
   beforeRouteUpdate(to, from, next) {
-    const { id: userId } = to.params
-    this.fetchUser(userId)
+    this.fetchUser(this.user.id)
     next()
   },
 }

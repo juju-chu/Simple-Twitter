@@ -117,13 +117,14 @@
             v-focus
             @keyup.esc="cancelModal"
             @keyup.enter="postTweet"
-            @blur="cancelModal"
           ></textarea>
         </div>
         <div class="post-tweet-model-button">
           <button
             class="post-tweet-model-btn"
             @click.stop.prevent="postTweet(newTweet)"
+            :disabled="isProcession"
+            :class="{ disabled: isProcession }"
           >
             <span class="post-tweet-model-btn-text">推文</span>
           </button>
@@ -148,6 +149,7 @@ export default {
       isShowModal: false,
       newTweet: '',
       userId: -1,
+      isProcession: false,
     }
   },
   computed: {
@@ -160,6 +162,14 @@ export default {
       }
 
       this.userId = to.params.id
+    },
+    newTweet(newValue) {
+      if (newValue.length === 140) {
+        Toast.fire({
+          icon: 'warning',
+          title: '已達字數上限',
+        })
+      }
     },
   },
   created() {
@@ -202,17 +212,20 @@ export default {
         return
       }
       try {
+        this.isProcessiong = true
         const { data } = await tweetsAPI.post({ newTweet })
         if (data.status !== 'success') {
           throw new Error(data.message)
         }
         this.isShowModal = false
+        this.$emit('after-post-tweet')
       } catch (error) {
         console.log(error)
         Toast.fire({
           icon: 'error',
           title: '無法新增推文，請稍後再試',
         })
+        this.isProcession = false
       }
     },
     logout() {
@@ -287,6 +300,9 @@ export default {
 .post-tweet-model-btn {
   width: 64px;
   height: 40px;
+}
+.disabled {
+  background: #ecbd9e;
 }
 .post-tweet {
   position: absolute;
