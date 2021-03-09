@@ -109,19 +109,22 @@
         </div>
         <div class="post-tweet-modal-tweet">
           <img class="tweet-avatar" :src="currentUser.avatar | emptyImage" />
-          <input
-            type="text"
+          <textarea
             class="tweet-text"
             placeholder="有什麼新鮮事？"
+            maxlength="140"
             v-model="newTweet"
             v-focus
             @keyup.esc="cancelModal"
             @keyup.enter="postTweet"
             @blur="cancelModal"
-          />
+          ></textarea>
         </div>
         <div class="post-tweet-model-button">
-          <button class="post-tweet-model-btn" @click.stop.prevent="postTweet">
+          <button
+            class="post-tweet-model-btn"
+            @click.stop.prevent="postTweet(newTweet)"
+          >
             <span class="post-tweet-model-btn-text">推文</span>
           </button>
         </div>
@@ -164,7 +167,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
+      inserted: function(el) {
         el.focus()
       },
     },
@@ -190,7 +193,7 @@ export default {
     cancelModal() {
       this.isShowModal = false
     },
-    async postTweet() {
+    async postTweet(newTweet) {
       if (this.newTweet.trim() === '') {
         Toast.fire({
           icon: 'warning',
@@ -199,7 +202,7 @@ export default {
         return
       }
       try {
-        const { data } = await tweetsAPI.post({ newTweet: this.newTweet })
+        const { data } = await tweetsAPI.post({ newTweet })
         if (data.status !== 'success') {
           throw new Error(data.message)
         }
@@ -323,6 +326,8 @@ export default {
   border-radius: 50%;
 }
 .tweet-text {
+  width: 600px;
+  height: 100px;
   margin-left: 10px;
   border: none;
 }
