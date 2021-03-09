@@ -1,6 +1,6 @@
 <template>
   <div class="tweet-wrapper">
-    <div v-for="tweet in tweets" :key="tweet.id">
+    <div>
       <div class="tweet-content">
         <div class="tweet-detail">
           <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
@@ -43,11 +43,29 @@
             <span>{{ tweet.replyCount }}</span>
           </button>
           <div class="action tweet-actions-like">
-            <img
-              class="icon tweet-actions-like-icon"
-              src="./../assets/icon_like.svg"
-            />
-            <span>{{ tweet.likeCount }}</span>
+            <button
+              class="tweet-actions-like-icon"
+              v-if="tweet.isLiked"
+              @click.stop.prevent="deleteLike(tweet.id)"
+              :disabled="isProcessing"
+            >
+              <img
+                class="icon tweet-actions-like-icon"
+                src="./../assets/icon_liked.svg"
+              />
+            </button>
+            <button
+              class="tweet-actions-like-icon"
+              v-else
+              @click.stop.prevent="addLike(tweet.id)"
+              :disabled="isProcessing"
+            >
+              <img
+                class="icon tweet-actions-like-icon"
+                src="./../assets/icon_like.svg"
+              />
+            </button>
+            <span :class="{ likes: tweet.isLiked }">{{ tweet.likeCount }}</span>
           </div>
         </div>
       </div>
@@ -63,8 +81,10 @@
 
 <script>
 import ReplyModal from '../components/ReplyModal'
+import tweetsAPI from './../apis/tweets'
 import { fromNowFilter } from './../utils/mixins'
 import { mapState } from 'vuex'
+import { Toast } from './../utils/helpers'
 
 export default {
   mixins: [fromNowFilter],
@@ -73,22 +93,18 @@ export default {
     ReplyModal,
   },
   props: {
-    initialTweets: {
-      type: Array,
+    initialTweet: {
+      type: Object,
       required: true,
     },
   },
   data() {
     return {
-      tweets: this.initialTweets,
+      tweet: this.initialTweet,
       modalTweet: {},
       isReplyModalToggle: false,
+      isProcessing: false,
     }
-  },
-  watch: {
-    initialTweets(newValue) {
-      this.tweets = newValue
-    },
   },
   computed: {
     ...mapState(['currentUser']),
@@ -103,6 +119,44 @@ export default {
     },
     openReplies(tweetId) {
       this.$router.push({ name: 'tweets-replies', params: { id: tweetId } })
+    },
+    async addLike(tweetId) {
+      try {
+        this.isProcessing = true
+        const { data } = await tweetsAPI.addLike({ tweetId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.tweet.isLiked = true
+        this.tweet.likeCount = this.tweet.likeCount + 1
+        this.isProcessing = false
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法按讚，請稍後再試',
+        })
+        this.isProcessing = false
+      }
+    },
+    async deleteLike(tweetId) {
+      try {
+        this.isProcessing = true
+        const { data } = await tweetsAPI.deleteLike({ tweetId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.tweet.isLiked = false
+        this.tweet.likeCount = this.tweet.likeCount - 1
+        this.isProcessing = false
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取消按讚，請稍後再試',
+        })
+        this.isProcessing = false
+      }
     },
   },
 }
@@ -161,6 +215,9 @@ export default {
 }
 .tweet-actions-like {
   margin-left: 50px;
+}
+.likes {
+  color: #e0245e;
 }
 .icon {
   width: 15px;

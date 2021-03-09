@@ -11,7 +11,12 @@
       <div class="divider"></div>
 
       <!-- Tweet list -->
-      <TweetsList class="tweet-list" :initial-tweets="tweets" />
+      <TweetsList
+        class="tweet-list"
+        v-for="tweet in tweets"
+        :key="tweet.id"
+        :initial-tweet="tweet"
+      />
     </div>
 
     <!-- Recommendation -->
@@ -58,6 +63,7 @@ export default {
           replyCount: tweet.replyCount,
           likeCount: tweet.likeCount,
           createdAt: tweet.createdAt,
+          isLiked: tweet.isLiked,
         }))
       } catch (error) {
         console.log(error)
