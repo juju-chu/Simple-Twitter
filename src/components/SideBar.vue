@@ -330,6 +330,7 @@ export default {
   height: 100px;
   margin-left: 10px;
   border: none;
+  resize: none;
 }
 .logout {
   position: absolute;
