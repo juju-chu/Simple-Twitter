@@ -25,9 +25,13 @@
         >
           <span class="tab-item-text">推文</span>
         </button>
-        <div class="tab-item">
+        <button
+          class="tab-item"
+          :class="{ active: tab === 'replied-tweets' }"
+          @click.stop.prevent="redirectTab('replied-tweets')"
+        >
           <span class="tab-item-text">推文與回覆</span>
-        </div>
+        </button>
         <button
           class="tab-item"
           :class="{ active: tab === 'likes' }"
@@ -109,6 +113,8 @@ export default {
     async fetchUser(userId) {
       if (this.$route.name.includes('likes')) {
         this.tab = 'likes'
+      } else if (this.$route.name.includes('replied-tweets')) {
+        this.tab = 'replied-tweets'
       } else {
         this.tab = 'tweets'
       }
@@ -149,6 +155,8 @@ export default {
     setTab(userId, tab) {
       if (tab === 'likes') {
         this.fetchLikes(userId)
+      } else if (tab === 'replied-tweets') {
+        this.fetchRepliedTweets(userId)
       } else {
         this.fetchTweets(userId)
       }
@@ -170,6 +178,29 @@ export default {
             isLiked: tweet.isLiked,
           }
         })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得推文，請稍後再試',
+        })
+      }
+    },
+    async fetchRepliedTweets(userId) {
+      try {
+        const { data } = await usersAPI.getUsersRepliedTweets({ userId })
+        this.tweets = data.map((tweet) => ({
+          id: tweet.id,
+          userId: tweet.User.id,
+          account: tweet.User.account,
+          name: tweet.User.name,
+          avatar: tweet.User.avatar,
+          description: tweet.description,
+          createdAt: tweet.createdAt,
+          likeCount: tweet.likeCount,
+          replyCount: tweet.replyCount,
+          isLiked: tweet.isLiked,
+        }))
       } catch (error) {
         console.log(error)
         Toast.fire({
@@ -206,6 +237,12 @@ export default {
         case 'tweets':
           this.$router.push({
             name: 'user',
+            params: { id: this.user.id },
+          })
+          break
+        case 'replied-tweets':
+          this.$router.push({
+            name: 'user-replied-tweets',
             params: { id: this.user.id },
           })
           break

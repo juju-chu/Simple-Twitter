@@ -7,6 +7,9 @@ export default {
   getUsersTweets({ userId }) {
     return apiHelper.get(`/users/${userId}/tweets`)
   },
+  getUsersRepliedTweets({ userId }) {
+    return apiHelper.get(`/users/${userId}/replied_tweets`)
+  },
   getUsersLikes({ userId }) {
     return apiHelper.get(`/users/${userId}/likes`)
   },
@@ -22,13 +25,13 @@ export default {
       checkPassword,
     })
   },
-  editInfo ({ userId, formData }) {
+  editInfo({ userId, formData }) {
     return apiHelper.put(`/users/${userId}`, formData)
   },
-  getFollowings ({ userId }) {
+  getFollowings({ userId }) {
     return apiHelper.get(`/users/${userId}/followings`)
   },
-  getFollowers ({ userId }) {
+  getFollowers({ userId }) {
     return apiHelper.get(`/users/${userId}/followers`)
-  }
+  },
 }

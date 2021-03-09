@@ -42,6 +42,11 @@ const routes = [
     component: User,
   },
   {
+    path: '/users/:id/replied_tweets',
+    name: 'user-replied-tweets',
+    component: User,
+  },
+  {
     path: '/users/:id/likes',
     name: 'user-likes',
     component: User,
