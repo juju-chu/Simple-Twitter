@@ -9,26 +9,11 @@
 </template>
 
 <script>
-const dummyCurrentUser = {
-  id: 5,
-  name: 'Tracy Towne',
-  account: 'user5',
-  avatar: 'https://loremflickr.com/320/240/dog/?lock=37.8808195638617',
-}
+import { mapState } from 'vuex'
 export default {
   name: 'PostTweet',
-  data() {
-    return {
-      currentUser: {},
-    }
-  },
-  created() {
-    this.fetchCurrentUser()
-  },
-  methods: {
-    fetchCurrentUser() {
-      this.currentUser = dummyCurrentUser
-    },
+  computed: {
+    ...mapState(['currentUser']),
   },
 }
 </script>
