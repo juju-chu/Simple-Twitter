@@ -61,28 +61,7 @@ export default {
       active: ['normal', 'normal'],
     }
   },
-  props: {
-    iconColorController: {
-      type: String,
-      required: true,
-    },
-  },
-  created() {
-    this.controlIconColor()
-  },
   methods: {
-    controlIconColor() {
-      switch (this.iconColorController) {
-        case 'AdminTweets':
-          this.iconColor[0] = '#FF6600'
-          this.active[0] = 'activeIcon'
-          break
-        case 'AdminUsersList':
-          this.iconColor[1] = '#FF6600'
-          this.active[1] = 'activeIcon'
-          break
-      }
-    },
     logout() {
       this.$store.commit('revokeCurrentUser')
       this.$router.push('/admin/signin')
@@ -92,6 +71,10 @@ export default {
 </script>
 
 <style scoped>
+.admin-sidebar-wrapper {
+  position: relative;
+  margin: 0;
+}
 .admin-sidebar-logo {
   margin-top: 14px;
   width: 30px;
@@ -111,6 +94,12 @@ export default {
 .item {
   display: flex;
 }
+.router-link-exact-active span {
+  color: #ff6600;
+}
+.router-link-exact-active path {
+  fill: #ff6600;
+}
 .icon {
   margin-right: 20px;
   width: 24px;
@@ -122,12 +111,9 @@ export default {
   font-size: 18px;
   color: #1c1c1c;
 }
-.activeIcon {
-  color: #ff6600;
-}
 .logout {
   position: absolute;
-  bottom: 17px;
-  left: 111px;
+  bottom: 0;
+  left: 0;
 }
 </style>

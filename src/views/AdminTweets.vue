@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <AdminSidebar class="admin-side-bar" iconColorController="AdminTweets" />
+    <AdminSidebar class="admin-side-bar" />
 
     <div class="center-column">
       <div class="header">
@@ -28,15 +28,16 @@ export default {
 .wrapper {
   display: grid;
   grid-template-columns: 378px 1062px;
-  grid-template-rows: auto;
+  grid-template-rows: 100vh;
 }
 .admin-side-bar {
+  position: fixed;
+  z-index: 1;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
-  margin-top: 4px;
   margin-left: 103px;
-  width: 235px;
-  height: 1196px;
+  width: 378px;
+  height: 100vh;
 }
 .center-column {
   grid-column: 2 / 3;
