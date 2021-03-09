@@ -3,8 +3,12 @@
     <div class="user">
       <img class="user-avatar" :src="user.avatar" />
       <div class="user-info">
-        <span class="user-name">{{ user.name }}</span>
-        <span class="user-account">@{{ user.account }}</span>
+        <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
+          <span class="user-name">{{ user.name }}</span>
+        </router-link>
+        <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
+          <span class="user-account">@{{ user.account }}</span>
+        </router-link>
       </div>
     </div>
     <div class="description">{{ tweet.description }}</div>
@@ -45,28 +49,16 @@ import ReplyModal from '../components/ReplyModal'
 export default {
   name: 'TweetDetail',
   components: {
-    ReplyModal
+    ReplyModal,
   },
   props: {
     initialTweet: {
       type: Object,
-      default: () => ({
-        description: '',
-        time: '',
-        replyCount: -1,
-        likeCount: -1,
-        avatar: '',
-        name: '',
-        account: ''
-      }),
+      required: true,
     },
     initialUser: {
       type: Object,
-      default: () => ({
-        avatar: '',
-        name: '',
-        account: '',
-      }),
+      required: true,
     },
   },
   data() {
@@ -88,25 +80,10 @@ export default {
   },
   watch: {
     initialTweet(newValue) {
-      this.tweet = {
-        ...this.tweet,
-        ...newValue,
-        avatar: this.user.avatar,
-        name: this.user.name,
-        account: this.user.account
-      }
+      this.tweet = newValue
     },
     initialUser(newValue) {
-      this.user = {
-        ...this.user,
-        ...newValue,
-      }
-      this.tweet = {
-        ...this.tweet,
-        avatar: this.user.avatar,
-        name: this.user.name,
-        account: this.user.account
-      }
+      this.user = newValue
     },
   },
 }

@@ -3,17 +3,28 @@
     <div v-for="reply in replies" :key="reply.id">
       <div class="reply-wrapper">
         <div class="avatar-wrapper">
-          <img class="avatar" :src="reply.avatar" />
+          <router-link :to="{ name: 'user', params: { id: reply.userId } }">
+            <img class="avatar" :src="reply.avatar" />
+          </router-link>
         </div>
         <div class="reply-content">
           <div class="user-info">
-            <div class="name">{{ reply.name }}</div>
+            <router-link :to="{ name: 'user', params: { id: reply.userId } }">
+              <div class="name">{{ reply.name }}</div>
+            </router-link>
             <div class="account-createdAt">
-              @{{ reply.account }}・{{ reply.replyTime }}
+              <router-link :to="{ name: 'user', params: { id: reply.userId } }">
+                <span>@{{ reply.account }}</span>
+              </router-link>
+              <span>・</span>
+              <span>{{ reply.replyTime }}</span>
             </div>
           </div>
           <div class="reply-to">
-            回覆 <span>@{{ user.name }}</span>
+            回覆
+            <router-link :to="{ name: 'user', params: { id: user.id } }">
+              <span>@{{ user.name }}</span>
+            </router-link>
           </div>
           <div class="comment">{{ reply.comment }}</div>
         </div>
@@ -43,6 +54,7 @@ export default {
       user: this.initialUser,
       replies: {
         id: -1,
+        userId: -1,
         name: '',
         account: '',
         avatar: '',
@@ -69,6 +81,7 @@ export default {
         const { data } = await tweetsAPI.getTweetReplies({ tweetId })
         this.replies = data.map((reply) => ({
           id: reply.id,
+          userId: reply.UserId,
           name: reply.User.name,
           account: reply.User.account,
           avatar: reply.User.avatar,
@@ -110,6 +123,8 @@ export default {
 }
 .account-createdAt {
   margin-left: 5px;
+}
+.account-createdAt span {
   color: #657786;
 }
 .reply-to {

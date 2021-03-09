@@ -154,9 +154,10 @@ export default {
         this.tweets = data.map((tweet) => {
           return {
             id: tweet.id,
-            account: this.user.account,
+            userId: tweet.User.id,
+            account: tweet.User.account,
             name: tweet.User.name,
-            avatar: this.user.avatar,
+            avatar: tweet.User.avatar,
             description: tweet.description,
             createdAt: tweet.createdAt,
             likeCount: tweet.likeCount,
@@ -176,6 +177,7 @@ export default {
         const { data } = await usersAPI.getUsersLikes({ userId })
         this.tweets = data.map((tweet) => ({
           id: tweet.id,
+          userId: tweet.User.id,
           account: tweet.User.account,
           name: tweet.User.name,
           avatar: tweet.User.avatar,

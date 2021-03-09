@@ -57,6 +57,7 @@ export default {
         const { id: tweetId } = this.$route.params
         const { data } = await tweetsAPI.getTweet({ tweetId })
         const {
+          UserId: userId,
           description,
           createdAt,
           likeCount,
@@ -65,6 +66,7 @@ export default {
         } = data
         const time = this.transformTime(createdAt)
         this.tweet = {
+          userId,
           description,
           time,
           likeCount,

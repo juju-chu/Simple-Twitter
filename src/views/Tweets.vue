@@ -49,6 +49,7 @@ export default {
         const { data } = await tweetsAPI.get()
         this.tweets = data.map((tweet) => ({
           id: tweet.id,
+          userId: tweet.User.id,
           account: tweet.User.account,
           avatar: tweet.User.avatar,
           name: tweet.User.name,

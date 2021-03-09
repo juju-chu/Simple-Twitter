@@ -2,16 +2,33 @@
   <div class="tweet-wrapper">
     <div v-for="tweet in tweets" :key="tweet.id">
       <div class="tweet-content">
-        <div class="tweet-detail" @click.stop.prevent="openReplies(tweet.id)">
-          <img class="tweet-user-photo" :src="tweet.avatar" alt="" />
+        <div class="tweet-detail">
+          <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
+            <img class="tweet-user-photo" :src="tweet.avatar" />
+          </router-link>
           <div class="tweet">
             <div class="tweet-user">
-              <span class="tweet-user-name">{{ tweet.name }}</span>
-              <span class="tweet-user-info"
-                >@{{ tweet.account }}・{{ tweet.createdAt | fromNow }}</span
+              <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
+                <span class="tweet-user-name">{{ tweet.name }}</span>
+              </router-link>
+              <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
+                <span class="tweet-user-info">@{{ tweet.account }}</span>
+              </router-link>
+              <span>・</span>
+              <router-link
+                :to="{ name: 'tweets-replies', params: { id: tweet.id } }"
               >
+                <span class="tweet-user-info">{{
+                  tweet.createdAt | fromNow
+                }}</span>
+              </router-link>
             </div>
-            <div class="tweet-description">{{ tweet.description }}</div>
+            <div
+              class="tweet-description"
+              @click.stop.prevent="openReplies(tweet.id)"
+            >
+              {{ tweet.description }}
+            </div>
           </div>
         </div>
         <div class="tweet-actions">
@@ -75,12 +92,6 @@ export default {
   },
   computed: {
     ...mapState(['currentUser']),
-  },
-  created() {
-    this.tweets = {
-      ...this.tweets,
-      ...this.initialTweets,
-    }
   },
   methods: {
     toggleReplyModal(tweet) {

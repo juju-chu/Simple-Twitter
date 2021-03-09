@@ -5,10 +5,16 @@
     </header>
     <div class="follow-list">
       <div v-for="user in users" :key="user.id" class="follow-card">
-        <img class="user-avatar" :src="user.avatar" alt="" />
+        <router-link :to="{ name: 'user', params: { id: user.id } }">
+          <img class="user-avatar" :src="user.avatar" alt="" />
+        </router-link>
         <div class="profile">
-          <div class="user-name">{{ user.name }}</div>
-          <div class="user-account">@{{ user.account }}</div>
+          <router-link :to="{ name: 'user', params: { id: user.id } }">
+            <div class="user-name">{{ user.name }}</div>
+          </router-link>
+          <router-link :to="{ name: 'user', params: { id: user.id } }">
+            <div class="user-account">@{{ user.account }}</div>
+          </router-link>
         </div>
         <div class="action">
           <button
@@ -142,79 +148,77 @@ footer p {
 //Dummy users, to be removed
 const dummyUsers = [
   {
+    id: 2,
+    name: 'Lucia Raynor',
+    account: 'user2',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=12.529173430492301',
+    isFollowed: true,
+  },
+  {
     id: 1,
     name: 'Robert Stroman',
     account: 'user1',
     avatar: 'https://loremflickr.com/320/240/dog/?lock=19.49557651044964',
-    isFollowed: true
-
-  },
-  {
-    id: 2,
-    name: 'Robert Stroman',
-    account: 'user1',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=19.49557651044964',
-    isFollowed: false
-  },
-  {
-    id: 3,
-    name: 'Ashley Ondricka',
-    account: 'user6',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=26.314776042720133',
-    isFollowed: false
-  },
-  {
-    id: 4,
-    name: 'Tracy Towne',
-    account: 'user5',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=37.8808195638617',
-    isFollowed: false
-  },
-  {
-    id: 5,
-    name: 'Ashley Ondricka',
-    account: 'user6',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=26.314776042720133',
-    isFollowed: false
+    isFollowed: false,
   },
   {
     id: 6,
+    name: 'Ashley Ondricka',
+    account: 'user6',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=26.314776042720133',
+    isFollowed: false,
+  },
+  {
+    id: 5,
+    name: 'Tracy Towne',
+    account: 'user5',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=37.8808195638617',
+    isFollowed: false,
+  },
+  {
+    id: 7,
     name: 'Priscilla Stehr',
     account: 'user7',
     avatar: 'https://loremflickr.com/320/240/dog/?lock=33.233134434246146',
-    isFollowed: false
+    isFollowed: false,
   },
-
+  {
+    id: 8,
+    name: 'Zachary Schneider',
+    account: 'user8',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=12.96476705674201',
+    isFollowed: false,
+  },
 ]
 
 export default {
   name: 'Recommendation',
-  data () {
+  data() {
     return {
-      users: []
+      users: [],
     }
   },
   methods: {
-    fetchUsers () {
+    fetchUsers() {
       //TODO: 用API取得random users資料，先使用dummy users
       this.users = [...dummyUsers]
     },
-    showMoreUser () {
+    showMoreUser() {
       //TODO: 顯示更多用戶
       console.log('show more user')
     },
-    addFollowing (userId) {
+    addFollowing(userId) {
       //TODO: 透過API發送請求新增follow
-      this.users = this.users.map(user => {
+      this.users = this.users.map((user) => {
         if (user.id === userId) {
           user.isFollowed = true
         }
         return user
       })
     },
-    removeFollowing (userId) {
+    removeFollowing(userId) {
       //TODO: 透過API發送請求移除follow
-      this.users = this.users.map(user => {
+      this.users = this.users.map((user) => {
         if (user.id === userId) {
           user.isFollowed = false
         }
@@ -222,8 +226,8 @@ export default {
       })
     },
   },
-  created () {
+  created() {
     this.fetchUsers()
-  }
+  },
 }
 </script>
