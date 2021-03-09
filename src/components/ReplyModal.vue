@@ -54,7 +54,7 @@
                 alt=""
               />
               <textarea
-                v-model="replyComment"
+                v-model="comment"
                 class="reply-comment"
                 name="comment"
                 id="comment"
@@ -62,7 +62,7 @@
               ></textarea>
             </div>
             <footer class="reply-modal-footer">
-              <button class="reply-btn">回覆</button>
+              <button class="reply-btn" type="submit">回覆</button>
             </footer>
           </div>
         </form>
@@ -80,7 +80,7 @@
   left: 0px;
   width: 100vw;
   height: 100vw;
-  z-index: 2000;
+  z-index: 2;
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -221,7 +221,9 @@ textarea.reply-comment {
 </style>
 
 <script>
+import tweetsAPI from '../apis/tweets'
 import { mapState } from 'vuex'
+import { Toast } from '../utils/helpers'
 import { fromNowFilter } from './../utils/mixins'
 
 export default {
@@ -241,13 +243,38 @@ export default {
   data() {
     return {
       isReplyModalToggle: false,
-      replyComment: '',
+      comment: '',
     }
   },
   methods: {
     closeReplyModal() {
       this.isReplyModalToggle = false
       this.$emit("after-close-modal", this.isReplyModalToggle)
+    },
+    async handleSubmit() {
+      if (!this.comment) {
+        Toast.fire({
+          icon: 'warning',
+          title: '推文內容不可為空'
+        })
+        return
+      }
+      try {
+        const { data } = await tweetsAPI.reply({ id: this.modalTweet.id, comment: this.comment })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.comment = ''
+        this.closeReplyModal()
+        this.$emit('after-submit')
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法新增回覆，請稍後再試'
+        })
+      }
+
     },
   },
   created() {

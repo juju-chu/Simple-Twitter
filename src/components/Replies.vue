@@ -34,60 +34,27 @@
 </template>
 
 <script>
-import tweetsAPI from './../apis/tweets'
-import { Toast } from './../utils/helpers'
 
 export default {
   name: 'Replies',
   props: {
     initialTweet: {
       type: Object,
-      required: true,
+      required: true
     },
+    replies: {
+      type: Array,
+      required: true
+    }
   },
   data() {
     return {
-      tweet: this.initialTweet,
-      replies: {
-        id: -1,
-        userId: -1,
-        name: '',
-        account: '',
-        avatar: '',
-        comment: '',
-        replyTime: '',
-      },
+      tweet: this.initialTweet
     }
   },
   watch: {
     initialTweet(newValue) {
       this.tweet = newValue
-    },
-  },
-  created() {
-    this.fetchReplies()
-  },
-  methods: {
-    async fetchReplies() {
-      try {
-        const { id: tweetId } = this.$route.params
-        const { data } = await tweetsAPI.getTweetReplies({ tweetId })
-        this.replies = data.map((reply) => ({
-          id: reply.id,
-          userId: reply.UserId,
-          name: reply.User.name,
-          account: reply.User.account,
-          avatar: reply.User.avatar,
-          comment: reply.comment,
-          replyTime: reply.replyTime,
-        }))
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得回覆資訊，請稍後再試',
-        })
-      }
     },
   },
 }

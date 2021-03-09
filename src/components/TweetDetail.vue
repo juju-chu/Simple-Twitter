@@ -39,6 +39,7 @@
       :initial-is-reply-modal-toggle="isReplyModalToggle"
       :modal-tweet="modalTweet"
       @after-close-modal="closeReplyModal"
+      @after-submit="afterSubmit"
     />
   </div>
 </template>
@@ -72,6 +73,9 @@ export default {
     closeReplyModal(isReplyModalToggle) {
       this.isReplyModalToggle = isReplyModalToggle
     },
+    afterSubmit() {
+      this.$emit('after-submit')
+    }
   },
   watch: {
     initialTweet(newValue) {
@@ -117,7 +121,7 @@ export default {
 }
 .createdAt {
   margin-top: 15px;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 15px;
   color: #657786;
 }

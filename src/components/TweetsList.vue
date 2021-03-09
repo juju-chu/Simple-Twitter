@@ -75,6 +75,7 @@
       :initial-is-reply-modal-toggle="isReplyModalToggle"
       :modal-tweet="modalTweet"
       @after-close-modal="closeReplyModal"
+      @after-submit="afterSubmit"
     />
   </div>
 </template>
@@ -158,6 +159,26 @@ export default {
         this.isProcessing = false
       }
     },
+    async afterSubmit() {
+      const { userId, account, avatar, name } = this.tweet
+      try {
+        const { data } = await tweetsAPI.getTweet({ tweetId: this.tweet.id })
+        this.tweet = {
+          ...data,
+          userId,
+          account,
+          avatar,
+          name
+        }
+      }
+      catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得推文資訊，請稍後再試'
+        })
+      }
+    }
   },
 }
 </script>

@@ -11,10 +11,14 @@
       </div>
 
       <!-- TweetDetail -->
-      <TweetDetail class="tweet-detail" :initial-tweet="tweet" />
+      <TweetDetail
+        class="tweet-detail"
+        :initial-tweet="tweet"
+        @after-submit="afterSubmit"
+      />
 
       <!-- Replies -->
-      <Replies class="replies" :initial-tweet="tweet" />
+      <Replies class="replies" :initial-tweet="tweet" :replies="replies" />
     </div>
 
     <!-- Recommendation -->
@@ -41,10 +45,12 @@ export default {
   data() {
     return {
       tweet: {},
+      replies: []
     }
   },
   created() {
     this.fetchTweet()
+    this.fetchReplies()
   },
   methods: {
     async fetchTweet() {
@@ -52,6 +58,7 @@ export default {
         const { id: tweetId } = this.$route.params
         const { data } = await tweetsAPI.getTweet({ tweetId })
         const {
+          id,
           UserId: userId,
           description,
           createdAt,
@@ -61,6 +68,7 @@ export default {
         } = data
         const time = this.transformTime(createdAt)
         this.tweet = {
+          id,
           userId,
           avatar: user.avatar,
           name: user.name,
@@ -76,6 +84,27 @@ export default {
         Toast.fire({
           icon: 'error',
           title: '無法取得資料，請稍後再試',
+        })
+      }
+    },
+    async fetchReplies() {
+      try {
+        const { id: tweetId } = this.$route.params
+        const { data } = await tweetsAPI.getTweetReplies({ tweetId })
+        this.replies = data.map((reply) => ({
+          id: reply.id,
+          userId: reply.UserId,
+          name: reply.User.name,
+          account: reply.User.account,
+          avatar: reply.User.avatar,
+          comment: reply.comment,
+          replyTime: reply.replyTime,
+        }))
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得回覆資訊，請稍後再試',
         })
       }
     },
@@ -99,6 +128,10 @@ export default {
 
       return `${time}・${date}`
     },
+    async afterSubmit() {
+      this.fetchTweet()
+      this.fetchReplies()
+    }
   },
 }
 </script>
