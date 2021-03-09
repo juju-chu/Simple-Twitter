@@ -116,7 +116,6 @@
             v-model="newTweet"
             v-focus
             @keyup.esc="cancelModal"
-            @keyup.enter="postTweet"
           ></textarea>
         </div>
         <div class="post-tweet-model-button">
@@ -217,7 +216,9 @@ export default {
         if (data.status !== 'success') {
           throw new Error(data.message)
         }
+        this.newTweet = ''
         this.isShowModal = false
+        this.isProcession = false
         this.$emit('after-post-tweet')
       } catch (error) {
         console.log(error)
