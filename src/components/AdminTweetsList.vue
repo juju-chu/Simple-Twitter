@@ -12,7 +12,10 @@
           </div>
           <div class="tweet-description">{{ tweet.description }}</div>
         </div>
-        <button @click.stop.prevent="deleteTweet(tweet.id)">
+        <button
+          @click.stop.prevent="deleteTweet(tweet.id)"
+          :disabled="isProcessing"
+        >
           <img src="./../assets/icon_close.svg" alt="" />
         </button>
       </div>
@@ -37,6 +40,7 @@ export default {
   data() {
     return {
       tweets: [],
+      isProcessing: false,
     }
   },
   created() {
@@ -67,6 +71,23 @@ export default {
         Toast.fire({
           icon: 'error',
           title: '無法取得推文，請稍後再試',
+        })
+      }
+    },
+    async deleteTweet(tweetId) {
+      try {
+        this.isProcessing = true
+        const { data } = await adminAPI.tweets.delete({ tweetId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.fetchTweets()
+        this.isProcessing = false
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法刪除推文，請稍後再試',
         })
       }
     },
