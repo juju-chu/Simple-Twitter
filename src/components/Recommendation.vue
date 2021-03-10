@@ -4,7 +4,7 @@
       <p>跟隨誰</p>
     </header>
     <div class="follow-list">
-      <div v-for="user in users" :key="user.id" class="follow-card">
+      <div v-for="user in topUsers" :key="user.id" class="follow-card">
         <router-link :to="{ name: 'user', params: { id: user.id } }">
           <img class="user-avatar" :src="user.avatar" alt="" />
         </router-link>
@@ -18,16 +18,20 @@
         </div>
         <div class="action">
           <button
+            :disabled="isProcessing"
             v-if="user.isFollowed"
             @click.stop.prevent="removeFollowing(user.id)"
             class="followed-btn"
+            :class="{ disabled: isProcessing }"
           >
             正在跟隨
           </button>
           <button
+            :disabled="isProcessing"
             @click.stop.prevent="addFollowing(user.id)"
             v-else
             class="to-follow-btn"
+            :class="{ disabled: isProcessing }"
           >
             跟隨
           </button>
@@ -35,7 +39,9 @@
       </div>
     </div>
     <footer>
-      <p @click.prevent.stop="showMoreUser">顯示更多</p>
+      <p @click.prevent.stop="showMoreUser">
+        {{ isShowMore ? '顯示較少' : '顯示更多' }}
+      </p>
     </footer>
   </div>
 </template>
@@ -43,9 +49,7 @@
 <style scoped>
 .recommendation-wrapper {
   width: 350px;
-  height: 517px;
-  border-radius: 14px;
-  background: #f5f8fa;
+  min-height: 517px;
 }
 
 header p {
@@ -57,6 +61,9 @@ header p {
 }
 
 header {
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  background: #f5f8fa;
   height: 45px;
   border-bottom: 1px solid #e6ecf0;
 }
@@ -66,6 +73,7 @@ header {
   grid-template-columns: 65px 1fr 1fr;
   height: 71px;
   border-bottom: 1px solid #e6ecf0;
+  background: #f5f8fa;
 }
 
 .user-avatar {
@@ -117,6 +125,10 @@ button.followed-btn {
   outline: none;
 }
 
+button.followed-btn.disabled {
+  background: #ecbd9e;
+}
+
 button.to-follow-btn {
   width: 62px;
   height: 30px;
@@ -130,100 +142,114 @@ button.to-follow-btn {
   outline: none;
 }
 
+button.to-follow-btn.disabled {
+  color: #ecbd9e;
+  border: 1px solid #ecbd9e;
+}
+
 footer {
   height: 45px;
+  background: #f5f8fa;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
 }
 
 footer p {
-  margin-top: 11px;
   margin-left: 15px;
   font-size: 15px;
-  font-weight: bolder;
+  font-weight: normal;
+  line-height: 45px;
   color: #ff6600;
   cursor: pointer;
 }
 </style>
 
 <script>
-//Dummy users, to be removed
-const dummyUsers = [
-  {
-    id: 2,
-    name: 'Lucia Raynor',
-    account: 'user2',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=12.529173430492301',
-    isFollowed: true,
-  },
-  {
-    id: 1,
-    name: 'Robert Stroman',
-    account: 'user1',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=19.49557651044964',
-    isFollowed: false,
-  },
-  {
-    id: 6,
-    name: 'Ashley Ondricka',
-    account: 'user6',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=26.314776042720133',
-    isFollowed: false,
-  },
-  {
-    id: 5,
-    name: 'Tracy Towne',
-    account: 'user5',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=37.8808195638617',
-    isFollowed: false,
-  },
-  {
-    id: 7,
-    name: 'Priscilla Stehr',
-    account: 'user7',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=33.233134434246146',
-    isFollowed: false,
-  },
-  {
-    id: 8,
-    name: 'Zachary Schneider',
-    account: 'user8',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=12.96476705674201',
-    isFollowed: false,
-  },
-]
+import usersAPI from '../apis/users'
+import { Toast } from '../utils/helpers'
 
 export default {
   name: 'Recommendation',
   data() {
     return {
-      users: [],
+      totalTopUsers: [],
+      topUsers: [],
+      isShowMore: false,
+      isProcessing: false
     }
   },
   methods: {
-    fetchUsers() {
-      //TODO: 用API取得random users資料，先使用dummy users
-      this.users = [...dummyUsers]
+    async fetchUsers() {
+      try {
+        const { data } = await usersAPI.getTopUsers()
+        this.totalTopUsers = data
+
+        for (let i = 0; i < 6; i++) {
+          this.topUsers.push(this.totalTopUsers[i])
+        }
+
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得Top Users資訊，請稍後再試'
+        })
+      }
     },
     showMoreUser() {
-      //TODO: 顯示更多用戶
-      console.log('show more user')
-    },
-    addFollowing(userId) {
-      //TODO: 透過API發送請求新增follow
-      this.users = this.users.map((user) => {
-        if (user.id === userId) {
-          user.isFollowed = true
+      this.isShowMore = !this.isShowMore
+      if (this.isShowMore) {
+        this.topUsers = this.totalTopUsers
+      } else {
+        this.topUsers = []
+        for (let i = 0; i < 6; i++) {
+          this.topUsers.push(this.totalTopUsers[i])
         }
-        return user
-      })
+      }
     },
-    removeFollowing(userId) {
-      //TODO: 透過API發送請求移除follow
-      this.users = this.users.map((user) => {
-        if (user.id === userId) {
-          user.isFollowed = false
+    async addFollowing(userId) {
+      try {
+        this.isProcessing = true
+        const { data } = await usersAPI.addFollow({ id: userId })
+        if (data.status != 'success') {
+          throw new Error(data.message)
         }
-        return user
-      })
+        this.totalTopUsers = this.totalTopUsers.map((user) => {
+          if (user.id === userId) {
+            user.isFollowed = true
+          }
+          return user
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法追蹤用戶，請稍後再試'
+        })
+      }
+      this.isProcessing = false
+    },
+    async removeFollowing(userId) {
+      try {
+        this.isProcessing = true
+        const { data } = await usersAPI.deleteFollow({ followingId: userId })
+        if (data.status != 'success') {
+          throw new Error(data.message)
+        }
+        this.totalTopUsers = this.totalTopUsers.map((user) => {
+          if (user.id === userId) {
+            user.isFollowed = false
+          }
+          return user
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取消追蹤用戶，請稍後再試'
+        })
+      }
+      this.isProcessing = false
     },
   },
   created() {

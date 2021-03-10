@@ -16,6 +16,9 @@ export default {
   getCurrentUser() {
     return apiHelper.get('/users/currentUser')
   },
+  getTopUsers() {
+    return apiHelper.get('/users/top')
+  },
   updateUser({ id, account, name, email, password, checkPassword }) {
     return apiHelper.put(`users/${id}`, {
       account,
