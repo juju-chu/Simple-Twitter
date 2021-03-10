@@ -103,6 +103,9 @@ export default {
           name: data.name,
           email: data.email,
           password: data.password,
+          role: (data.isAdmin ? 'Admin' : 'User'),
+          avatar: data.avatar,
+          introduction: data.introduction
         }
       } catch (error) {
         console.log(error)
@@ -112,29 +115,35 @@ export default {
         })
       }
     },
-    async handleAfterSubmit({ account, name, email, password, checkPassword }) {
+    async handleAfterSubmit({ account, name, email, password }) {
       try {
         this.isProcessing = true
         const { data } = await usersAPI.updateUser({
-          id: this.$route.params,
+          id: this.$route.params.id,
           account,
           name,
           email,
           password,
-          checkPassword,
+          role: this.userData.role,
+          avatar: this.userData.avatar,
+          introduction: this.userData.introduction
         })
         if (data.status !== 'success') {
           throw new Error(data.message)
         }
-        this.$router.push('/signin')
+
+        Toast.fire({
+          icon: 'success',
+          title: '更新完成',
+        })
       } catch (error) {
-        this.isProcessing = false
         console.log(error)
         Toast.fire({
           icon: 'error',
           title: '無法更新用戶資訊，請稍後再試',
         })
       }
+      this.isProcessing = false
     },
   },
   created() {
