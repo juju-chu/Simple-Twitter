@@ -16,6 +16,7 @@
   display: grid;
   grid-template-columns: 378px 1062px;
   grid-template-rows: 100vh;
+  width: 100vw;
 }
 .admin-side-bar {
   position: fixed;
@@ -32,8 +33,11 @@
   border-left: 1px solid #e6ecf0;
 }
 .header {
-  width: auto;
+  position: fixed;
+  z-index: 1;
+  width: 100vw;
   height: 55px;
+  background: #fff;
   border-bottom: 1px solid #e6ecf0;
 }
 .header-title {
@@ -44,6 +48,9 @@
   font-weight: 700;
   font-size: 18px;
   color: #1c1c1c;
+}
+.admin-user-card {
+  margin-top: 70px;
 }
 </style>
 
