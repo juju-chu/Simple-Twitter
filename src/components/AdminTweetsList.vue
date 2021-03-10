@@ -48,8 +48,11 @@ export default {
       try {
         const { data } = await adminAPI.tweets.get()
         this.tweets = data.map((tweet) => {
-          const { id, description, createdAt, User } = tweet
+          let { id, description, createdAt, User } = tweet
           const { name, account, avatar } = User
+          if (description.length >= 50) {
+            description = description + ' ...'
+          }
           return {
             id,
             description,
