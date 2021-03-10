@@ -40,12 +40,18 @@
           :key="follow.id"
           class="follow-card"
         >
-          <img class="user-avatar" :src="follow.avatar" alt="" />
+          <router-link :to="{ name: 'user', params: { id: follow.id } }">
+            <img class="user-avatar" :src="follow.avatar" alt="" />
+          </router-link>
           <div class="card-content">
             <div class="profile-action-wrapper">
               <div class="profile">
-                <div class="user-name">{{ follow.name }}</div>
-                <div class="user-account">@{{ follow.account }}</div>
+                <router-link :to="{ name: 'user', params: { id: follow.id } }">
+                  <div class="user-name">{{ follow.name }}</div>
+                </router-link>
+                <router-link :to="{ name: 'user', params: { id: follow.id } }">
+                  <div class="user-account">@{{ follow.account }}</div>
+                </router-link>
               </div>
               <div class="action">
                 <button
