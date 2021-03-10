@@ -65,6 +65,14 @@ export default {
       isReplyModalToggle: false,
     }
   },
+  watch: {
+    initialTweet(newValue) {
+      this.tweet = {
+        ...this.tweet,
+        ...newValue,
+      }
+    },
+  },
   methods: {
     toggleReplyModal(tweet) {
       this.isReplyModalToggle = true
@@ -75,11 +83,6 @@ export default {
     },
     afterSubmit() {
       this.$emit('after-submit')
-    }
-  },
-  watch: {
-    initialTweet(newValue) {
-      this.tweet = newValue
     },
   },
 }

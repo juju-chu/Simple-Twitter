@@ -34,27 +34,29 @@
 </template>
 
 <script>
-
 export default {
   name: 'Replies',
   props: {
     initialTweet: {
       type: Object,
-      required: true
+      required: true,
     },
     replies: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      tweet: this.initialTweet
+      tweet: this.initialTweet,
     }
   },
   watch: {
     initialTweet(newValue) {
-      this.tweet = newValue
+      this.tweet = {
+        ...this.tweet,
+        ...newValue,
+      }
     },
   },
 }

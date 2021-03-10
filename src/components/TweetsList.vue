@@ -107,6 +107,14 @@ export default {
       isProcessing: false,
     }
   },
+  watch: {
+    initialTweet(newValue) {
+      this.tweet = {
+        ...this.tweet,
+        ...newValue,
+      }
+    },
+  },
   computed: {
     ...mapState(['currentUser']),
   },
@@ -168,17 +176,16 @@ export default {
           userId,
           account,
           avatar,
-          name
+          name,
         }
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error)
         Toast.fire({
           icon: 'error',
-          title: '無法取得推文資訊，請稍後再試'
+          title: '無法取得推文資訊，請稍後再試',
         })
       }
-    }
+    },
   },
 }
 </script>
