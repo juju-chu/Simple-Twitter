@@ -15,6 +15,24 @@ import store from './../store'
 
 Vue.use(VueRouter)
 
+const authorizeIsAdmin = (to, from, next) => {
+  const currentUser = store.state.currentUser
+  if (currentUser && !currentUser.isAdmin) {
+    next('/404')
+    return
+  }
+  next()
+}
+
+const authorizeIsUser = (to, from, next) => {
+  const currentUser = store.state.currentUser
+  if (currentUser && currentUser.isAdmin) {
+    next('/404')
+    return
+  }
+  next()
+}
+
 const routes = [
   {
     path: '/',
@@ -35,41 +53,49 @@ const routes = [
     path: '/users/:id/setting',
     name: 'user-setting',
     component: UserSetting,
+    beforeEnter: authorizeIsUser,
   },
   {
     path: '/users/:id',
     name: 'user',
     component: User,
+    beforeEnter: authorizeIsUser,
   },
   {
     path: '/users/:id/replied_tweets',
     name: 'user-replied-tweets',
     component: User,
+    beforeEnter: authorizeIsUser,
   },
   {
     path: '/users/:id/likes',
     name: 'user-likes',
     component: User,
+    beforeEnter: authorizeIsUser,
   },
   {
     path: '/users/:id/:tab',
     name: 'user-followers',
     component: UserFollowShip,
+    beforeEnter: authorizeIsUser,
   },
   {
     path: '/users/:id/:tab',
     name: 'user-followings',
     component: UserFollowShip,
+    beforeEnter: authorizeIsUser,
   },
   {
     path: '/tweets',
     name: 'tweets',
     component: Tweets,
+    beforeEnter: authorizeIsUser,
   },
   {
     path: '/tweets/:id',
     name: 'tweets-replies',
     component: TweetReplies,
+    beforeEnter: authorizeIsUser,
   },
   {
     path: '/admin/signin',
@@ -80,11 +106,13 @@ const routes = [
     path: '/admin/tweets',
     name: 'admin-tweets',
     component: AdminTweets,
+    beforeEnter: authorizeIsAdmin,
   },
   {
     path: '/admin/users',
     name: 'admin-users',
     component: AdminUsers,
+    beforeEnter: authorizeIsAdmin,
   },
   {
     path: '*',
