@@ -46,9 +46,20 @@
           <img src="./../assets/btn_noti_check.svg" />
         </button>
       </div>
-      <div class="btn btn-follow-wrapper">
-        <button class="btn-follow">
-          <span class="btn-text-white">正在跟隨</span>
+      <div class="btn">
+        <button
+          v-if="isFollowed"
+          class="btn-wrapper-followed"
+          @click.stop.prevent="deleteFollow"
+        >
+          <span class="btn-text-followed">正在跟隨</span>
+        </button>
+        <button
+          v-else
+          class="btn-wrapper-follow"
+          @click.stop.prevent="addFollow"
+        >
+          <span class="btn-text-follow">跟隨</span>
         </button>
       </div>
     </div>
@@ -187,6 +198,7 @@ export default {
       initialAvatar: '',
       isSelf: false,
       isNoti: false,
+      isFollowed: false,
     }
   },
   computed: {
@@ -206,7 +218,11 @@ export default {
         ...newValue,
       }
       this.checkIsSelf()
+      this.checkFollow()
     },
+  },
+  created() {
+    this.checkFollow()
   },
   methods: {
     checkIsSelf() {
@@ -221,6 +237,58 @@ export default {
     },
     clickNotiChcek() {
       this.isNoti = false
+    },
+    async checkFollow() {
+      try {
+        const { data } = await usersAPI.getFollowers({ userId: this.user.id })
+        data.map((follower) => {
+          if (follower.id === this.currentUser.id) {
+            this.isFollowed = true
+          } else {
+            this.isFollowed = false
+          }
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法讀取追隨狀態，請稍後再試',
+        })
+      }
+    },
+    async addFollow() {
+      try {
+        const { data } = await usersAPI.addFollow({ id: this.user.id })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.isFollowed = true
+        this.user.followingsCount++
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法新增追隨，請稍後再試',
+        })
+      }
+    },
+    async deleteFollow() {
+      try {
+        const { data } = await usersAPI.deleteFollow({
+          followingId: this.user.id,
+        })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.isFollowed = false
+        this.user.followingsCount--
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取消追隨，請稍後再試',
+        })
+      }
     },
     showModal() {
       this.isShowModal = true
@@ -373,7 +441,21 @@ img {
 .btn-noti {
   margin: 0 10px 0 10px;
 }
-.btn-follow-wrapper {
+.btn-wrapper-follow {
+  padding: 0;
+  width: 92px;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid #ff6600;
+  border-radius: 100px;
+}
+.btn-text-follow {
+  line-height: 40px;
+  font-weight: bold;
+  font-size: 15px;
+  color: #ff6600;
+}
+.btn-wrapper-followed {
   padding: 0;
   width: 92px;
   height: 40px;
@@ -381,7 +463,7 @@ img {
   border: 1px solid #ff6600;
   border-radius: 100px;
 }
-.btn-text-white {
+.btn-text-followed {
   line-height: 40px;
   font-weight: bold;
   font-size: 15px;
