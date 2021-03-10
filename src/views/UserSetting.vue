@@ -102,7 +102,6 @@ export default {
           account: data.account,
           name: data.name,
           email: data.email,
-          password: data.password,
           role: (data.isAdmin ? 'Admin' : 'User'),
           avatar: data.avatar,
           introduction: data.introduction
