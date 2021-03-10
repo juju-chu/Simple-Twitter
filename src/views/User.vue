@@ -195,7 +195,7 @@ export default {
           account: tweet.User.account,
           name: tweet.User.name,
           avatar: tweet.User.avatar,
-          description: tweet.description,
+          description: tweet.comment,
           createdAt: tweet.createdAt,
           likeCount: tweet.likeCount,
           replyCount: tweet.replyCount,
