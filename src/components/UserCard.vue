@@ -212,6 +212,8 @@ export default {
     checkIsSelf() {
       if (this.user.id === this.currentUser.id) {
         this.isSelf = true
+      } else {
+        this.isSelf = false
       }
     },
     clickNoti() {
