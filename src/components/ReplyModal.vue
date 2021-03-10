@@ -62,7 +62,14 @@
               ></textarea>
             </div>
             <footer class="reply-modal-footer">
-              <button class="reply-btn" type="submit">回覆</button>
+              <button
+                :disabled="isProcessing"
+                class="reply-btn"
+                :class="{ disabled: isProcessing }"
+                type="submit"
+              >
+                回覆
+              </button>
             </footer>
           </div>
         </form>
@@ -73,7 +80,6 @@
 </template>
 
 <style scoped>
-/* ==========Modal Style============= */
 .modal-background-wrapper {
   position: fixed;
   top: 0px;
@@ -217,7 +223,10 @@ textarea.reply-comment {
   line-height: 18px;
   color: #ffffff;
 }
-/* ==========Modal Style End============= */
+
+.disabled {
+  background: #ecbd9e;
+}
 </style>
 
 <script>
@@ -244,6 +253,7 @@ export default {
     return {
       isReplyModalToggle: false,
       comment: '',
+      isProcessing: false
     }
   },
   methods: {
@@ -260,6 +270,7 @@ export default {
         return
       }
       try {
+        this.isProcessing = true
         const { data } = await tweetsAPI.reply({ id: this.modalTweet.id, comment: this.comment })
         if (data.status !== 'success') {
           throw new Error(data.message)
@@ -274,7 +285,7 @@ export default {
           title: '無法新增回覆，請稍後再試'
         })
       }
-
+      this.isProcessing = false
     },
   },
   created() {
