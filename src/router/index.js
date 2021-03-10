@@ -74,13 +74,13 @@ const routes = [
     beforeEnter: authorizeIsUser,
   },
   {
-    path: '/users/:id/:tab',
+    path: '/users/:id/followers',
     name: 'user-followers',
     component: UserFollowShip,
     beforeEnter: authorizeIsUser,
   },
   {
-    path: '/users/:id/:tab',
+    path: '/users/:id/followings',
     name: 'user-followings',
     component: UserFollowShip,
     beforeEnter: authorizeIsUser,
@@ -131,7 +131,7 @@ router.beforeEach(async (to, from, next) => {
   const pathsWithoutAuthentication = ['signup', 'signin', 'admin-signin']
   let isAuthenticated = store.state.isAuthenticated
   let isAdmin = store.state.currentUser.isAdmin
-  const { id, tab } = to.params
+  //const { id, tab } = to.params
 
   if (token && token !== tokenInStore) {
     isAuthenticated = await store.dispatch('fetchCurrentUser')
@@ -150,18 +150,6 @@ router.beforeEach(async (to, from, next) => {
     }
 
     return
-  }
-
-  //Redirect only when tab is followings and next id is different with current id(prevent infinite redirect loop)
-  if (tab === from.params.tab && id !== from.params.id) {
-    from.params.id = id //set current id to next id for preventing next forEach redirect again
-    if (tab === 'followings') {
-      next({ name: 'user-followings', params: { id, tab } })
-      return
-    } else if (tab === 'followers') {
-      next({ name: 'user-followers', params: { id, tab } })
-      return
-    }
   }
 
   next()

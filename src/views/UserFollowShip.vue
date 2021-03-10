@@ -4,7 +4,9 @@
     <div class="center-column">
       <!-- header -->
       <header>
-        <button @click="$router.back()">
+        <button
+          @click="$router.push({ name: 'user', params: { id: user.id } })"
+        >
           <img class="header-back-icon" src="./../assets/icon_back.svg" />
         </button>
         <div class="header-user">
@@ -40,31 +42,39 @@
           :key="follow.id"
           class="follow-card"
         >
-          <router-link :to="{ name: 'user', params: { id: follow.id } }">
+          <router-link :to="{ name: 'user', params: { id: follow.id | -1 } }">
             <img class="user-avatar" :src="follow.avatar" alt="" />
           </router-link>
           <div class="card-content">
             <div class="profile-action-wrapper">
               <div class="profile">
-                <router-link :to="{ name: 'user', params: { id: follow.id } }">
+                <router-link
+                  :to="{ name: 'user', params: { id: follow.id | -1 } }"
+                >
                   <div class="user-name">{{ follow.name }}</div>
                 </router-link>
-                <router-link :to="{ name: 'user', params: { id: follow.id } }">
+                <router-link
+                  :to="{ name: 'user', params: { id: follow.id | -1 } }"
+                >
                   <div class="user-account">@{{ follow.account }}</div>
                 </router-link>
               </div>
               <div class="action">
                 <button
+                  :disabled="isProcessing"
                   v-if="follow.isFollowed"
                   @click.stop.prevent="removeFollowing(follow.id)"
                   class="followed-btn"
+                  :class="{ disabled: isProcessing }"
                 >
                   正在跟隨
                 </button>
                 <button
+                  :disabled="isProcessing"
                   @click.stop.prevent="addFollowing(follow.id)"
                   v-else
                   class="to-follow-btn"
+                  :class="{ disabled: isProcessing }"
                 >
                   跟隨
                 </button>
@@ -228,6 +238,10 @@ button.followed-btn {
   outline: none;
 }
 
+button.followed-btn.disabled {
+  background: #ecbd9e;
+}
+
 button.to-follow-btn {
   width: 62px;
   height: 30px;
@@ -238,6 +252,11 @@ button.to-follow-btn {
   border-radius: 100px;
   border: 1px solid #ff6600;
   outline: none;
+}
+
+button.to-follow-btn.disabled {
+  color: #ecbd9e;
+  border: 1px solid #ecbd9e;
 }
 
 .introduction {
@@ -286,6 +305,7 @@ export default {
       },
       followShipData: [],
       tab: 'followers',
+      isProcessing: false
     }
   },
   methods: {
@@ -340,16 +360,8 @@ export default {
         })
       }
     },
-    setTab(tab) {
-      if (tab === 'followings') {
-        this.tab = 'followings'
-      } else if (tab === 'followers') {
-        this.tab = 'followers'
-      } else {
-        this.$router.push('/*')
-      }
-    },
     redirectTab(tab) {
+      this.tab = tab
       if (tab === 'followings') {
         this.$router.push({
           name: 'user-followings',
@@ -361,51 +373,75 @@ export default {
           params: { id: this.user.id, tab },
         })
       }
-      this.setTab(tab)
+      this.fetchFollowData(this.user.id, tab)
     },
-    addFollowing(userId) {
-      //TODO: 透過API發送請求新增follow
-      this.followShipData = this.followShipData.map((follow) => {
-        if (follow.id === userId) {
-          follow.isFollowed = true
+    async addFollowing(userId) {
+      try {
+        this.isProcessing = true
+        const { data } = await usersAPI.addFollow({ id: userId })
+        if (data.status != 'success') {
+          throw new Error(data.message)
         }
-        return follow
-      })
+        this.followShipData = this.followShipData.map((follow) => {
+          if (follow.id === userId) {
+            follow.isFollowed = true
+          }
+          return follow
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法追蹤用戶，請稍後再試'
+        })
+      }
+      this.isProcessing = false
     },
-    removeFollowing(userId) {
-      //TODO: 透過API發送請求移除follow
-      this.followShipData = this.followShipData.map((follow) => {
-        if (follow.id === userId) {
-          follow.isFollowed = false
+    async removeFollowing(userId) {
+      try {
+        this.isProcessing = true
+        const { data } = await usersAPI.deleteFollow({ followingId: userId })
+        if (data.status != 'success') {
+          throw new Error(data.message)
         }
-        return follow
-      })
+        this.followShipData = this.followShipData.map((follow) => {
+          if (follow.id === userId) {
+            follow.isFollowed = false
+          }
+          return follow
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取消追蹤用戶，請稍後再試'
+        })
+      }
+      this.isProcessing = false
     },
   },
   created() {
-    const { id: userId, tab } = this.$route.params
-    this.fetchUser(userId)
-    this.setTab(tab)
-    this.fetchFollowData(userId, tab)
-  },
-  watch: {
-    tab(newValue) {
-      if (this.user.id !== -1) {
-        this.fetchFollowData(this.user.id, newValue)
-      }
-    },
-  },
-  beforeRouteUpdate(to, from, next) {
-    const { id: userId, tab } = to.params
-    this.setTab(tab)
+    const { id: userId } = this.$route.params
+    const tab = this.$route.name
 
-    //fetch user and follow data only when next router user id is different with current user id
-    if (Number(userId) !== this.user.id) {
-      this.fetchUser(userId)
-      this.fetchFollowData(userId, tab)
+    if (tab === 'user-followings') {
+      this.tab = 'followings'
+    } else if (tab === 'user-followers') {
+      this.tab = 'followers'
     }
 
-    next()
+    this.fetchUser(userId)
+    this.fetchFollowData(userId, this.tab)
+
+  },
+  watch: {
+    $route(to) {
+      const targetId = to.params.id
+      if (this.user.id !== targetId) {
+        this.fetchUser(targetId)
+        this.fetchFollowData(targetId, this.tab)
+      }
+    }
   },
 }
 </script>
