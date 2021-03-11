@@ -37,54 +37,12 @@
 
       <!-- followship-list -->
       <div class="followship-list">
-        <div
+        <FollowCard
           v-for="follow in followShipData"
           :key="follow.id"
           class="follow-card"
-        >
-          <router-link :to="{ name: 'user', params: { id: follow.id | -1 } }">
-            <img class="user-avatar" :src="follow.avatar" alt="" />
-          </router-link>
-          <div class="card-content">
-            <div class="profile-action-wrapper">
-              <div class="profile">
-                <router-link
-                  :to="{ name: 'user', params: { id: follow.id | -1 } }"
-                >
-                  <div class="user-name">{{ follow.name }}</div>
-                </router-link>
-                <router-link
-                  :to="{ name: 'user', params: { id: follow.id | -1 } }"
-                >
-                  <div class="user-account">@{{ follow.account }}</div>
-                </router-link>
-              </div>
-              <div v-if="follow.id !== currentUser.id" class="action">
-                <button
-                  :disabled="isProcessing"
-                  v-if="follow.isFollowed"
-                  @click.stop.prevent="removeFollowing(follow.id)"
-                  class="followed-btn"
-                  :class="{ disabled: isProcessing }"
-                >
-                  正在跟隨
-                </button>
-                <button
-                  :disabled="isProcessing"
-                  @click.stop.prevent="addFollowing(follow.id)"
-                  v-else
-                  class="to-follow-btn"
-                  :class="{ disabled: isProcessing }"
-                >
-                  跟隨
-                </button>
-              </div>
-            </div>
-            <div class="introduction">
-              {{ follow.introduction }}
-            </div>
-          </div>
-        </div>
+          :initial-follow="follow"
+        />
       </div>
     </div>
     <Recommendation class="recommendation-list" />
@@ -92,17 +50,18 @@
 </template>
 
 <script>
-import SideBar from '../components/SideBar'
-import Recommendation from '../components/Recommendation'
-import usersAPI from '../apis/users'
+import SideBar from './../components/SideBar'
+import Recommendation from './../components/Recommendation'
+import FollowCard from './../components/FollowCard'
+import usersAPI from './../apis/users'
 import { Toast } from './../utils/helpers'
-import { mapState } from 'vuex'
 
 export default {
   name: 'UserFollowShip',
   components: {
     SideBar,
     Recommendation,
+    FollowCard
   },
   data() {
     return {
@@ -118,8 +77,7 @@ export default {
         followersCount: -1,
       },
       followShipData: [],
-      tab: 'followers',
-      isProcessing: false
+      tab: 'followers'
     }
   },
   methods: {
@@ -175,7 +133,12 @@ export default {
       }
     },
     redirectTab(tab) {
-      this.tab = tab
+      if (this.tab === tab) {
+        return
+      } else {
+        this.tab = tab
+      }
+
       if (tab === 'followings') {
         this.$router.push({
           name: 'user-followings',
@@ -187,52 +150,8 @@ export default {
           params: { id: this.user.id, tab },
         })
       }
-      this.fetchFollowData(this.user.id, tab)
-    },
-    async addFollowing(userId) {
-      try {
-        this.isProcessing = true
-        const { data } = await usersAPI.addFollow({ id: userId })
-        if (data.status != 'success') {
-          throw new Error(data.message)
-        }
-        this.followShipData = this.followShipData.map((follow) => {
-          if (follow.id === userId) {
-            follow.isFollowed = true
-          }
-          return follow
-        })
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法追蹤用戶，請稍後再試'
-        })
-      }
-      this.isProcessing = false
-    },
-    async removeFollowing(userId) {
-      try {
-        this.isProcessing = true
-        const { data } = await usersAPI.deleteFollow({ followingId: userId })
-        if (data.status != 'success') {
-          throw new Error(data.message)
-        }
-        this.followShipData = this.followShipData.map((follow) => {
-          if (follow.id === userId) {
-            follow.isFollowed = false
-          }
-          return follow
-        })
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取消追蹤用戶，請稍後再試'
-        })
-      }
-      this.isProcessing = false
-    },
+      this.fetchFollowData(this.user.id, this.tab)
+    }
   },
   created() {
     const { id: userId } = this.$route.params
@@ -251,14 +170,23 @@ export default {
   watch: {
     $route(to) {
       const targetId = to.params.id
-      if (this.user.id !== targetId) {
+      let targetTab = ''
+      if (to.name === 'user-followings') {
+        targetTab = 'followings'
+      } else if (to.name === 'user-followers') {
+        targetTab = 'followers'
+      }
+
+      if (this.tab !== targetTab) {
+        this.tab = targetTab
+        this.fetchFollowData(targetId, this.tab)
+      }
+
+      if (this.user.id !== Number(targetId)) {
         this.fetchUser(targetId)
         this.fetchFollowData(targetId, this.tab)
       }
     }
-  },
-  computed: {
-    ...mapState(['currentUser'])
   }
 }
 </script>
@@ -359,84 +287,6 @@ div.tabs {
   width: 600px;
   height: 100vh;
   border-top: 1px solid #e6ecf0;
-}
-
-.follow-card {
-  display: flex;
-  width: 600px;
-  min-height: 50px;
-  margin-top: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #e6ecf0;
-}
-
-.user-avatar {
-  grid-column: 1 / 2;
-  margin-top: 3px;
-  margin-left: 15px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50px;
-}
-
-.profile-action-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 525px;
-  height: 35px;
-  margin-left: 10px;
-}
-
-.user-name {
-  font-weight: bold;
-}
-
-.user-account {
-  color: #657786;
-  font-weight: 500;
-}
-
-button.followed-btn {
-  width: 92px;
-  height: 30px;
-  margin-right: 15px;
-  padding: 0;
-  background: #ff6600;
-  font-size: 15px;
-  color: white;
-  border-radius: 100px;
-  border: none;
-  outline: none;
-}
-
-button.followed-btn.disabled {
-  background: #ecbd9e;
-}
-
-button.to-follow-btn {
-  width: 62px;
-  height: 30px;
-  margin-right: 15px;
-  padding: 0;
-  font-size: 15px;
-  color: #ff6600;
-  border-radius: 100px;
-  border: 1px solid #ff6600;
-  outline: none;
-}
-
-button.to-follow-btn.disabled {
-  color: #ecbd9e;
-  border: 1px solid #ecbd9e;
-}
-
-.introduction {
-  margin-top: 5px;
-  margin-left: 10px;
-  margin-right: 15px;
-  font-weight: 400;
-  font-size: 15px;
 }
 
 /* ==========recommendation-list============= */
