@@ -101,84 +101,6 @@
   </form>
 </template>
 
-<style scoped>
-* {
-  box-sizing: border-box;
-}
-
-.forms {
-  width: 540px;
-}
-
-.signin-form {
-  position: relative;
-  max-height: 212px;
-  margin-bottom: 20px;
-}
-
-.regist-btn {
-  border-radius: 50px;
-  background: #ff6600;
-  border: none;
-  max-width: 540px;
-  margin: 0 auto;
-}
-
-.signup-admin-link {
-  display: flex;
-  justify-content: center;
-  max-width: 540px;
-  max-height: 26px;
-  margin: 20px auto;
-}
-
-.form-control {
-  height: 50px;
-  background: #f5f8fa;
-  border: none;
-  box-shadow: 0 2px 0px 0 #657786;
-  font-size: 19px;
-  font-weight: 500;
-  padding-top: 30px;
-}
-
-.input-label {
-  position: absolute;
-  top: 5px;
-  left: 10px;
-  color: #657786;
-  font-weight: 500;
-}
-
-.link {
-  text-decoration: underline;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 26px;
-  color: #0099ff;
-}
-
-.user-setting-margin {
-  height: 12px;
-}
-
-.action-btns {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin-top: 30px;
-}
-
-.save-btn {
-  background: #ff6600;
-  color: white;
-  width: 122px;
-  height: 50px;
-  border-radius: 50px;
-  border: none;
-}
-</style>
-
 <script>
 import { Toast } from '../utils/helpers'
 
@@ -257,5 +179,82 @@ export default {
     }
   },
 }
-
 </script>
+
+<style scoped>
+* {
+  box-sizing: border-box;
+}
+
+.forms {
+  width: 540px;
+}
+
+.signin-form {
+  position: relative;
+  max-height: 212px;
+  margin-bottom: 20px;
+}
+
+.regist-btn {
+  border-radius: 50px;
+  background: #ff6600;
+  border: none;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.signup-admin-link {
+  display: flex;
+  justify-content: center;
+  max-width: 540px;
+  max-height: 26px;
+  margin: 20px auto;
+}
+
+.form-control {
+  height: 50px;
+  background: #f5f8fa;
+  border: none;
+  box-shadow: 0 2px 0px 0 #657786;
+  font-size: 19px;
+  font-weight: 500;
+  padding-top: 30px;
+}
+
+.input-label {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  color: #657786;
+  font-weight: 500;
+}
+
+.link {
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #0099ff;
+}
+
+.user-setting-margin {
+  height: 12px;
+}
+
+.action-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 30px;
+}
+
+.save-btn {
+  background: #ff6600;
+  color: white;
+  width: 122px;
+  height: 50px;
+  border-radius: 50px;
+  border: none;
+}
+</style>

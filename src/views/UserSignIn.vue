@@ -55,71 +55,6 @@
   </div>
 </template>
 
-
-<style scoped>
-* {
-  box-sizing: border-box;
-}
-
-h1 {
-  font-weight: bold;
-  font-size: 23px;
-  line-height: 33px;
-}
-
-.signin-form {
-  position: relative;
-  max-width: 540px;
-  max-height: 212px;
-  margin: 0 auto;
-}
-
-.btn {
-  border-radius: 50px;
-  background: #ff6600;
-  border: none;
-  max-width: 540px;
-  margin: 30px auto;
-}
-
-.signup-admin-link {
-  display: flex;
-  justify-content: flex-end;
-  max-width: 540px;
-  max-height: 26px;
-  margin: 41px auto;
-}
-
-.form-control {
-  height: 50px;
-  background: #f5f8fa;
-  border: none;
-  box-shadow: 0 2px 0px 0 #657786;
-  margin-top: 20px;
-  padding-top: 30px;
-  font-size: 19px;
-  font-weight: 500;
-}
-
-.input-label {
-  position: absolute;
-  top: 5px;
-  left: 10px;
-  color: #657786;
-  font-weight: 500;
-}
-
-.link {
-  text-decoration: underline;
-  font-size: 18px;
-  line-height: 26px;
-}
-
-p {
-  color: #0099ff;
-}
-</style>
-
 <script>
 import authorizationAPI from "../apis/authorization"
 import { Toast } from "../utils/helpers"
@@ -188,3 +123,67 @@ export default {
 }
 
 </script>
+
+<style scoped>
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 33px;
+}
+
+.signin-form {
+  position: relative;
+  max-width: 540px;
+  max-height: 212px;
+  margin: 0 auto;
+}
+
+.btn {
+  border-radius: 50px;
+  background: #ff6600;
+  border: none;
+  max-width: 540px;
+  margin: 30px auto;
+}
+
+.signup-admin-link {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 540px;
+  max-height: 26px;
+  margin: 41px auto;
+}
+
+.form-control {
+  height: 50px;
+  background: #f5f8fa;
+  border: none;
+  box-shadow: 0 2px 0px 0 #657786;
+  margin-top: 20px;
+  padding-top: 30px;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.input-label {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  color: #657786;
+  font-weight: 500;
+}
+
+.link {
+  text-decoration: underline;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+p {
+  color: #0099ff;
+}
+</style>

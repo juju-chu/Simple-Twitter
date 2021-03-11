@@ -91,6 +91,178 @@
   </div>
 </template>
 
+<script>
+import SideBar from '../components/SideBar'
+import Recommendation from '../components/Recommendation'
+import usersAPI from '../apis/users'
+import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
+
+export default {
+  name: 'UserFollowShip',
+  components: {
+    SideBar,
+    Recommendation,
+  },
+  data() {
+    return {
+      user: {
+        id: -1,
+        account: '',
+        name: '',
+        avatar: '',
+        cover: '',
+        introduction: '',
+        userTweetsCount: -1,
+        followingsCount: -1,
+        followersCount: -1,
+      },
+      followShipData: [],
+      tab: 'followers',
+      isProcessing: false
+    }
+  },
+  methods: {
+    async fetchUser(userId) {
+      try {
+        const { data } = await usersAPI.get({ userId })
+        const {
+          id,
+          account,
+          name,
+          avatar,
+          cover,
+          introduction,
+          userTweetsCount,
+          FollowingsCount: followingsCount,
+          FollowersCount: followersCount,
+        } = data
+        this.user = {
+          id,
+          account,
+          name,
+          avatar,
+          cover,
+          introduction,
+          userTweetsCount,
+          followingsCount,
+          followersCount,
+        }
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得使用者資料，請稍後再試',
+        })
+      }
+    },
+    async fetchFollowData(userId, tab) {
+      try {
+        let data = {}
+        if (tab === 'followings') {
+          data = await usersAPI.getFollowings({ userId })
+        } else if (tab === 'followers') {
+          data = await usersAPI.getFollowers({ userId })
+        }
+
+        this.followShipData = [...data.data]
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得follow ship資訊，請稍後再試',
+        })
+      }
+    },
+    redirectTab(tab) {
+      this.tab = tab
+      if (tab === 'followings') {
+        this.$router.push({
+          name: 'user-followings',
+          params: { id: this.user.id, tab },
+        })
+      } else if (tab === 'followers') {
+        this.$router.push({
+          name: 'user-followers',
+          params: { id: this.user.id, tab },
+        })
+      }
+      this.fetchFollowData(this.user.id, tab)
+    },
+    async addFollowing(userId) {
+      try {
+        this.isProcessing = true
+        const { data } = await usersAPI.addFollow({ id: userId })
+        if (data.status != 'success') {
+          throw new Error(data.message)
+        }
+        this.followShipData = this.followShipData.map((follow) => {
+          if (follow.id === userId) {
+            follow.isFollowed = true
+          }
+          return follow
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法追蹤用戶，請稍後再試'
+        })
+      }
+      this.isProcessing = false
+    },
+    async removeFollowing(userId) {
+      try {
+        this.isProcessing = true
+        const { data } = await usersAPI.deleteFollow({ followingId: userId })
+        if (data.status != 'success') {
+          throw new Error(data.message)
+        }
+        this.followShipData = this.followShipData.map((follow) => {
+          if (follow.id === userId) {
+            follow.isFollowed = false
+          }
+          return follow
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取消追蹤用戶，請稍後再試'
+        })
+      }
+      this.isProcessing = false
+    },
+  },
+  created() {
+    const { id: userId } = this.$route.params
+    const tab = this.$route.name
+
+    if (tab === 'user-followings') {
+      this.tab = 'followings'
+    } else if (tab === 'user-followers') {
+      this.tab = 'followers'
+    }
+
+    this.fetchUser(userId)
+    this.fetchFollowData(userId, this.tab)
+
+  },
+  watch: {
+    $route(to) {
+      const targetId = to.params.id
+      if (this.user.id !== targetId) {
+        this.fetchUser(targetId)
+        this.fetchFollowData(targetId, this.tab)
+      }
+    }
+  },
+  computed: {
+    ...mapState(['currentUser'])
+  }
+}
+</script>
+
 <style scoped>
 .wrapper {
   display: grid;
@@ -277,175 +449,3 @@ button.to-follow-btn.disabled {
   grid-row: 1 / 2;
 }
 </style>
-
-<script>
-import SideBar from '../components/SideBar'
-import Recommendation from '../components/Recommendation'
-import usersAPI from '../apis/users'
-import { Toast } from './../utils/helpers'
-import { mapState } from 'vuex'
-
-export default {
-  name: 'UserFollowShip',
-  components: {
-    SideBar,
-    Recommendation,
-  },
-  data() {
-    return {
-      user: {
-        id: -1,
-        account: '',
-        name: '',
-        avatar: '',
-        cover: '',
-        introduction: '',
-        userTweetsCount: -1,
-        followingsCount: -1,
-        followersCount: -1,
-      },
-      followShipData: [],
-      tab: 'followers',
-      isProcessing: false
-    }
-  },
-  methods: {
-    async fetchUser(userId) {
-      try {
-        const { data } = await usersAPI.get({ userId })
-        const {
-          id,
-          account,
-          name,
-          avatar,
-          cover,
-          introduction,
-          userTweetsCount,
-          FollowingsCount: followingsCount,
-          FollowersCount: followersCount,
-        } = data
-        this.user = {
-          id,
-          account,
-          name,
-          avatar,
-          cover,
-          introduction,
-          userTweetsCount,
-          followingsCount,
-          followersCount,
-        }
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得使用者資料，請稍後再試',
-        })
-      }
-    },
-    async fetchFollowData(userId, tab) {
-      try {
-        let data = {}
-        if (tab === 'followings') {
-          data = await usersAPI.getFollowings({ userId })
-        } else if (tab === 'followers') {
-          data = await usersAPI.getFollowers({ userId })
-        }
-
-        this.followShipData = [...data.data]
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得follow ship資訊，請稍後再試',
-        })
-      }
-    },
-    redirectTab(tab) {
-      this.tab = tab
-      if (tab === 'followings') {
-        this.$router.push({
-          name: 'user-followings',
-          params: { id: this.user.id, tab },
-        })
-      } else if (tab === 'followers') {
-        this.$router.push({
-          name: 'user-followers',
-          params: { id: this.user.id, tab },
-        })
-      }
-      this.fetchFollowData(this.user.id, tab)
-    },
-    async addFollowing(userId) {
-      try {
-        this.isProcessing = true
-        const { data } = await usersAPI.addFollow({ id: userId })
-        if (data.status != 'success') {
-          throw new Error(data.message)
-        }
-        this.followShipData = this.followShipData.map((follow) => {
-          if (follow.id === userId) {
-            follow.isFollowed = true
-          }
-          return follow
-        })
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法追蹤用戶，請稍後再試'
-        })
-      }
-      this.isProcessing = false
-    },
-    async removeFollowing(userId) {
-      try {
-        this.isProcessing = true
-        const { data } = await usersAPI.deleteFollow({ followingId: userId })
-        if (data.status != 'success') {
-          throw new Error(data.message)
-        }
-        this.followShipData = this.followShipData.map((follow) => {
-          if (follow.id === userId) {
-            follow.isFollowed = false
-          }
-          return follow
-        })
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取消追蹤用戶，請稍後再試'
-        })
-      }
-      this.isProcessing = false
-    },
-  },
-  created() {
-    const { id: userId } = this.$route.params
-    const tab = this.$route.name
-
-    if (tab === 'user-followings') {
-      this.tab = 'followings'
-    } else if (tab === 'user-followers') {
-      this.tab = 'followers'
-    }
-
-    this.fetchUser(userId)
-    this.fetchFollowData(userId, this.tab)
-
-  },
-  watch: {
-    $route(to) {
-      const targetId = to.params.id
-      if (this.user.id !== targetId) {
-        this.fetchUser(targetId)
-        this.fetchFollowData(targetId, this.tab)
-      }
-    }
-  },
-  computed: {
-    ...mapState(['currentUser'])
-  }
-}
-</script>

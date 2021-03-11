@@ -14,25 +14,6 @@
   </div>
 </template>
 
-
-<style scoped>
-* {
-  box-sizing: border-box;
-}
-
-h1 {
-  margin-bottom: 20px;
-  font-weight: bold;
-  font-size: 23px;
-  line-height: 33px;
-}
-
-.center-column {
-  display: flex;
-  justify-content: center;
-}
-</style>
-
 <script>
 import SettingForm from '../components/SettingForm'
 import authorizationAPI from '../apis/authorization'
@@ -72,3 +53,21 @@ export default {
 }
 
 </script>
+
+<style scoped>
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 33px;
+}
+
+.center-column {
+  display: flex;
+  justify-content: center;
+}
+</style>

@@ -17,55 +17,6 @@
   </div>
 </template>
 
-<style scoped>
-.wrapper {
-  display: grid;
-  grid-template-columns: 378px 1063px;
-  grid-template-rows: 100vh;
-}
-
-.side-bar {
-  position: fixed;
-  z-index: 2;
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-  padding-left: 103px;
-  width: 378px;
-  height: 100vh;
-  border-right: 1px solid #e6ecf0;
-}
-
-.center-column {
-  position: relative;
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-  height: 100vh;
-}
-
-header {
-  height: 55px;
-  padding-top: 13px;
-  padding-bottom: 14px;
-  padding-left: 23.69px;
-  font-size: 19px;
-  border-bottom: 1px solid #e6ecf0;
-}
-
-.form-wrapper {
-  position: absolute;
-  top: 85px;
-  left: 16px;
-}
-
-.forms {
-  width: 642px;
-}
-
-.form-control {
-  margin-bottom: 32px;
-}
-</style>
-
 <script>
 import SideBar from '../components/SideBar'
 import SettingForm from '../components/SettingForm'
@@ -154,3 +105,52 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.wrapper {
+  display: grid;
+  grid-template-columns: 378px 1063px;
+  grid-template-rows: 100vh;
+}
+
+.side-bar {
+  position: fixed;
+  z-index: 2;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  padding-left: 103px;
+  width: 378px;
+  height: 100vh;
+  border-right: 1px solid #e6ecf0;
+}
+
+.center-column {
+  position: relative;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  height: 100vh;
+}
+
+header {
+  height: 55px;
+  padding-top: 13px;
+  padding-bottom: 14px;
+  padding-left: 23.69px;
+  font-size: 19px;
+  border-bottom: 1px solid #e6ecf0;
+}
+
+.form-wrapper {
+  position: absolute;
+  top: 85px;
+  left: 16px;
+}
+
+.forms {
+  width: 642px;
+}
+
+.form-control {
+  margin-bottom: 32px;
+}
+</style>

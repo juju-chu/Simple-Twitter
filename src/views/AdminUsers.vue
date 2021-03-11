@@ -11,6 +11,19 @@
   </div>
 </template>
 
+<script>
+import AdminSidebar from './../components/AdminSidebar'
+import AdminUsersCards from './../components/AdminUsersCards'
+
+export default {
+  name: 'AdminUsers',
+  components: {
+    AdminSidebar,
+    AdminUsersCards,
+  },
+}
+</script>
+
 <style scoped>
 .wrapper {
   display: grid;
@@ -53,16 +66,3 @@
   margin-top: 70px;
 }
 </style>
-
-<script>
-import AdminSidebar from './../components/AdminSidebar'
-import AdminUsersCards from './../components/AdminUsersCards'
-
-export default {
-  name: 'AdminUsers',
-  components: {
-    AdminSidebar,
-    AdminUsersCards,
-  },
-}
-</script>

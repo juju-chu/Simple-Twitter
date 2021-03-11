@@ -79,6 +79,79 @@
   <!-- Modal HTML End-->
 </template>
 
+<script>
+import tweetsAPI from '../apis/tweets'
+import { mapState } from 'vuex'
+import { Toast } from '../utils/helpers'
+import { fromNowFilter } from './../utils/mixins'
+
+export default {
+  name: 'ReplyModal',
+  mixins: [fromNowFilter],
+  props: {
+    initialIsReplyModalToggle: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    modalTweet: {
+      type: Object,
+      required: true,
+    }
+  },
+  data() {
+    return {
+      isReplyModalToggle: false,
+      comment: '',
+      isProcessing: false
+    }
+  },
+  methods: {
+    closeReplyModal() {
+      this.isReplyModalToggle = false
+      this.$emit("after-close-modal", this.isReplyModalToggle)
+    },
+    async handleSubmit() {
+      if (!this.comment) {
+        Toast.fire({
+          icon: 'warning',
+          title: '推文內容不可為空'
+        })
+        return
+      }
+      try {
+        this.isProcessing = true
+        const { data } = await tweetsAPI.reply({ id: this.modalTweet.id, comment: this.comment })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.comment = ''
+        this.closeReplyModal()
+        this.$emit('after-submit')
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法新增回覆，請稍後再試'
+        })
+      }
+      this.isProcessing = false
+    },
+  },
+  created() {
+    this.isReplyModalToggle = this.initialIsReplyModalToggle
+  },
+  watch: {
+    initialIsReplyModalToggle(newVale) {
+      this.isReplyModalToggle = newVale
+    }
+  },
+  computed: {
+    ...mapState(['currentUser'])
+  }
+}
+</script>
+
 <style scoped>
 .modal-background-wrapper {
   position: fixed;
@@ -228,76 +301,3 @@ textarea.reply-comment {
   background: #ecbd9e;
 }
 </style>
-
-<script>
-import tweetsAPI from '../apis/tweets'
-import { mapState } from 'vuex'
-import { Toast } from '../utils/helpers'
-import { fromNowFilter } from './../utils/mixins'
-
-export default {
-  name: 'ReplyModal',
-  mixins: [fromNowFilter],
-  props: {
-    initialIsReplyModalToggle: {
-      type: Boolean,
-      required: true,
-      default: false
-    },
-    modalTweet: {
-      type: Object,
-      required: true,
-    }
-  },
-  data() {
-    return {
-      isReplyModalToggle: false,
-      comment: '',
-      isProcessing: false
-    }
-  },
-  methods: {
-    closeReplyModal() {
-      this.isReplyModalToggle = false
-      this.$emit("after-close-modal", this.isReplyModalToggle)
-    },
-    async handleSubmit() {
-      if (!this.comment) {
-        Toast.fire({
-          icon: 'warning',
-          title: '推文內容不可為空'
-        })
-        return
-      }
-      try {
-        this.isProcessing = true
-        const { data } = await tweetsAPI.reply({ id: this.modalTweet.id, comment: this.comment })
-        if (data.status !== 'success') {
-          throw new Error(data.message)
-        }
-        this.comment = ''
-        this.closeReplyModal()
-        this.$emit('after-submit')
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法新增回覆，請稍後再試'
-        })
-      }
-      this.isProcessing = false
-    },
-  },
-  created() {
-    this.isReplyModalToggle = this.initialIsReplyModalToggle
-  },
-  watch: {
-    initialIsReplyModalToggle(newVale) {
-      this.isReplyModalToggle = newVale
-    }
-  },
-  computed: {
-    ...mapState(['currentUser'])
-  }
-}
-</script>

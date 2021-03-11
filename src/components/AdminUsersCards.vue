@@ -53,6 +53,50 @@
   </div>
 </template>
 
+<script>
+import adminAPI from '../apis/admin'
+import { Toast } from '../utils/helpers'
+
+export default {
+  name: 'AdminUsersCards',
+  data() {
+    return {
+      users: []
+    }
+  },
+  methods: {
+    async fetchUsers() {
+      try {
+        const { data } = await adminAPI.users.get()
+        this.users = data.map(user => ({
+          id: user.id,
+          cover: user.cover,
+          avatar: user.avatar,
+          name: user.name,
+          account: user.account,
+          tweetCount: user.tweetCount,
+          likeCount: user.likeCount,
+          followingCount: user.FollowingCount,
+          followerCount: user.FollowerCount
+        }))
+
+      }
+      catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得所有用戶資訊，請稍後再試'
+        })
+      }
+    }
+  },
+  created() {
+    this.fetchUsers()
+  }
+
+}
+</script>
+
 <style scoped>
 .user-cards-wrapper {
   display: grid;
@@ -152,47 +196,3 @@ span.like-count {
   font-size: 14px;
 }
 </style>
-
-<script>
-import adminAPI from '../apis/admin'
-import { Toast } from '../utils/helpers'
-
-export default {
-  name: 'AdminUsersCards',
-  data() {
-    return {
-      users: []
-    }
-  },
-  methods: {
-    async fetchUsers() {
-      try {
-        const { data } = await adminAPI.users.get()
-        this.users = data.map(user => ({
-          id: user.id,
-          cover: user.cover,
-          avatar: user.avatar,
-          name: user.name,
-          account: user.account,
-          tweetCount: user.tweetCount,
-          likeCount: user.likeCount,
-          followingCount: user.FollowingCount,
-          followerCount: user.FollowerCount
-        }))
-
-      }
-      catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得所有用戶資訊，請稍後再試'
-        })
-      }
-    }
-  },
-  created() {
-    this.fetchUsers()
-  }
-
-}
-</script>

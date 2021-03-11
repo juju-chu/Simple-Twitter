@@ -46,6 +46,104 @@
   </div>
 </template>
 
+<script>
+import usersAPI from '../apis/users'
+import { Toast } from '../utils/helpers'
+import { mapState } from 'vuex'
+
+export default {
+  name: 'Recommendation',
+  data() {
+    return {
+      totalTopUsers: [],
+      topUsers: [],
+      isShowMore: false,
+      isProcessing: false
+    }
+  },
+  methods: {
+    async fetchUsers() {
+      try {
+        const { data } = await usersAPI.getTopUsers()
+        this.totalTopUsers = data
+
+        for (let i = 0; i < 6; i++) {
+          this.topUsers.push(this.totalTopUsers[i])
+        }
+
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得Top Users資訊，請稍後再試'
+        })
+      }
+    },
+    showMoreUser() {
+      this.isShowMore = !this.isShowMore
+      if (this.isShowMore) {
+        this.topUsers = this.totalTopUsers
+      } else {
+        this.topUsers = []
+        for (let i = 0; i < 6; i++) {
+          this.topUsers.push(this.totalTopUsers[i])
+        }
+      }
+    },
+    async addFollowing(userId) {
+      try {
+        this.isProcessing = true
+        const { data } = await usersAPI.addFollow({ id: userId })
+        if (data.status != 'success') {
+          throw new Error(data.message)
+        }
+        this.totalTopUsers = this.totalTopUsers.map((user) => {
+          if (user.id === userId) {
+            user.isFollowed = true
+          }
+          return user
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法追蹤用戶，請稍後再試'
+        })
+      }
+      this.isProcessing = false
+    },
+    async removeFollowing(userId) {
+      try {
+        this.isProcessing = true
+        const { data } = await usersAPI.deleteFollow({ followingId: userId })
+        if (data.status != 'success') {
+          throw new Error(data.message)
+        }
+        this.totalTopUsers = this.totalTopUsers.map((user) => {
+          if (user.id === userId) {
+            user.isFollowed = false
+          }
+          return user
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取消追蹤用戶，請稍後再試'
+        })
+      }
+      this.isProcessing = false
+    },
+  },
+  created() {
+    this.fetchUsers()
+  },
+  computed: {
+    ...mapState(['currentUser'])
+  }
+}
+</script>
+
 <style scoped>
 .recommendation-wrapper {
   width: 350px;
@@ -163,101 +261,3 @@ footer p {
   cursor: pointer;
 }
 </style>
-
-<script>
-import usersAPI from '../apis/users'
-import { Toast } from '../utils/helpers'
-import { mapState } from 'vuex'
-
-export default {
-  name: 'Recommendation',
-  data() {
-    return {
-      totalTopUsers: [],
-      topUsers: [],
-      isShowMore: false,
-      isProcessing: false
-    }
-  },
-  methods: {
-    async fetchUsers() {
-      try {
-        const { data } = await usersAPI.getTopUsers()
-        this.totalTopUsers = data
-
-        for (let i = 0; i < 6; i++) {
-          this.topUsers.push(this.totalTopUsers[i])
-        }
-
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得Top Users資訊，請稍後再試'
-        })
-      }
-    },
-    showMoreUser() {
-      this.isShowMore = !this.isShowMore
-      if (this.isShowMore) {
-        this.topUsers = this.totalTopUsers
-      } else {
-        this.topUsers = []
-        for (let i = 0; i < 6; i++) {
-          this.topUsers.push(this.totalTopUsers[i])
-        }
-      }
-    },
-    async addFollowing(userId) {
-      try {
-        this.isProcessing = true
-        const { data } = await usersAPI.addFollow({ id: userId })
-        if (data.status != 'success') {
-          throw new Error(data.message)
-        }
-        this.totalTopUsers = this.totalTopUsers.map((user) => {
-          if (user.id === userId) {
-            user.isFollowed = true
-          }
-          return user
-        })
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法追蹤用戶，請稍後再試'
-        })
-      }
-      this.isProcessing = false
-    },
-    async removeFollowing(userId) {
-      try {
-        this.isProcessing = true
-        const { data } = await usersAPI.deleteFollow({ followingId: userId })
-        if (data.status != 'success') {
-          throw new Error(data.message)
-        }
-        this.totalTopUsers = this.totalTopUsers.map((user) => {
-          if (user.id === userId) {
-            user.isFollowed = false
-          }
-          return user
-        })
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取消追蹤用戶，請稍後再試'
-        })
-      }
-      this.isProcessing = false
-    },
-  },
-  created() {
-    this.fetchUsers()
-  },
-  computed: {
-    ...mapState(['currentUser'])
-  }
-}
-</script>
