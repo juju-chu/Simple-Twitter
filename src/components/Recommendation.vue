@@ -16,7 +16,7 @@
             <div class="user-account">@{{ user.account }}</div>
           </router-link>
         </div>
-        <div class="action">
+        <div v-if="user.id !== currentUser.id" class="action">
           <button
             :disabled="isProcessing"
             v-if="user.isFollowed"
@@ -167,6 +167,7 @@ footer p {
 <script>
 import usersAPI from '../apis/users'
 import { Toast } from '../utils/helpers'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Recommendation',
@@ -255,5 +256,8 @@ export default {
   created() {
     this.fetchUsers()
   },
+  computed: {
+    ...mapState(['currentUser'])
+  }
 }
 </script>

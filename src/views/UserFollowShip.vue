@@ -59,7 +59,7 @@
                   <div class="user-account">@{{ follow.account }}</div>
                 </router-link>
               </div>
-              <div class="action">
+              <div v-if="follow.id !== currentUser.id" class="action">
                 <button
                   :disabled="isProcessing"
                   v-if="follow.isFollowed"
@@ -283,6 +283,7 @@ import SideBar from '../components/SideBar'
 import Recommendation from '../components/Recommendation'
 import usersAPI from '../apis/users'
 import { Toast } from './../utils/helpers'
+import { mapState } from 'vuex'
 
 export default {
   name: 'UserFollowShip',
@@ -443,5 +444,8 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState(['currentUser'])
+  }
 }
 </script>
