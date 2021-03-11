@@ -273,6 +273,7 @@ export default {
   grid-template-columns: 378px 600px 462px;
   grid-template-rows: 100vh;
 }
+
 .side-bar {
   position: fixed;
   z-index: 2;
@@ -283,11 +284,13 @@ export default {
   height: 100vh;
   border-right: 1px solid #e6ecf0;
 }
+
 .center-column {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   border-right: 1px solid #e6ecf0;
 }
+
 .header {
   position: fixed;
   z-index: 1;
@@ -297,11 +300,13 @@ export default {
   background: #fff;
   border-right: 1px solid #e6ecf0;
 }
+
 .header-back-icon {
   margin-left: 15px;
   width: 24px;
   height: 24px;
 }
+
 .header-user {
   margin-left: 43px;
   margin-bottom: 7px;
@@ -309,26 +314,31 @@ export default {
   flex-direction: column;
   height: 42px;
 }
+
 .header-user-name {
   font-family: 'Noto Sans TC', sans-serif;
   font-weight: 900;
   font-size: 19px;
   color: #1c1c1c;
 }
+
 .header-user-tweets-count {
   font-weight: 500;
   font-size: 13px;
   color: #657786;
 }
+
 .User-card {
   margin-top: 55px;
   height: auto;
 }
+
 .tab {
   display: flex;
   width: 390px;
   height: 54px;
 }
+
 .tab-item {
   display: flex;
   justify-content: center;
@@ -336,20 +346,25 @@ export default {
   width: 130px;
   height: 54px;
 }
+
 .tab-item-text {
   font-weight: bold;
   font-size: 15px;
   color: #657786;
 }
+
 .active {
   border-bottom: 2px solid #ff6600;
 }
+
 .active span {
   color: #ff6600;
 }
+
 .tweet-list {
   border-top: 1px solid #e6ecf0;
 }
+
 .recommendation-list {
   position: fixed;
   top: 15px;

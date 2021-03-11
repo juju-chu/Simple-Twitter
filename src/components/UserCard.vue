@@ -358,13 +358,16 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 img {
   object-fit: cover;
 }
+
 .cover {
   width: 598px;
   height: 200px;
 }
+
 .avatar {
   position: absolute;
   top: 178px;
@@ -374,14 +377,17 @@ img {
   border-radius: 50%;
   border: 4px solid #ffffff;
 }
+
 .btn {
   padding: 0;
 }
+
 .btn-edit {
   position: absolute;
   top: 264px;
   left: 841px;
 }
+
 .btn-button {
   width: 122px;
   height: 40px;
@@ -389,36 +395,43 @@ img {
   border: 1px solid #ff6600;
   border-radius: 100px;
 }
+
 .btn-text {
   font-weight: bold;
   font-size: 15px;
   color: #ff6600;
 }
+
 .user-info {
   display: flex;
   flex-direction: column;
   margin-top: 69px;
   margin-left: 15px;
 }
+
 .name {
   font-weight: 900;
   font-size: 19px;
 }
+
 .account {
   font-weight: 500;
   font-size: 15px;
   color: #657786;
 }
+
 .introduction {
   margin-top: 10px;
   font-weight: normal;
   font-size: 14px;
 }
+
 .follow {
   display: flex;
   margin-top: 10px;
   margin-bottom: 20px;
 }
+
 .followings-count,
 .followers-count {
   margin-right: 20px;
@@ -427,9 +440,11 @@ img {
   font-weight: 500;
   font-size: 14px;
 }
+
 .follow span {
   color: #657786;
 }
+
 .btn-other {
   position: absolute;
   top: 264px;
@@ -438,9 +453,11 @@ img {
   justify-content: flex-end;
   width: auto;
 }
+
 .btn-noti {
   margin: 0 10px 0 10px;
 }
+
 .btn-wrapper-follow {
   padding: 0;
   width: 92px;
@@ -449,12 +466,14 @@ img {
   border: 1px solid #ff6600;
   border-radius: 100px;
 }
+
 .btn-text-follow {
   line-height: 40px;
   font-weight: bold;
   font-size: 15px;
   color: #ff6600;
 }
+
 .btn-wrapper-followed {
   padding: 0;
   width: 92px;
@@ -463,12 +482,14 @@ img {
   border: 1px solid #ff6600;
   border-radius: 100px;
 }
+
 .btn-text-followed {
   line-height: 40px;
   font-weight: bold;
   font-size: 15px;
   color: #ffffff;
 }
+
 .modal-edit {
   position: absolute;
   z-index: 2;
@@ -478,6 +499,7 @@ img {
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
 }
+
 .modal-edit-wrapper {
   position: absolute;
   top: 54px;
@@ -489,13 +511,16 @@ img {
   background: #ffffff;
   border-radius: 14px;
 }
+
 .modal-edit-header {
   height: 55px;
 }
+
 .modal-edit-icon-close {
   margin-top: 15px;
   margin-left: 15px;
 }
+
 .modal-edit-header-text {
   position: absolute;
   top: 13px;
@@ -504,38 +529,46 @@ img {
   font-size: 19px;
   color: #1c1c1c;
 }
+
 .modal-form {
   position: relative;
 }
+
 .modal-input-img {
   display: none;
 }
+
 .modal-icon {
   width: 24px;
   height: 24px;
   cursor: pointer;
 }
+
 .modal-cover-wrapper {
   position: relative;
   width: 600px;
   height: 200px;
   margin: 0;
 }
+
 .modal-cover {
   width: 600px;
   height: 200px;
   opacity: 0.6;
 }
+
 .modal-cover-icon-uploadPhoto {
   position: absolute;
   top: 88px;
   left: 260px;
 }
+
 .modal-cover-icon-delete {
   position: absolute;
   top: 88px;
   left: 314px;
 }
+
 .modal-avatar {
   position: absolute;
   top: -60px;
@@ -545,6 +578,7 @@ img {
   border-radius: 50%;
   border: 4px solid #ffffff;
 }
+
 .modal-avatar-background {
   position: absolute;
   top: -60px;
@@ -554,16 +588,19 @@ img {
   border-radius: 50%;
   background-color: rgba(200, 200, 200, 0.3);
 }
+
 .modal-avatar-icon-uploadPhoto {
   position: absolute;
   top: -15px;
   left: 63px;
 }
+
 .modal-form-btn-text {
   font-weight: 500;
   font-size: 18px;
   color: #ffffff;
 }
+
 .save-btn {
   position: absolute;
   top: 12px;
@@ -575,6 +612,7 @@ img {
   border-radius: 50px;
   border: none;
 }
+
 .signin-form {
   position: relative;
   width: 570px;
@@ -583,14 +621,17 @@ img {
   background: #f5f8fa;
   box-shadow: 0 2px 0px 0 #657786;
 }
+
 .signin-form-name {
   margin-top: 80px;
   margin-bottom: 43px;
 }
+
 .signin-form-introduction {
   display: flex;
   height: 150px;
 }
+
 .input-label {
   position: absolute;
   top: 5px;
@@ -600,6 +641,7 @@ img {
   font-size: 15px;
   color: #657786;
 }
+
 .form-control {
   padding: 24px 0 0 15px;
   text-align: start;
@@ -610,9 +652,11 @@ img {
   background: #f5f8fa;
   box-shadow: none;
 }
+
 .form-control-name {
   height: 54px;
 }
+
 .form-control-introduction {
   width: 570px;
   height: 150px;

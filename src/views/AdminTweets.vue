@@ -80,6 +80,7 @@ export default {
   grid-template-columns: 378px auto;
   grid-template-rows: 100vh;
 }
+
 .admin-side-bar {
   position: fixed;
   z-index: 1;
@@ -89,11 +90,13 @@ export default {
   width: 378px;
   height: 100vh;
 }
+
 .center-column {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   border-left: 1px solid #e6ecf0;
 }
+
 .header {
   position: fixed;
   z-index: 1;
@@ -102,6 +105,7 @@ export default {
   background: #fff;
   border-bottom: 1px solid #e6ecf0;
 }
+
 .header-title {
   margin-left: 15px;
   line-height: 55px;
@@ -111,6 +115,7 @@ export default {
   font-size: 18px;
   color: #1c1c1c;
 }
+
 .tweet-list {
   margin-top: 70px;
 }

@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       tweet: {},
-      replies: []
+      replies: [],
     }
   },
   created() {
@@ -131,7 +131,7 @@ export default {
     async afterSubmit() {
       this.fetchTweet()
       this.fetchReplies()
-    }
+    },
   },
 }
 </script>
@@ -142,6 +142,7 @@ export default {
   grid-template-columns: 378px 600px 462px;
   grid-template-rows: 100vh;
 }
+
 .side-bar {
   position: fixed;
   z-index: 2;
@@ -152,11 +153,13 @@ export default {
   height: 100vh;
   border-right: 1px solid #e6ecf0;
 }
+
 .center-column {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   border-right: 1px solid #e6ecf0;
 }
+
 .recommendation-list {
   position: fixed;
   top: 15px;
@@ -164,6 +167,7 @@ export default {
   grid-column: 3 / 4;
   grid-row: 1 / 2;
 }
+
 .header {
   position: fixed;
   z-index: 1;
@@ -174,6 +178,7 @@ export default {
   border-right: 1px solid #e6ecf0;
   border-bottom: 1px solid #e6ecf0;
 }
+
 .header-title {
   margin-left: 15px;
   line-height: 55px;
@@ -183,11 +188,13 @@ export default {
   font-size: 18px;
   color: #1c1c1c;
 }
+
 .header-back-icon {
   margin-left: 15px;
   width: 24px;
   height: 24px;
 }
+
 .tweet-detail {
   margin-top: 70px;
   border-bottom: 1px solid #e6ecf0;

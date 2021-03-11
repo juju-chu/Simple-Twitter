@@ -68,34 +68,43 @@ export default {
   margin: 18px 0 0 15px;
   border-bottom: 1px solid #e6ecf0;
 }
+
 .avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
+
 .reply-content {
   margin-left: 15px;
 }
+
 .user-info {
   display: flex;
 }
+
 .name {
   font-weight: bold;
   font-size: 15px;
 }
+
 .account-createdAt {
   margin-left: 5px;
 }
+
 .account-createdAt span {
   color: #657786;
 }
+
 .reply-to {
   margin-top: 4px;
   color: #657786;
 }
+
 .reply-to span {
   color: #ff6600;
 }
+
 .comment {
   margin: 5px 0 15px 0;
   font-weight: normal;

@@ -94,69 +94,85 @@ export default {
   flex-direction: column;
   margin-left: 15px;
 }
+
 .user {
   display: flex;
 }
+
 .user-avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
+
 .user-info {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
 }
+
 .user-name {
   font-weight: bold;
   font-size: 15px;
 }
+
 .user-account {
   font-weight: 500;
   font-size: 15px;
   color: #657786;
 }
+
 .description {
   margin-top: 15px;
   width: 510px;
   font-weight: 500;
   font-size: 23px;
 }
+
 .createdAt {
   margin-top: 15px;
   font-weight: 400;
   font-size: 15px;
   color: #657786;
 }
+
 .divider-1,
 .divider-2 {
   width: 570px;
   height: 1px;
   background: #e6ecf0;
 }
+
 .divider-1 {
   margin-top: 15px;
 }
+
 .divider-2 {
   margin-top: 20px;
 }
+
 .count-wrapper {
   display: flex;
 }
+
 .count {
   font-weight: bold;
   font-size: 19px;
 }
+
 .count span {
   color: #657786;
 }
+
 .count-likes {
   margin-left: 20px;
 }
+
 .action {
   display: flex;
   margin: 18px 0 11px 0;
 }
+
 .action-likes {
   margin-left: 150px;
 }

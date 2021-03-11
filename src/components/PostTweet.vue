@@ -85,6 +85,7 @@ export default {
   position: relative;
   display: flex;
 }
+
 .user-image {
   margin-top: 10px;
   margin-left: 15px;
@@ -92,6 +93,7 @@ export default {
   height: 50px;
   border-radius: 50%;
 }
+
 .tweet-text {
   margin-top: 21px;
   margin-left: 10px;
@@ -106,6 +108,7 @@ export default {
   border: none;
   resize: none;
 }
+
 button {
   position: absolute;
   bottom: 10px;
@@ -116,9 +119,11 @@ button {
   border: none;
   border-radius: 100px;
 }
+
 .disabled {
   background: #ecbd9e;
 }
+
 span {
   font-size: 18px;
   color: #ffffff;

@@ -91,6 +91,7 @@ export default {
   margin-bottom: 10px;
   border-bottom: 1px solid #e6ecf0;
 }
+
 .tweet-user-photo {
   margin-top: 13px;
   margin-left: 15px;
@@ -98,27 +99,33 @@ export default {
   height: 50px;
   border-radius: 50%;
 }
+
 .tweet {
   margin-top: 15px;
   margin-left: 10px;
 }
+
 .tweet-user {
   height: 22px;
 }
+
 .tweet-user-info {
   margin-left: 5px;
   color: #657786;
 }
+
 .tweet-description {
   margin-top: 6px;
   margin-bottom: 37px;
 }
+
 button {
   margin-left: auto;
   margin-right: 15px;
   border: none;
   background: none;
 }
+
 .active path {
   fill: #ff6600;
 }

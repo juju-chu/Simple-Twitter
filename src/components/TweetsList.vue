@@ -194,6 +194,7 @@ export default {
 .tweet-wrapper {
   width: 600px;
 }
+
 .tweet-content {
   display: flex;
   flex-direction: column;
@@ -201,34 +202,42 @@ export default {
   border-bottom: 1px solid #e6ecf0;
   border-right: 1px solid #e6ecf0;
 }
+
 .tweet-detail {
   display: flex;
   cursor: pointer;
 }
+
 .tweet-user-photo {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
+
 .tweet {
   margin-left: 10px;
 }
+
 .weet-user-name {
   font-weight: bold;
   font-size: 15px;
 }
+
 .tweet-user-info {
   margin-left: 5px;
   color: #657786;
 }
+
 .tweet-description {
   margin-top: 6px;
   font-weight: 500;
   font-size: 15px;
 }
+
 .tweet-actions {
   margin-left: 60px;
 }
+
 .action {
   display: flex;
   align-items: center;
@@ -236,17 +245,21 @@ export default {
   width: 40px;
   height: 15px;
 }
+
 .tweet-actions {
   display: flex;
   margin-top: 10px;
   height: 21px;
 }
+
 .tweet-actions-like {
   margin-left: 50px;
 }
+
 .likes {
   color: #e0245e;
 }
+
 .icon {
   width: 15px;
   height: 15px;

@@ -75,42 +75,51 @@ export default {
   position: relative;
   margin: 0;
 }
+
 .admin-sidebar-logo {
   margin-top: 14px;
   width: 30px;
   height: 30px;
 }
+
 .navigation {
   width: 235px;
   height: 240px;
   margin-top: 24px;
 }
+
 .nav-item {
   display: flex;
   align-items: center;
   width: 235px;
   height: 60px;
 }
+
 .item {
   display: flex;
 }
+
 .router-link-exact-active span {
   color: #ff6600;
 }
+
 .router-link-exact-active path {
   fill: #ff6600;
 }
+
 .icon {
   margin-right: 20px;
   width: 24px;
   height: 24px;
 }
+
 .text {
   line-height: 26px;
   font-weight: 700;
   font-size: 18px;
   color: #1c1c1c;
 }
+
 .logout {
   position: absolute;
   bottom: 0;

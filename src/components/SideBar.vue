@@ -176,7 +176,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
+      inserted: function(el) {
         el.focus()
       },
     },
@@ -242,45 +242,55 @@ export default {
   position: relative;
   margin: 0;
 }
+
 .sidebar-logo {
   margin-top: 14px;
   width: 30px;
   height: 30px;
 }
+
 .navigation {
   width: 235px;
   height: 240px;
   margin-top: 24px;
 }
+
 .nav-item {
   display: flex;
   align-items: center;
   width: 235px;
   height: 60px;
 }
+
 .item {
   display: flex;
 }
+
 .router-link-exact-active span {
   color: #ff6600;
 }
+
 .router-link-exact-active path {
   fill: #ff6600;
 }
+
 .icon {
   margin-right: 20px;
   width: 24px;
   height: 24px;
 }
+
 .text {
   line-height: 26px;
   font-weight: 700;
   font-size: 18px;
   color: #1c1c1c;
 }
+
 .activeIcon {
   color: #ff6600;
 }
+
 .sidebar-btn,
 .post-tweet-model-btn {
   width: 210px;
@@ -289,22 +299,27 @@ export default {
   border: none;
   border-radius: 100px;
 }
+
 .sidebar-btn-text,
 .post-tweet-model-btn-text {
   color: #ffffff;
 }
+
 .post-tweet-model-button {
   position: absolute;
   bottom: 15px;
   right: 15px;
 }
+
 .post-tweet-model-btn {
   width: 64px;
   height: 40px;
 }
+
 .disabled {
   background: #ecbd9e;
 }
+
 .post-tweet {
   position: absolute;
   top: 0;
@@ -313,6 +328,7 @@ export default {
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
 }
+
 .post-tweet-modal {
   position: absolute;
   top: 54px;
@@ -324,24 +340,29 @@ export default {
   background: #ffffff;
   border-radius: 14px;
 }
+
 .post-tweet-modal-header {
   margin-top: 15px;
   height: 40px;
   border-bottom: 1px solid #e6ecf0;
 }
+
 .icon-close {
   margin-left: 15px;
 }
+
 .post-tweet-modal-tweet {
   display: flex;
   margin-top: 15px;
   margin-left: 15px;
 }
+
 .tweet-avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
+
 .tweet-text {
   width: 600px;
   height: 100px;
@@ -349,6 +370,7 @@ export default {
   border: none;
   resize: none;
 }
+
 .logout {
   position: absolute;
   bottom: 17px;
