@@ -30,7 +30,6 @@
           class="form-control"
           placeholder=""
           minlength="6"
-          maxlength="12"
           autocomplete="current-password"
           required
         />
@@ -89,7 +88,9 @@
   border: none;
   box-shadow: 0 2px 0px 0 #657786;
   margin-top: 20px;
-  text-align: right;
+  padding-top: 30px;
+  font-size: 19px;
+  font-weight: 500;
 }
 
 .input-label {
@@ -97,6 +98,7 @@
   top: 5px;
   left: 10px;
   color: #657786;
+  font-weight: 500;
 }
 
 .link {
