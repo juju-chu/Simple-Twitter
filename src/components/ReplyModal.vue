@@ -243,6 +243,11 @@ export default {
   color: #657786;
 }
 
+.text-wrapper {
+  width: 510px;
+  overflow-wrap: anywhere;
+}
+
 .interaction-wrapper {
   margin-top: 15px;
   margin-bottom: 23px;
@@ -270,7 +275,7 @@ textarea.reply-comment {
   border: none;
   resize: none;
   min-height: 171px;
-  width: 525px;
+  width: 510px;
   margin-left: 10px;
   padding-top: 10px;
   font-weight: 500;

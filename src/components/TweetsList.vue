@@ -229,6 +229,7 @@ export default {
 }
 
 .tweet-description {
+  overflow-wrap: anywhere;
   margin-top: 6px;
   font-weight: 500;
   font-size: 15px;

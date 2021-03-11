@@ -109,5 +109,7 @@ export default {
   margin: 5px 0 15px 0;
   font-weight: normal;
   font-size: 15px;
+  width: 510px;
+  overflow-wrap: anywhere;
 }
 </style>

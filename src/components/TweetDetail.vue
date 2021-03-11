@@ -129,6 +129,7 @@ export default {
   width: 510px;
   font-weight: 500;
   font-size: 23px;
+  overflow-wrap: anywhere;
 }
 
 .createdAt {

@@ -369,6 +369,7 @@ export default {
   margin-left: 10px;
   border: none;
   resize: none;
+  overflow-wrap: anywhere;
 }
 
 .logout {
