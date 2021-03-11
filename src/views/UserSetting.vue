@@ -114,18 +114,16 @@ export default {
         })
       }
     },
-    async handleAfterSubmit({ account, name, email, password }) {
+    async handleAfterSubmit({ account, name, email, password, checkPassword }) {
       try {
         this.isProcessing = true
-        const { data } = await usersAPI.updateUser({
+        const { data } = await usersAPI.editAccount({
           id: this.$route.params.id,
           account,
           name,
           email,
           password,
-          role: this.userData.role,
-          avatar: this.userData.avatar,
-          introduction: this.userData.introduction
+          checkPassword
         })
         if (data.status !== 'success') {
           throw new Error(data.message)
