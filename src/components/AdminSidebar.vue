@@ -114,6 +114,6 @@ export default {
 .logout {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 103px;
 }
 </style>

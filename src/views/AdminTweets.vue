@@ -27,16 +27,16 @@ export default {
 <style scoped>
 .wrapper {
   display: grid;
-  grid-template-columns: 378px 1062px;
-  grid-template-rows: 100vh;
   width: 100vw;
+  grid-template-columns: 378px auto;
+  grid-template-rows: 100vh;
 }
 .admin-side-bar {
   position: fixed;
   z-index: 1;
   grid-column: 1 / 2;
   grid-row: 1 / 2;
-  margin-left: 103px;
+  padding-left: 103px;
   width: 378px;
   height: 100vh;
 }
