@@ -55,7 +55,6 @@
         class="form-control"
         placeholder=""
         minlength="6"
-        maxlength="12"
         required
       />
     </div>
@@ -70,7 +69,6 @@
         class="form-control"
         placeholder=""
         minlength="6"
-        maxlength="12"
         required
       />
     </div>
@@ -139,7 +137,9 @@
   background: #f5f8fa;
   border: none;
   box-shadow: 0 2px 0px 0 #657786;
-  text-align: right;
+  font-size: 19px;
+  font-weight: 500;
+  padding-top: 30px;
 }
 
 .input-label {
@@ -147,6 +147,7 @@
   top: 5px;
   left: 10px;
   color: #657786;
+  font-weight: 500;
 }
 
 .link {
