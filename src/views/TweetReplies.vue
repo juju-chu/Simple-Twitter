@@ -65,6 +65,7 @@ export default {
           likeCount,
           replyCount,
           User: user,
+          isLiked,
         } = data
         const time = this.transformTime(createdAt)
         this.tweet = {
@@ -78,6 +79,7 @@ export default {
           likeCount,
           replyCount,
           createdAt,
+          isLiked
         }
       } catch (error) {
         console.log(error)
