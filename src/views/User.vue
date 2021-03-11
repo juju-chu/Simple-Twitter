@@ -258,11 +258,7 @@ export default {
       const { id: userId } = this.$route.params
       this.fetchUser(userId)
     },
-  },
-  beforeRouteUpdate(to, from, next) {
-    this.fetchUser(this.user.id)
-    next()
-  },
+  }
 }
 </script>
 
