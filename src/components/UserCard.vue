@@ -218,25 +218,28 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.focus()
       },
     },
   },
   watch: {
-    initialUser(newValue) {
-      this.user = {
-        ...this.user,
-        ...newValue,
-      }
-      this.nameCount = this.user.name.length
-      if (this.user.introduction.length > 160) {
-        this.user.introduction = this.user.introduction.slice(0, 160)
-      }
-      this.introductionCount = this.user.introduction.length
-      this.checkIsSelf()
-      this.checkFollow()
-      this.isLoading = false
+    initialUser: {
+      handler: function (newValue) {
+        this.user = {
+          ...this.user,
+          ...newValue,
+        }
+        this.nameCount = this.user.name.length
+        if (this.user.introduction.length > 160) {
+          this.user.introduction = this.user.introduction.slice(0, 160)
+        }
+        this.introductionCount = this.user.introduction.length
+        this.checkIsSelf()
+        this.checkFollow()
+        this.isLoading = false
+      },
+      deep: true
     },
     user: {
       handler: function () {

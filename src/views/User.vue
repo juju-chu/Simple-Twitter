@@ -51,7 +51,10 @@
     </div>
 
     <!-- Recommendation -->
-    <Recommendation class="recommendation-list" />
+    <Recommendation
+      @after-top-follow-ship="afterTopFollowShip"
+      class="recommendation-list"
+    />
   </div>
 </template>
 
@@ -260,6 +263,13 @@ export default {
       const { id: userId } = this.$route.params
       this.fetchUser(userId)
     },
+    afterTopFollowShip(newTopFollowShip) {
+      if (newTopFollowShip.isFollowed) {
+        this.user.followingsCount += 1
+      } else {
+        this.user.followingsCount -= 1
+      }
+    }
   }
 }
 </script>
