@@ -132,19 +132,20 @@
 
             <div class="signin-form signin-form-name">
               <label class="input-label" for="name">名稱</label>
-              <input
+              <textarea
                 id="name"
                 name="name"
+                maxlength="50"
                 v-model="user.name"
                 type="text"
                 class="form-control form-control-name"
-                placeholder=""
                 autocomplete="username"
                 required
                 v-focus
                 @keyup.esc="cancelModal"
                 @keyup.enter="handleSubmit"
-              />
+              ></textarea>
+              <div class="signin-form-name-count">{{ nameCount }}/50</div>
             </div>
 
             <div class="signin-form signin-form-introduction">
@@ -154,11 +155,15 @@
                 name="introduction"
                 rows="3"
                 cols="50"
+                maxlength="160"
                 v-model="user.introduction"
                 class="form-control form-control-introduction"
                 @keyup.esc="cancelModal"
                 @keyup.enter="handleSubmit"
               ></textarea>
+              <div class="signin-form-introduction-count">
+                {{ introductionCount }}/160
+              </div>
             </div>
 
             <button type="submit" class="save-btn btn btn-primary btn-block">
@@ -192,6 +197,8 @@ export default {
       user: {
         id: -1,
       },
+      nameCount: -1,
+      introductionCount: -1,
       initialName: '',
       initialIntroduction: '',
       initialCover: '',
@@ -217,9 +224,21 @@ export default {
         ...this.user,
         ...newValue,
       }
+      this.nameCount = this.user.name.length
+      if (this.user.introduction.length > 160) {
+        this.user.introduction = this.user.introduction.slice(0, 160)
+      }
+      this.introductionCount = this.user.introduction.length
       this.checkIsSelf()
       this.checkFollow()
     },
+    user: {
+      handler: function () {
+        this.nameCount = this.user.name.length
+        this.introductionCount = this.user.introduction.length
+      },
+      deep: true,
+    }
   },
   created() {
     this.checkFollow()
