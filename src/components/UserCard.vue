@@ -263,7 +263,7 @@ export default {
           throw new Error(data.message)
         }
         this.isFollowed = true
-        this.user.followingsCount++
+        this.user.followersCount++
       } catch (error) {
         console.log(error)
         Toast.fire({
@@ -281,7 +281,7 @@ export default {
           throw new Error(data.message)
         }
         this.isFollowed = false
-        this.user.followingsCount--
+        this.user.followersCount--
       } catch (error) {
         console.log(error)
         Toast.fire({
