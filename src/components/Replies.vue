@@ -3,17 +3,32 @@
     <div v-for="reply in replies" :key="reply.id">
       <div class="reply-wrapper">
         <div class="avatar-wrapper">
-          <router-link :to="{ name: 'user', params: { id: reply.userId } }">
+          <router-link
+            :to="{
+              name: 'user',
+              params: { id: reply.userId ? reply.userId : -1 },
+            }"
+          >
             <img class="avatar" :src="reply.avatar" />
           </router-link>
         </div>
         <div class="reply-content">
           <div class="user-info">
-            <router-link :to="{ name: 'user', params: { id: reply.userId } }">
+            <router-link
+              :to="{
+                name: 'user',
+                params: { id: reply.userId ? reply.userId : -1 },
+              }"
+            >
               <div class="name">{{ reply.name }}</div>
             </router-link>
             <div class="account-createdAt">
-              <router-link :to="{ name: 'user', params: { id: reply.userId } }">
+              <router-link
+                :to="{
+                  name: 'user',
+                  params: { id: reply.userId ? reply.userId : -1 },
+                }"
+              >
                 <span>@{{ reply.account }}</span>
               </router-link>
               <span>・</span>
@@ -22,7 +37,12 @@
           </div>
           <div class="reply-to">
             回覆
-            <router-link :to="{ name: 'user', params: { id: tweet.id } }">
+            <router-link
+              :to="{
+                name: 'user',
+                params: { id: tweet.userId ? tweet.userId : -1 },
+              }"
+            >
               <span>@{{ tweet.name }}</span>
             </router-link>
           </div>

@@ -63,7 +63,9 @@ export default {
   },
   data() {
     return {
-      follow: {},
+      follow: {
+        id: -1
+      },
       isProcessing: false,
       newFollowShip: {
         userId: -1,

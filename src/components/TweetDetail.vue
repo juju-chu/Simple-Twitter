@@ -1,14 +1,26 @@
 <template>
   <div class="wrapper-center">
     <div class="user">
-      <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
+      <router-link
+        :to="{ name: 'user', params: { id: tweet.userId ? tweet.userId : -1 } }"
+      >
         <img class="user-avatar" :src="tweet.avatar" />
       </router-link>
       <div class="user-info">
-        <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
+        <router-link
+          :to="{
+            name: 'user',
+            params: { id: tweet.userId ? tweet.userId : -1 },
+          }"
+        >
           <span class="user-name">{{ tweet.name }}</span>
         </router-link>
-        <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
+        <router-link
+          :to="{
+            name: 'user',
+            params: { id: tweet.userId ? tweet.userId : -1 },
+          }"
+        >
           <span class="user-account">@{{ tweet.account }}</span>
         </router-link>
       </div>
