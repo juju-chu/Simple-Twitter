@@ -168,8 +168,7 @@ export default {
 
   },
   watch: {
-    $route(to) {
-      const targetId = to.params.id
+    $route(to, from) {
       let targetTab = ''
       if (to.name === 'user-followings') {
         targetTab = 'followings'
@@ -179,12 +178,12 @@ export default {
 
       if (this.tab !== targetTab) {
         this.tab = targetTab
-        this.fetchFollowData(targetId, this.tab)
+        this.fetchFollowData(to.params.id, this.tab)
       }
 
-      if (this.user.id !== Number(targetId)) {
-        this.fetchUser(targetId)
-        this.fetchFollowData(targetId, this.tab)
+      if (to.params.id !== from.params.id) {
+        this.fetchUser(to.params.id)
+        this.fetchFollowData(to.params.id, this.tab)
       }
     }
   }
