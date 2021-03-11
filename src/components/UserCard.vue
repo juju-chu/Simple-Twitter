@@ -661,6 +661,20 @@ img {
   color: #657786;
 }
 
+textarea {
+  resize: none;
+}
+
+.signin-form-name-count,
+.signin-form-introduction-count {
+  position: absolute;
+  bottom: -24px;
+  right: 0;
+  font-weight: 500;
+  font-size: 15px;
+  color: #657786;
+}
+
 .form-control {
   padding: 24px 0 0 15px;
   text-align: start;
