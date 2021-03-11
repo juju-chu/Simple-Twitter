@@ -4,10 +4,10 @@
 
     <div class="center-column">
       <div class="header">
-        <button @click="$router.back()">
+        <button @click="$router.back()" v-show="!isLoading">
           <img class="header-back-icon" src="./../assets/icon_back.svg" />
         </button>
-        <div class="header-user">
+        <div class="header-user" v-show="!isLoading">
           <div class="header-user-name">{{ user.name }}</div>
           <div class="header-user-tweets-count">
             {{ user.userTweetsCount }} 推文
@@ -86,6 +86,7 @@ export default {
         followersCount: -1,
       },
       isSelf: false,
+      isLoading: true,
       tweets: [],
       tab: 'tweets',
     }
@@ -144,6 +145,7 @@ export default {
         }
         this.setTab(userId, this.tab)
         this.checkIsSelf()
+        this.isLoading = false
       } catch (error) {
         console.log(error)
         Toast.fire({

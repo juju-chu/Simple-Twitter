@@ -2,11 +2,14 @@
   <div class="wrapper">
     <img class="cover" :src="user.cover" />
     <div class="user-info">
-      <div class="name">{{ user.name }}</div>
-      <div class="account">@{{ user.account }}</div>
-      <div class="introduction">{{ user.introduction }}</div>
+      <div v-show="!isLoading" class="name">{{ user.name }}</div>
+      <div v-show="!isLoading" class="account">@{{ user.account }}</div>
+      <div v-show="!isLoading" class="introduction">
+        {{ user.introduction }}
+      </div>
       <div class="follow">
         <router-link
+          v-show="!isLoading"
           class="followings-count"
           :to="{
             name: 'user-followings',
@@ -16,6 +19,7 @@
           {{ user.followingsCount }} 個<span>跟隨中</span>
         </router-link>
         <router-link
+          v-show="!isLoading"
           class="followers-count"
           :to="{
             name: 'user-followers',
@@ -26,7 +30,7 @@
         </router-link>
       </div>
     </div>
-    <img class="avatar" :src="user.avatar" />
+    <img v-show="!isLoading" class="avatar" :src="user.avatar" />
     <div class="btn btn-edit" v-if="isSelf">
       <button class="btn-button" @click.stop.prevent="showModal">
         <span class="btn-text">編輯個人資料</span>
@@ -206,6 +210,7 @@ export default {
       isSelf: false,
       isNoti: false,
       isFollowed: false,
+      isLoading: true,
     }
   },
   computed: {
@@ -231,6 +236,7 @@ export default {
       this.introductionCount = this.user.introduction.length
       this.checkIsSelf()
       this.checkFollow()
+      this.isLoading = false
     },
     user: {
       handler: function () {

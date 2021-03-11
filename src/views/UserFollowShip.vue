@@ -11,7 +11,7 @@
         </button>
         <div class="header-user">
           <div class="header-user-name">{{ user.name }}</div>
-          <div class="header-user-tweets-count">
+          <div class="header-user-tweets-count" v-show="!isLoading">
             {{ user.userTweetsCount }} 推文
           </div>
         </div>
@@ -77,7 +77,8 @@ export default {
         followersCount: -1,
       },
       followShipData: [],
-      tab: 'followers'
+      tab: 'followers',
+      isLoading: true,
     }
   },
   methods: {
@@ -106,6 +107,7 @@ export default {
           followingsCount,
           followersCount,
         }
+        this.isLoading = false
       } catch (error) {
         console.log(error)
         Toast.fire({
