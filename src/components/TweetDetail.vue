@@ -1,7 +1,9 @@
 <template>
   <div class="wrapper-center">
     <div class="user">
-      <img class="user-avatar" :src="tweet.avatar" />
+      <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
+        <img class="user-avatar" :src="tweet.avatar" />
+      </router-link>
       <div class="user-info">
         <router-link :to="{ name: 'user', params: { id: tweet.userId } }">
           <span class="user-name">{{ tweet.name }}</span>
