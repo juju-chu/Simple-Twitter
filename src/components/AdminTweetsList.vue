@@ -1,6 +1,6 @@
 <template>
   <div class="tweet-wrapper">
-    <div v-for="tweet in tweets" :key="tweet.id">
+    <div>
       <div class="tweet-content">
         <img class="tweet-user-photo" :src="tweet.avatar" alt="" />
         <div class="tweet">
@@ -15,8 +15,20 @@
         <button
           @click.stop.prevent="deleteTweet(tweet.id)"
           :disabled="isProcessing"
+          :class="{ active: isProcessing }"
         >
-          <img src="./../assets/icon_close.svg" alt="" />
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.414 12.0001L19.207 6.20712C19.597 5.81712 19.597 5.18412 19.207 4.79312C18.817 4.40212 18.184 4.40312 17.793 4.79312L12 10.5861L6.207 4.79312C5.817 4.40312 5.184 4.40312 4.793 4.79312C4.402 5.18312 4.403 5.81612 4.793 6.20712L10.586 12.0001L4.793 17.7931C4.403 18.1831 4.403 18.8161 4.793 19.2071C4.988 19.4021 5.243 19.5001 5.5 19.5001C5.757 19.5001 6.012 19.4021 6.207 19.2071L12 13.4141L17.793 19.2071C17.988 19.4021 18.243 19.5001 18.5 19.5001C18.757 19.5001 19.012 19.4021 19.207 19.2071C19.597 18.8171 19.597 18.1841 19.207 17.7931L13.414 12.0001Z"
+              fill="#657786"
+            />
+          </svg>
         </button>
       </div>
     </div>
@@ -32,48 +44,26 @@ export default {
   mixins: [fromNowFilter],
   name: 'AdminTweetsList',
   props: {
-    noActions: {
-      type: Boolean,
-      default: false,
+    initialTweet: {
+      type: Object,
+      required: true,
     },
   },
   data() {
     return {
-      tweets: [],
       isProcessing: false,
+      tweet: this.initialTweet,
     }
   },
-  created() {
-    this.fetchTweets()
-  },
-  methods: {
-    async fetchTweets() {
-      // TODO: 取得 API 請求後的資料
-      try {
-        const { data } = await adminAPI.tweets.get()
-        this.tweets = data.map((tweet) => {
-          let { id, description, createdAt, User } = tweet
-          const { name, account, avatar } = User
-          if (description.length >= 50) {
-            description = description + ' ...'
-          }
-          return {
-            id,
-            description,
-            createdAt,
-            name,
-            account,
-            avatar,
-          }
-        })
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得推文，請稍後再試',
-        })
+  watch: {
+    initialTweet(newValue) {
+      this.tweet = {
+        ...this.tweet,
+        ...newValue,
       }
     },
+  },
+  methods: {
     async deleteTweet(tweetId) {
       try {
         this.isProcessing = true
@@ -81,7 +71,7 @@ export default {
         if (data.status !== 'success') {
           throw new Error(data.message)
         }
-        this.fetchTweets()
+        this.$emit('after-delete-tweet')
         this.isProcessing = false
       } catch (error) {
         console.log(error)
@@ -96,10 +86,6 @@ export default {
 </script>
 
 <style scoped>
-.tweet-wrapper {
-  width: auto;
-  height: 136px;
-}
 .tweet-content {
   display: flex;
   margin-bottom: 10px;
@@ -132,5 +118,8 @@ button {
   margin-right: 15px;
   border: none;
   background: none;
+}
+.active path {
+  fill: #ff6600;
 }
 </style>

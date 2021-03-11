@@ -6,7 +6,15 @@
       <div class="header">
         <div class="header-title">推文清單</div>
       </div>
-      <AminTweetsList class="tweet-list" />
+      <div class="tweet-list">
+        <AminTweetsList
+          v-for="tweet in tweets"
+          :key="tweet.id"
+          :initial-tweet="tweet"
+          class="tweet-list-item"
+          @after-delete-tweet="afterDeleteTweet"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -14,12 +22,53 @@
 <script>
 import AdminSidebar from './../components/AdminSidebar'
 import AminTweetsList from './../components/AdminTweetsList'
+import adminAPI from './../apis/admin'
+import { Toast } from './../utils/helpers'
 
 export default {
   name: 'AdminTweets',
   components: {
     AdminSidebar,
     AminTweetsList,
+  },
+  data() {
+    return {
+      tweets: [],
+    }
+  },
+  created() {
+    this.fetchTweets()
+  },
+  methods: {
+    async fetchTweets() {
+      try {
+        const { data } = await adminAPI.tweets.get()
+        this.tweets = data.map((tweet) => {
+          let { id, description, createdAt, User } = tweet
+          const { name, account, avatar } = User
+          if (description.length >= 50) {
+            description = description + ' ...'
+          }
+          return {
+            id,
+            description,
+            createdAt,
+            name,
+            account,
+            avatar,
+          }
+        })
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法取得推文，請稍後再試',
+        })
+      }
+    },
+    afterDeleteTweet() {
+      this.fetchTweets()
+    },
   },
 }
 </script>
