@@ -8,6 +8,8 @@
         v-for="user in topUsers"
         :key="user.id"
         :initial-user="user"
+        :new-follow-ship="newFollowShip"
+        @after-top-follow-ship="afterTopFollowShip"
       />
     </div>
     <footer>
@@ -27,6 +29,15 @@ export default {
   name: 'Recommendation',
   components: {
     TopUserCard
+  },
+  props: {
+    newFollowShip: {
+      type: Object,
+      default: () => ({
+        userId: -1,
+        isFollowed: ''
+      })
+    }
   },
   data() {
     return {
@@ -63,6 +74,9 @@ export default {
           this.topUsers.push(this.totalTopUsers[i])
         }
       }
+    },
+    afterTopFollowShip(newTopFollowShip) {
+      this.$emit('after-top-follow-ship', newTopFollowShip)
     }
   },
   created() {

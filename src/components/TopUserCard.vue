@@ -45,12 +45,23 @@ export default {
     initialUser: {
       type: Object,
       required: true
+    },
+    newFollowShip: {
+      type: Object,
+      default: () => ({
+        userId: -1,
+        isFollowed: ''
+      })
     }
   },
   data() {
     return {
       user: {},
-      isProcessing: false
+      isProcessing: false,
+      newTopFollowShip: {
+        userId: -1,
+        isFollowed: ''
+      }
     }
   },
   methods: {
@@ -65,6 +76,9 @@ export default {
           throw new Error(data.message)
         }
         this.user.isFollowed = true
+        this.newTopFollowShip.userId = userId
+        this.newTopFollowShip.isFollowed = true
+        this.$emit('after-top-follow-ship', this.newTopFollowShip)
       } catch (error) {
         console.log(error)
         Toast.fire({
@@ -82,6 +96,9 @@ export default {
           throw new Error(data.message)
         }
         this.user.isFollowed = false
+        this.newTopFollowShip.userId = userId
+        this.newTopFollowShip.isFollowed = false
+        this.$emit('after-top-follow-ship', this.newTopFollowShip)
       } catch (error) {
         console.log(error)
         Toast.fire({
@@ -101,6 +118,14 @@ export default {
         ...this.user,
         ...newValue
       }
+    },
+    newFollowShip: {
+      handler: function (newValue) {
+        if (this.user.id === newValue.userId) {
+          this.user.isFollowed = newValue.isFollowed
+        }
+      },
+      deep: true
     }
   },
   computed: {

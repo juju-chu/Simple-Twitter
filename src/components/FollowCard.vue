@@ -47,17 +47,28 @@ import { mapState } from 'vuex'
 import { Toast } from './../utils/helpers'
 
 export default {
-  name: 'followCard',
+  name: 'FollowCard',
   props: {
     initialFollow: {
       type: Object,
       required: true
+    },
+    newTopFollowShip: {
+      type: Object,
+      default: () => ({
+        userId: -1,
+        isFollowed: ''
+      })
     }
   },
   data() {
     return {
       follow: {},
-      isProcessing: false
+      isProcessing: false,
+      newFollowShip: {
+        userId: -1,
+        isFollowed: false
+      }
     }
   },
   methods: {
@@ -69,10 +80,12 @@ export default {
         this.isProcessing = true
         const { data } = await usersAPI.addFollow({ id: userId })
         if (data.status != 'success') {
-          console.log('data.status', data.status)
           throw new Error(data.message)
         }
         this.follow.isFollowed = true
+        this.newFollowShip.userId = userId
+        this.newFollowShip.isFollowed = true
+        this.$emit('after-follow-ship', this.newFollowShip)
       } catch (error) {
         console.log(error)
         Toast.fire({
@@ -90,6 +103,9 @@ export default {
           throw new Error(data.message)
         }
         this.follow.isFollowed = false
+        this.newFollowShip.userId = userId
+        this.newFollowShip.isFollowed = false
+        this.$emit('after-follow-ship', this.newFollowShip)
       } catch (error) {
         console.log(error)
         Toast.fire({
@@ -109,6 +125,14 @@ export default {
         ...this.follow,
         ...newValue
       }
+    },
+    newTopFollowShip: {
+      handler: function (newValue) {
+        if (this.follow.id === newValue.userId) {
+          this.follow.isFollowed = newValue.isFollowed
+        }
+      },
+      deep: true
     }
   },
   computed: {

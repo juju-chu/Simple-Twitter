@@ -40,12 +40,18 @@
         <FollowCard
           v-for="follow in followShipData"
           :key="follow.id"
-          class="follow-card"
           :initial-follow="follow"
+          :new-top-follow-ship="newTopFollowShip"
+          @after-follow-ship="afterFollowShip"
+          class="follow-card"
         />
       </div>
     </div>
-    <Recommendation class="recommendation-list" />
+    <Recommendation
+      :new-follow-ship="newFollowShip"
+      @after-top-follow-ship="afterTopFollowShip"
+      class="recommendation-list"
+    />
   </div>
 </template>
 
@@ -79,6 +85,8 @@ export default {
       followShipData: [],
       tab: 'followers',
       isLoading: true,
+      newFollowShip: {},
+      newTopFollowShip: {}
     }
   },
   methods: {
@@ -153,6 +161,12 @@ export default {
         })
       }
       this.fetchFollowData(this.user.id, this.tab)
+    },
+    afterFollowShip(newFollowShip) {
+      this.newFollowShip = newFollowShip
+    },
+    afterTopFollowShip(newTopFollowShip) {
+      this.newTopFollowShip = newTopFollowShip
     }
   },
   created() {
