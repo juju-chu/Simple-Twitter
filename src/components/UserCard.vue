@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <img class="cover" :src="user.cover" />
+    <img class="cover" :src="user.cover | emptyImage" />
     <div class="user-info">
       <div v-show="!isLoading" class="name">{{ user.name }}</div>
       <div v-show="!isLoading" class="account">@{{ user.account }}</div>
@@ -30,7 +30,7 @@
         </router-link>
       </div>
     </div>
-    <img v-show="!isLoading" class="avatar" :src="user.avatar" />
+    <img v-show="!isLoading" class="avatar" :src="user.avatar | emptyImage" />
     <div class="btn btn-edit" v-if="isSelf">
       <button class="btn-button" @click.stop.prevent="showModal">
         <span class="btn-text">編輯個人資料</span>
@@ -193,6 +193,10 @@ export default {
     initialUser: {
       type: Object,
       required: true,
+      default: () => ({
+        name: '',
+        introduction: ''
+      })
     },
   },
   data() {
@@ -200,6 +204,8 @@ export default {
       isShowModal: false,
       user: {
         id: -1,
+        name: '',
+        introduction: ''
       },
       nameCount: -1,
       introductionCount: -1,
@@ -230,11 +236,17 @@ export default {
           ...this.user,
           ...newValue,
         }
+
         this.nameCount = this.user.name.length
-        if (this.user.introduction.length > 160) {
-          this.user.introduction = this.user.introduction.slice(0, 160)
+        if (this.user.introduction !== null) {
+          if (this.user.introduction.length > 160) {
+            this.user.introduction = this.user.introduction.slice(0, 160)
+          }
+          this.introductionCount = this.user.introduction.length
+        } else {
+          this.introductionCount = 0
         }
-        this.introductionCount = this.user.introduction.length
+
         this.checkIsSelf()
         this.checkFollow()
         this.isLoading = false
@@ -244,7 +256,11 @@ export default {
     user: {
       handler: function () {
         this.nameCount = this.user.name.length
-        this.introductionCount = this.user.introduction.length
+        if (this.user.introduction !== null) {
+          this.introductionCount = this.user.introduction.length
+        } else {
+          this.introductionCount = 0
+        }
       },
       deep: true,
     }
