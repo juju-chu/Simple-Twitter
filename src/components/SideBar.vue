@@ -20,6 +20,93 @@
           <span class="text sidebar-tweets-text">首頁</span>
         </router-link>
       </div>
+      <div class="nav-item sidebar-notify">
+        <router-link to="/tweets" class="item">
+          <svg
+            v-if="isNotify"
+            class="icon-spot-noti"
+            width="7"
+            height="7"
+            viewBox="0 0 7 7"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="4" cy="3" r="3.5" fill="#FF6600" stroke="white" />
+          </svg>
+          <svg
+            class="icon"
+            width="20"
+            height="21"
+            viewBox="0 0 20 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.697 15.468C19.677 15.452 17.557 13.828 17.594 9.43799C17.614 6.90599 16.782 4.65599 15.247 3.10299C13.872 1.70999 12.01 0.939993 10.005 0.929993H9.992C7.988 0.939993 6.126 1.70999 4.75 3.10399C3.216 4.65699 2.382 6.90599 2.404 9.43799C2.441 13.768 0.384001 15.405 0.302002 15.468C0.0420015 15.661 -0.0639986 15.998 0.0370014 16.306C0.139001 16.614 0.427002 16.821 0.749002 16.821H5.669C5.771 19.131 7.666 20.981 9.999 20.981C12.332 20.981 14.225 19.131 14.326 16.821H19.248C19.57 16.821 19.858 16.615 19.958 16.307C20.061 16 19.955 15.662 19.695 15.469L19.697 15.468ZM10 19.478C8.495 19.478 7.27 18.301 7.172 16.82H12.828C12.728 18.3 11.505 19.48 10 19.48V19.478ZM2.38 15.32C3.12 14.188 3.928 12.292 3.904 9.42399C3.886 7.26399 4.548 5.44199 5.817 4.15699C6.91 3.04999 8.397 2.43699 10 2.42999C11.603 2.43799 13.087 3.04999 14.18 4.15799C15.45 5.44299 16.113 7.26399 16.095 9.42499C16.071 12.293 16.88 14.19 17.62 15.321H2.38V15.32Z"
+              fill="black"
+            />
+          </svg>
+          <span class="text sidebar-notify-text">通知</span>
+        </router-link>
+      </div>
+      <div class="nav-item sidebar-public">
+        <router-link to="/tweets" class="item">
+          <svg
+            v-if="isPublic"
+            class="icon-spot-msg"
+            width="7"
+            height="7"
+            viewBox="0 0 7 7"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="4" cy="3" r="3.5" fill="#FF6600" stroke="white" />
+          </svg>
+          <svg
+            class="icon"
+            width="20"
+            height="19"
+            viewBox="0 0 20 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.25 0.0180054H2.75C1.233 0.0180054 0 1.25201 0 2.77001V15.265C0 16.783 1.233 18.018 2.75 18.018H17.25C18.767 18.018 20 16.783 20 15.265V2.77001C20 1.25201 18.767 0.0180054 17.25 0.0180054ZM2.75 1.51801H17.25C17.94 1.51801 18.5 2.07801 18.5 2.76801V3.48201L10.45 8.84901C10.177 9.02901 9.824 9.03101 9.55 8.84701L1.5 3.48201V2.76801C1.5 2.07801 2.06 1.51801 2.75 1.51801ZM17.25 16.516H2.75C2.06 16.516 1.5 15.956 1.5 15.266V5.24001L8.74 10.07C9.123 10.326 9.562 10.454 10 10.454C10.44 10.454 10.877 10.326 11.26 10.071L18.5 5.24101V15.263C18.5 15.953 17.94 16.513 17.25 16.513V16.516Z"
+              fill="black"
+            />
+          </svg>
+          <span class="text sidebar-public-text">公開聊天室</span>
+        </router-link>
+      </div>
+      <div class="nav-item sidebar-private">
+        <router-link to="/tweets" class="item">
+          <svg
+            v-if="isPrivate"
+            class="icon-spot-msg"
+            width="7"
+            height="7"
+            viewBox="0 0 7 7"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="4" cy="3" r="3.5" fill="#FF6600" stroke="white" />
+          </svg>
+          <svg
+            class="icon"
+            width="20"
+            height="19"
+            viewBox="0 0 20 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.25 0.0180054H2.75C1.233 0.0180054 0 1.25201 0 2.77001V15.265C0 16.783 1.233 18.018 2.75 18.018H17.25C18.767 18.018 20 16.783 20 15.265V2.77001C20 1.25201 18.767 0.0180054 17.25 0.0180054ZM2.75 1.51801H17.25C17.94 1.51801 18.5 2.07801 18.5 2.76801V3.48201L10.45 8.84901C10.177 9.02901 9.824 9.03101 9.55 8.84701L1.5 3.48201V2.76801C1.5 2.07801 2.06 1.51801 2.75 1.51801ZM17.25 16.516H2.75C2.06 16.516 1.5 15.956 1.5 15.266V5.24001L8.74 10.07C9.123 10.326 9.562 10.454 10 10.454C10.44 10.454 10.877 10.326 11.26 10.071L18.5 5.24101V15.263C18.5 15.953 17.94 16.513 17.25 16.513V16.516Z"
+              fill="black"
+            />
+          </svg>
+          <span class="text sidebar-private-text">私人訊息</span>
+        </router-link>
+      </div>
       <div class="nav-item sidebar-user-self">
         <router-link
           class="item"
@@ -149,6 +236,9 @@ export default {
       newTweet: '',
       userId: -1,
       isProcessing: false,
+      isNotify: false,
+      isPublic: false,
+      isPrivate: false,
     }
   },
   computed: {
@@ -176,7 +266,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.focus()
       },
     },
@@ -263,6 +353,7 @@ export default {
 }
 
 .item {
+  position: relative;
   display: flex;
 }
 
@@ -278,6 +369,18 @@ export default {
   margin-right: 20px;
   width: 24px;
   height: 24px;
+}
+
+.icon-spot-noti {
+  position: absolute;
+  top: 0;
+  left: 16px;
+}
+
+.icon-spot-msg {
+  position: absolute;
+  top: -2px;
+  left: 19px;
 }
 
 .text {
