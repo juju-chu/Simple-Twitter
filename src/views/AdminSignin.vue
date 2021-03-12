@@ -3,7 +3,7 @@
   <div class="container py-5">
     <div class="title text-center">
       <img class="mb-4" src="../assets/Logo.svg" alt="" />
-      <h1 class="h3 font-weight-normal">後台登入</h1>
+      <h1>後台登入</h1>
     </div>
     <form class="w-100" @submit.prevent.stop="handleSubmit">
       <div class="signin-form">
@@ -123,6 +123,12 @@ export default {
 <style scoped>
 * {
   box-sizing: border-box;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 33px;
 }
 
 .signin-form {
