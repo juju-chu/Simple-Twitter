@@ -233,9 +233,10 @@ export default {
 }
 
 .tweet-description {
-  text-align: left;
+  width: 510px;
   overflow-wrap: anywhere;
   margin-top: 6px;
+  text-align: left;
   font-weight: 500;
   font-size: 15px;
 }
