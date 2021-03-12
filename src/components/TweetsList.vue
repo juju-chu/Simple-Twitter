@@ -23,12 +23,13 @@
                 }}</span>
               </router-link>
             </div>
-            <div
+            <button
               class="tweet-description"
               @click.stop.prevent="openReplies(tweet.id)"
+              :disabled="isRepliedTweets"
             >
               {{ tweet.description }}
-            </div>
+            </button>
           </div>
         </div>
         <div class="tweet-actions">
@@ -105,6 +106,7 @@ export default {
       modalTweet: {},
       isReplyModalToggle: false,
       isProcessing: false,
+      isRepliedTweets: false,
     }
   },
   watch: {
@@ -113,7 +115,12 @@ export default {
         ...this.tweet,
         ...newValue,
       }
-    },
+    }
+  },
+  created() {
+    if (this.$route.name.includes('replied-tweets')) {
+      this.isRepliedTweets = true
+    }
   },
   computed: {
     ...mapState(['currentUser']),
@@ -229,6 +236,7 @@ export default {
 }
 
 .tweet-description {
+  text-align: left;
   overflow-wrap: anywhere;
   margin-top: 6px;
   font-weight: 500;
