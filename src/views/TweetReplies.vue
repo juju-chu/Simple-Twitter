@@ -130,7 +130,7 @@ export default {
 
       return `${time}・${date}`
     },
-    async afterSubmit() {
+    afterSubmit() {
       this.fetchTweet()
       this.fetchReplies()
     },

@@ -127,7 +127,11 @@ export default {
       this.isReplyModalToggle = isReplyModalToggle
     },
     openReplies(tweetId) {
-      this.$router.push({ name: 'tweets-replies', params: { id: tweetId } })
+      if (this.$route.name === 'user-replied-tweets') {
+        this.$router.push({ name: 'tweets-replies', params: { id: this.tweet.tweetId } })
+      } else {
+        this.$router.push({ name: 'tweets-replies', params: { id: tweetId } })
+      }
     },
     async addLike(tweetId) {
       try {

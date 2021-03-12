@@ -196,6 +196,7 @@ export default {
         const { data } = await usersAPI.getUsersRepliedTweets({ userId })
         this.tweets = data.map((tweet) => ({
           id: tweet.id,
+          tweetId: tweet.TweetId,
           userId: tweet.User.id,
           account: tweet.User.account,
           name: tweet.User.name,
