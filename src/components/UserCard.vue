@@ -450,6 +450,7 @@ img {
 
 .introduction {
   margin-top: 10px;
+  width: 570px;
   font-weight: normal;
   font-size: 14px;
 }
