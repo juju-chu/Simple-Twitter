@@ -26,7 +26,6 @@
             <button
               class="tweet-description"
               @click.stop.prevent="openReplies(tweet.id)"
-              :disabled="isRepliedTweets"
             >
               {{ tweet.description }}
             </button>
@@ -106,7 +105,6 @@ export default {
       modalTweet: {},
       isReplyModalToggle: false,
       isProcessing: false,
-      isRepliedTweets: false,
     }
   },
   watch: {
@@ -115,11 +113,6 @@ export default {
         ...this.tweet,
         ...newValue,
       }
-    }
-  },
-  created() {
-    if (this.$route.name.includes('replied-tweets')) {
-      this.isRepliedTweets = true
     }
   },
   computed: {
