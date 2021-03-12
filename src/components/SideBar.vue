@@ -79,7 +79,7 @@
         </router-link>
       </div>
       <div class="nav-item sidebar-private">
-        <router-link to="/tweets" class="item">
+        <router-link to="/public-messages" class="item">
           <svg
             v-if="isPrivate"
             class="icon-spot-msg"
