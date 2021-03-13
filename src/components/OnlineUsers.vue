@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'OnlineUser',
+  name: 'OnlineUsers',
   props: {
     user: {
       type: Object,

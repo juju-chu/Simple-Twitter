@@ -84,7 +84,7 @@ const dummyUsers = [
 ]
 
 import SideBar from './../components/SideBar'
-import OnlineUser from './../components/OnlineUser'
+import OnlineUser from './../components/OnlineUsers'
 import ChatRoom from './../components/ChatRoom'
 import { mapState } from 'vuex'
 import uuidv4 from 'uuid'
