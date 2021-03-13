@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <SideBar class="side-bar" @after-post-tweet="afterPostTweet" />
+    <SideBar class="side-bar" />
 
     <div class="header-users">上線使用者 ({{ onlineCount }})</div>
     <div class="onlineUser-wrapper">
@@ -13,10 +13,17 @@
     </div>
 
     <div class="header-room">公開聊天室</div>
-    <div class="messages-wrapper">messages</div>
+    <div class="chat-room-wrapper">
+      <ChatRoom
+        class="chat-room"
+        v-for="chatData in chatDatas"
+        :key="chatData.id"
+        :chatData="chatData"
+      />
+    </div>
     <input
       class="input-text"
-      type="text"
+      MessageType="text"
       placeholder="輸入訊息..."
       v-model="message"
     />
@@ -44,55 +51,130 @@
 <script>
 const dummyUsers = [
   {
-    id: 1,
+    id: 2,
     name: "Apple",
     account: "apple",
     avatar: "https://loremflickr.com/320/240/dog/?lock=42.87898512441826",
   },
   {
-    id: 2,
+    id: 3,
     name: "Jane",
     account: "user2",
     avatar: "https://loremflickr.com/320/240/dog/?lock=7.643201110272924",
   },
   {
-    id: 3,
+    id: 4,
     name: "Wade",
     account: "user3",
     avatar: "https://loremflickr.com/320/240/dog/?lock=2.7842269503866035",
   },
   {
-    id: 4,
+    id: 5,
     name: "Esther",
     account: "user4",
     avatar: "https://loremflickr.com/320/240/dog/?lock=35.34804975546177",
   },
   {
-    id: 5,
+    id: 6,
     name: "Ralph",
     account: "user5",
     avatar: "https://loremflickr.com/320/240/dog/?lock=35.00129934402724",
   }
 ]
+const dummyChatDatas = [
+  {
+    id: 1,
+    MessageType: "broadcast-online",
+    name: "Apple",
+  },
+  {
+    id: 2,
+    MessageType: "broadcast-online",
+    name: "Jane",
+  },
+  {
+    id: 3,
+    userId: 2,
+    MessageType: "message-other",
+    name: "Apple",
+    avatar: "https://loremflickr.com/320/240/dog/?lock=42.87898512441826",
+    message: "哈囉",
+    time: "2021-03-12T15:34:40.000Z",
+  },
+  {
+    id: 4,
+    userId: 1,
+    MessageType: "message-self",
+    message: "你好",
+    time: "2021-03-12T15:36:40.000Z",
+  },
+  {
+    id: 5,
+    MessageType: "broadcast-offline",
+    name: "Jane",
+  },
+  {
+    id: 6,
+    MessageType: "broadcast-online",
+    name: "Wade",
+  },
+  {
+    id: 7,
+    userId: 4,
+    MessageType: "message-other",
+    name: "Wade",
+    avatar: "https://loremflickr.com/320/240/dog/?lock=2.7842269503866035",
+    message: "今天天氣如何？",
+    time: "2021-03-12T15:41:40.000Z",
+  },
+  {
+    id: 8,
+    MessageType: "broadcast-online",
+    name: "Jane",
+  },
+  {
+    id: 9,
+    MessageType: "broadcast-online",
+    name: "Esther",
+  },
+  {
+    id: 10,
+    MessageType: "broadcast-online",
+    name: "Ralph",
+  },
+  {
+    id: 11,
+    userId: 3,
+    MessageType: "message-other",
+    name: "Jane",
+    avatar: "https://loremflickr.com/320/240/dog/?lock=7.643201110272924",
+    message: "剛斷線",
+    time: "2021-03-12T15:50:40.000Z",
+  },
+]
 import SideBar from './../components/SideBar'
 import OnlineUser from './../components/OnlineUser'
+import ChatRoom from './../components/ChatRoom'
 
 export default {
   name: 'PublicMessage',
   components: {
     SideBar,
     OnlineUser,
+    ChatRoom,
   },
   data() {
     return {
       onlineCount: -1,
       users: [],
+      chatDatas: '',
       message: '',
     }
   },
   created() {
     this.fetchData()
     this.fetchUsers()
+    this.fetchChatDatas()
   },
   methods: {
     fetchData() {
@@ -102,6 +184,10 @@ export default {
     fetchUsers() {
       // TODO:
       this.users = dummyUsers
+    },
+    fetchChatDatas() {
+      // TODO:
+      this.chatDatas = dummyChatDatas
     },
   }
 }
@@ -159,16 +245,15 @@ export default {
   grid-row: 1 / 2;
 }
 
-.messages-wrapper {
+.chat-room-wrapper {
   grid-column: 3 / 5;
   grid-row: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 20px;
   border-bottom: 1px solid #e6ecf0;
 }
-
-/* .input-wrapper {
-  display: flex;
-  align-items: center;
-} */
 
 .input-text {
   grid-column: 3 / 4;
