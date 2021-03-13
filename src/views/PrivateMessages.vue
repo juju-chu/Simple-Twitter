@@ -22,7 +22,7 @@
       />
     </div>
     <input
-      @keyup.enter="send"
+      @keypress.enter="send"
       class="input-text"
       MessageType="text"
       placeholder="輸入訊息..."
@@ -87,6 +87,7 @@ import SideBar from './../components/SideBar'
 import OnlineUser from './../components/OnlineUser'
 import ChatRoom from './../components/ChatRoom'
 import { mapState } from 'vuex'
+import uuidv4 from 'uuid'
 
 export default {
   name: 'PublicMessage',
@@ -97,7 +98,7 @@ export default {
   },
   data() {
     return {
-      onlineCount: -1,
+      onlineCount: 0,
       onlineUsers: [],
       chatDatas: [],
       message: '',
@@ -122,7 +123,6 @@ export default {
       //this.chatDatas = dummyChatDatas
     },
     send() {
-      console.log('send')
       this.$socket.emit('send', {
         id: 1,
         msg: this.message,
@@ -147,21 +147,20 @@ export default {
       this.onlineUsers = users
     },
     online(onlineCount) {
+      // TODO:
       console.log('online count', onlineCount)
       this.onlineCount = onlineCount
     },
     onlineUser(user) {
-      console.log('onlineUser', user)
       this.chatDatas.push({
-        id: user.id,
+        id: uuidv4(),
         MessageType: "broadcast-online",
         name: user.name,
       })
     },
     offlineUser(user) {
-      console.log('offlineUser', user)
       this.chatDatas.push({
-        id: user.id,
+        id: uuidv4(),
         MessageType: "broadcast-offline",
         name: user.name,
       })
@@ -171,12 +170,11 @@ export default {
       this.chatDatas = datas
     },
     message(data) {
-      console.log('message', data)
       if (!data.message) {
         return
       }
       this.chatDatas.push({
-        id: data.UserId,
+        id: uuidv4(),
         userId: data.id,
         message: data.message,
         MessageType: (data.id === this.currentUser.id) ? 'message-self' : 'message-other',
@@ -185,7 +183,6 @@ export default {
         time: data.updatedAt
       })
       this.message = ''
-      console.log()
     }
   },
   computed: {
