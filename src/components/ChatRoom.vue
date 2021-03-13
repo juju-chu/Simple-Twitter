@@ -121,28 +121,28 @@ export default {
 .message-other-text-wrapper,
 .message-self-wrapper {
   align-items: center;
-  line-height: 40px;
   padding: 15px 20px 15px 20px;
+}
+
+.message-other-message,
+.message-self {
+  max-width: 300px;
 }
 
 .message-other-text-wrapper {
   background: #e6ecf0;
-  border-radius: 50% 40% 40% 0;
+  border-radius: 30px 20px 20px 0;
 }
 
 .message-self-text-wrapper {
   padding: 15px;
   background: #ff6600;
-  border-radius: 40% 40% 0 50%;
+  border-radius: 20px 20px 0 30px;
 }
 
 .message-self-text {
   max-width: 200px;
   color: #fff;
-}
-
-.message-other-text {
-  line-height: 40px;
 }
 
 .message-time {
