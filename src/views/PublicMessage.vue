@@ -52,104 +52,182 @@
 const dummyUsers = [
   {
     id: 2,
-    name: "Apple",
-    account: "apple",
-    avatar: "https://loremflickr.com/320/240/dog/?lock=42.87898512441826",
+    name: 'Apple',
+    account: 'apple',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=42.87898512441826',
   },
   {
     id: 3,
-    name: "Jane",
-    account: "user2",
-    avatar: "https://loremflickr.com/320/240/dog/?lock=7.643201110272924",
+    name: 'Jane',
+    account: 'user2',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=7.643201110272924',
   },
   {
     id: 4,
-    name: "Wade",
-    account: "user3",
-    avatar: "https://loremflickr.com/320/240/dog/?lock=2.7842269503866035",
+    name: 'Wade',
+    account: 'user3',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.7842269503866035',
   },
   {
     id: 5,
-    name: "Esther",
-    account: "user4",
-    avatar: "https://loremflickr.com/320/240/dog/?lock=35.34804975546177",
+    name: 'Esther',
+    account: 'user4',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=35.34804975546177',
   },
   {
     id: 6,
-    name: "Ralph",
-    account: "user5",
-    avatar: "https://loremflickr.com/320/240/dog/?lock=35.00129934402724",
-  }
+    name: 'Ralph',
+    account: 'user5',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.0202522757629793',
+  },
 ]
 const dummyChatDatas = [
   {
     id: 1,
-    MessageType: "broadcast-online",
-    name: "Apple",
+    MessageType: 'broadcast-online',
+    name: 'Apple',
   },
   {
     id: 2,
-    MessageType: "broadcast-online",
-    name: "Jane",
+    MessageType: 'broadcast-online',
+    name: 'Jane',
   },
   {
     id: 3,
     userId: 2,
-    MessageType: "message-other",
-    name: "Apple",
-    avatar: "https://loremflickr.com/320/240/dog/?lock=42.87898512441826",
-    message: "哈囉",
-    time: "2021-03-12T15:34:40.000Z",
+    MessageType: 'message-other',
+    name: 'Apple',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=42.87898512441826',
+    message: '哈囉',
+    time: '2021-03-12T15:34:40.000Z',
   },
   {
     id: 4,
     userId: 1,
-    MessageType: "message-self",
-    message: "你好",
-    time: "2021-03-12T15:36:40.000Z",
+    MessageType: 'message-self',
+    message: '你好',
+    time: '2021-03-12T15:36:40.000Z',
   },
   {
     id: 5,
-    MessageType: "broadcast-offline",
-    name: "Jane",
+    MessageType: 'broadcast-offline',
+    name: 'Jane',
   },
   {
     id: 6,
-    MessageType: "broadcast-online",
-    name: "Wade",
+    MessageType: 'broadcast-online',
+    name: 'Wade',
   },
   {
     id: 7,
     userId: 4,
-    MessageType: "message-other",
-    name: "Wade",
-    avatar: "https://loremflickr.com/320/240/dog/?lock=2.7842269503866035",
-    message: "今天天氣如何？",
-    time: "2021-03-12T15:41:40.000Z",
+    MessageType: 'message-other',
+    name: 'Wade',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.7842269503866035',
+    message: '今天天氣如何？',
+    time: '2021-03-12T15:41:40.000Z',
   },
   {
     id: 8,
-    MessageType: "broadcast-online",
-    name: "Jane",
+    MessageType: 'broadcast-online',
+    name: 'Jane',
   },
   {
     id: 9,
-    MessageType: "broadcast-online",
-    name: "Esther",
+    MessageType: 'broadcast-online',
+    name: 'Esther',
   },
   {
     id: 10,
-    MessageType: "broadcast-online",
-    name: "Ralph",
+    MessageType: 'broadcast-online',
+    name: 'Ralph',
   },
   {
     id: 11,
     userId: 3,
-    MessageType: "message-other",
-    name: "Jane",
-    avatar: "https://loremflickr.com/320/240/dog/?lock=7.643201110272924",
-    message: "剛斷線",
-    time: "2021-03-12T15:50:40.000Z",
+    MessageType: 'message-other',
+    name: 'Jane',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=7.643201110272924',
+    message: '剛斷線',
+    time: '2021-03-12T15:50:40.000Z',
+  },
+  {
+    id: 12,
+    userId: 5,
+    MessageType: 'message-other',
+    name: 'Esther',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=35.00129934402724',
+    message: 'hi I am Esther. How are you? I am fine, thank you and you?',
+    time: '2021-03-12T15:50:40.000Z',
+  },
+  {
+    id: 13,
+    userId: 1,
+    MessageType: 'message-self',
+    message: 'hi I am Esther. How are you? I am fine, thank you and you?',
+    time: '2021-03-12T15:36:40.000Z',
+  },
+  {
+    id: 14,
+    userId: 3,
+    MessageType: 'message-other',
+    name: 'Jane',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=7.643201110272924',
+    message: '哈囉～ 我是Jane',
+    time: '2021-03-12T15:50:40.000Z',
+  },
+  {
+    id: 15,
+    userId: 1,
+    MessageType: 'message-self',
+    message:
+      'hi I am current user. I am testing the text. Do you have any suggestion?',
+    time: '2021-03-12T15:36:40.000Z',
+  },
+  {
+    id: 16,
+    userId: 2,
+    MessageType: 'message-other',
+    name: 'Apple',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=42.87898512441826',
+    message: '哈囉～ 我是Apple，我覺得都不錯啊～ 看大家覺得如何',
+    time: '2021-03-12T15:50:40.000Z',
+  },
+  {
+    id: 17,
+    userId: 2,
+    MessageType: 'message-other',
+    name: 'Apple',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=42.87898512441826',
+    message: '大家好',
+    time: '2021-03-12T15:50:40.000Z',
+  },
+  {
+    id: 18,
+    userId: 6,
+    MessageType: 'message-other',
+    name: 'Ralph',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.0202522757629793',
+    message:
+      '大家好 新年快樂 恭喜發財 紅包拿來 你好嗎？ 我很好你呢？ 順順利利 心想事成 平安健康 步步高升',
+    time: '2021-03-12T15:50:40.000Z',
+  },
+  {
+    id: 19,
+    userId: 1,
+    MessageType: 'message-self',
+    message:
+      '你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 你好 ',
+    time: '2021-03-12T15:36:40.000Z',
+  },
+  {
+    id: 20,
+    userId: 3,
+    MessageType: 'message-other',
+    name: 'Jane',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=7.643201110272924',
+    message: '哈囉～ 我是Jane 哈囉～ 我是Jane 哈囉～ 我是Jane',
+    time: '2021-03-12T15:50:40.000Z',
   },
 ]
 import SideBar from './../components/SideBar'
@@ -189,7 +267,7 @@ export default {
       // TODO:
       this.chatDatas = dummyChatDatas
     },
-  }
+  },
 }
 </script>
 
@@ -250,9 +328,9 @@ export default {
   grid-row: 2 / 3;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   margin: 20px;
   border-bottom: 1px solid #e6ecf0;
+  overflow: auto;
 }
 
 .input-text {
