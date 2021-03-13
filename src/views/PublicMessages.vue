@@ -3,9 +3,9 @@
     <SideBar class="side-bar" />
 
     <div class="header-users">上線使用者 ({{ onlineCount }})</div>
-    <div class="onlineUser-wrapper">
-      <OnlineUser
-        class="onlineUser"
+    <div class="online-users-wrapper">
+      <OnlineUsers
+        class="online-users"
         v-for="user in onlineUsers"
         :key="user.id"
         :user="user"
@@ -84,7 +84,7 @@ const dummyUsers = [
 ]
 
 import SideBar from './../components/SideBar'
-import OnlineUser from './../components/OnlineUsers'
+import OnlineUsers from './../components/OnlineUsers'
 import ChatRoom from './../components/ChatRoom'
 import { mapState } from 'vuex'
 import uuidv4 from 'uuid'
@@ -93,7 +93,7 @@ export default {
   name: 'PublicMessage',
   components: {
     SideBar,
-    OnlineUser,
+    OnlineUsers,
     ChatRoom,
   },
   data() {
@@ -128,15 +128,15 @@ export default {
         msg: this.message,
         name: this.currentUser.name,
         time: new Date().toString(),
-      });
-      this.text = "";
+      })
+      this.text = ''
     },
     disconnect() {
       this.$socket.emit('disconnect', {
         id: this.currentUser.id,
         name: this.currentUser.name,
       })
-    }
+    },
   },
   sockets: {
     connect(data) {
@@ -178,10 +178,11 @@ export default {
         id: uuidv4(),
         userId: data.id,
         message: data.message,
-        MessageType: (data.id === this.currentUser.id) ? 'message-self' : 'message-other',
+        MessageType:
+          data.id === this.currentUser.id ? 'message-self' : 'message-other',
         name: data.name,
         avatar: data.avatar,
-        time: data.updatedAt
+        time: data.updatedAt,
       })
       if (data.id === this.currentUser.id) {
         this.message = ''
@@ -193,9 +194,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentUser'])
-  }
-
+    ...mapState(['currentUser']),
+  },
 }
 </script>
 
@@ -235,14 +235,14 @@ export default {
   grid-row: 1 / 2;
 }
 
-.onlineUser-wrapper {
+.online-users-wrapper {
   grid-column: 2 / 3;
   grid-row: 2 / 4;
   width: 378px;
   border-right: 1px solid #e6ecf0;
 }
 
-.onlineUser {
+.online-users {
   border-bottom: 1px solid #e6ecf0;
 }
 

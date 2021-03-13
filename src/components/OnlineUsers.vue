@@ -21,8 +21,8 @@ export default {
     user: {
       type: Object,
       required: true,
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -36,7 +36,6 @@ export default {
 }
 
 .avatar {
-  /* margin: 15px 0 15px 15px; */
   width: 50px;
   height: 50px;
   border-radius: 50%;

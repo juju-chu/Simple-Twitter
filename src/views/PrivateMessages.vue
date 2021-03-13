@@ -2,11 +2,26 @@
   <div class="wrapper">
     <SideBar class="side-bar" />
 
-    <div class="header-users">上線使用者 ({{ onlineCount }})</div>
-    <div class="onlineUser-wrapper">
-      <OnlineUser
-        class="onlineUser"
-        v-for="user in onlineUsers"
+    <div class="header-users">
+      訊息
+      <svg
+        class="header-icon"
+        width="20"
+        height="19"
+        viewBox="0 0 20 19"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.25 0.0180054H2.75C1.233 0.0180054 0 1.25201 0 2.77001V15.265C0 16.783 1.233 18.018 2.75 18.018H17.25C18.767 18.018 20 16.783 20 15.265V2.77001C20 1.25201 18.767 0.0180054 17.25 0.0180054ZM2.75 1.51801H17.25C17.94 1.51801 18.5 2.07801 18.5 2.76801V3.48201L10.45 8.84901C10.177 9.02901 9.824 9.03101 9.55 8.84701L1.5 3.48201V2.76801C1.5 2.07801 2.06 1.51801 2.75 1.51801ZM17.25 16.516H2.75C2.06 16.516 1.5 15.956 1.5 15.266V5.24001L8.74 10.07C9.123 10.326 9.562 10.454 10 10.454C10.44 10.454 10.877 10.326 11.26 10.071L18.5 5.24101V15.263C18.5 15.953 17.94 16.513 17.25 16.513V16.516Z"
+          fill="black"
+        />
+      </svg>
+    </div>
+    <div class="private-users-wrapper">
+      <PrivateUsers
+        class="private-users"
+        v-for="user in privateUsers"
         :key="user.id"
         :user="user"
       />
@@ -84,111 +99,41 @@ const dummyUsers = [
 ]
 
 import SideBar from './../components/SideBar'
-import OnlineUser from './../components/OnlineUsers'
+import PrivateUsers from './../components/PrivateUsers'
 import ChatRoom from './../components/ChatRoom'
 import { mapState } from 'vuex'
-import uuidv4 from 'uuid'
 
 export default {
   name: 'PublicMessage',
   components: {
     SideBar,
-    OnlineUser,
+    PrivateUsers,
     ChatRoom,
   },
   data() {
     return {
-      onlineCount: 0,
-      onlineUsers: [],
+      privateUsers: [],
       chatDatas: [],
       message: '',
     }
   },
   created() {
-    this.fetchData()
-    this.fetchOnlineUsers()
+    this.fetchPrivateUsers()
     this.fetchChatDatas()
   },
   methods: {
-    fetchData() {
+    fetchPrivateUsers() {
       // TODO:
-      //this.onlineCount = dummyUsers.length
-    },
-    fetchOnlineUsers() {
-      // TODO:
-      this.onlineUsers = dummyUsers
+      this.privateUsers = dummyUsers
     },
     fetchChatDatas() {
       // TODO:
-      //this.chatDatas = dummyChatDatas
+      // this.chatDatas = dummyChatDatas
     },
-    send() {
-      this.$socket.emit('send', {
-        id: 1,
-        msg: this.message,
-        name: this.currentUser.name,
-        time: new Date().toString(),
-      });
-      this.text = "";
-    },
-    disconnect() {
-      this.$socket.emit('disconnect', {
-        id: this.currentUser.id,
-        name: this.currentUser.name,
-      })
-    }
-  },
-  sockets: {
-    connect(data) {
-      console.log('socket connected', data)
-    },
-    allOnlineUsers(users) {
-      // TODO:
-      this.onlineUsers = users
-    },
-    online(onlineCount) {
-      // TODO:
-      console.log('online count', onlineCount)
-      this.onlineCount = onlineCount
-    },
-    onlineUser(user) {
-      this.chatDatas.push({
-        id: uuidv4(),
-        MessageType: "broadcast-online",
-        name: user.name,
-      })
-    },
-    offlineUser(user) {
-      this.chatDatas.push({
-        id: uuidv4(),
-        MessageType: "broadcast-offline",
-        name: user.name,
-      })
-    },
-    fetchChatDatas(datas) {
-      // TODO:
-      this.chatDatas = datas
-    },
-    message(data) {
-      if (!data.message) {
-        return
-      }
-      this.chatDatas.push({
-        id: uuidv4(),
-        userId: data.id,
-        message: data.message,
-        MessageType: (data.id === this.currentUser.id) ? 'message-self' : 'message-other',
-        name: data.name,
-        avatar: data.avatar,
-        time: data.updatedAt
-      })
-      this.message = ''
-    }
   },
   computed: {
-    ...mapState(['currentUser'])
-  }
-
+    ...mapState(['currentUser']),
+  },
 }
 </script>
 
@@ -224,18 +169,25 @@ export default {
 }
 
 .header-users {
+  position: relative;
   grid-column: 2 / 3;
   grid-row: 1 / 2;
 }
 
-.onlineUser-wrapper {
+.header-icon {
+  position: absolute;
+  top: 14px;
+  right: 15px;
+}
+
+.private-users-wrapper {
   grid-column: 2 / 3;
   grid-row: 2 / 4;
   width: 378px;
   border-right: 1px solid #e6ecf0;
 }
 
-.onlineUser {
+.private-users {
   border-bottom: 1px solid #e6ecf0;
 }
 
