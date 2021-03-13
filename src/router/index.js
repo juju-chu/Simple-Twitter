@@ -5,7 +5,6 @@ import UserSignIn from '../views/UserSignIn.vue'
 import UserSignUp from '../views/UserSignUp.vue'
 import Tweets from '../views/Tweets.vue'
 import TweetReplies from './../views/TweetReplies.vue'
-import PublicMessage from './../views/PublicMessage.vue'
 import User from '../views/User.vue'
 import UserSetting from '../views/UserSetting.vue'
 import UserFollowShip from '../views/UserFollowShip.vue'
@@ -101,7 +100,13 @@ const routes = [
   {
     path: '/public-messages',
     name: 'public-messages',
-    component: PublicMessage,
+    component: () => import('../views/PublicMessage.vue'),
+    beforeEnter: authorizeIsUser,
+  },
+  {
+    path: '/private-message',
+    name: 'private-message',
+    component: () => import('../views/PrivateMessage.vue'),
     beforeEnter: authorizeIsUser,
   },
   {
