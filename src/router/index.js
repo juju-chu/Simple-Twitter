@@ -100,13 +100,13 @@ const routes = [
   {
     path: '/public-messages',
     name: 'public-messages',
-    component: () => import('../views/PublicMessage.vue'),
+    component: () => import('../views/PublicMessages.vue'),
     beforeEnter: authorizeIsUser,
   },
   {
-    path: '/private-message',
-    name: 'private-message',
-    component: () => import('../views/PrivateMessage.vue'),
+    path: '/private-messages',
+    name: 'private-messages',
+    component: () => import('../views/PrivateMessages.vue.vue'),
     beforeEnter: authorizeIsUser,
   },
   {
