@@ -50,39 +50,6 @@
 </template>
 
 <script>
-const dummyUsers = [
-  {
-    id: 2,
-    name: 'Apple',
-    account: 'apple',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=42.87898512441826',
-  },
-  {
-    id: 3,
-    name: 'Jane',
-    account: 'user2',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=7.643201110272924',
-  },
-  {
-    id: 4,
-    name: 'Wade',
-    account: 'user3',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.7842269503866035',
-  },
-  {
-    id: 5,
-    name: 'Esther',
-    account: 'user4',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=35.34804975546177',
-  },
-  {
-    id: 6,
-    name: 'Ralph',
-    account: 'user5',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.0202522757629793',
-  },
-]
-
 import SideBar from './../components/SideBar'
 import OnlineUsers from './../components/OnlineUsers'
 import ChatRoom from './../components/ChatRoom'
@@ -105,9 +72,9 @@ export default {
     }
   },
   created() {
-    this.fetchData()
-    this.fetchOnlineUsers()
-    this.fetchChatDatas()
+    //this.fetchData()
+    //this.fetchOnlineUsers()
+    //this.fetchChatDatas()
   },
   methods: {
     fetchData() {
@@ -116,7 +83,7 @@ export default {
     },
     fetchOnlineUsers() {
       // TODO:
-      this.onlineUsers = dummyUsers
+      //this.onlineUsers = dummyUsers
     },
     fetchChatDatas() {
       // TODO:
@@ -124,7 +91,7 @@ export default {
     },
     send() {
       this.$socket.emit('send', {
-        id: 1,
+        id: this.currentUser.id,
         msg: this.message,
         name: this.currentUser.name,
         time: new Date().toString(),
@@ -145,7 +112,11 @@ export default {
     allOnlineUsers(users) {
       // TODO:
       console.log('allOnlineUsers', users)
-      //this.onlineUsers = users
+      this.onlineUsers = users
+    },
+    chatRecord(data) {
+      // TODO:
+      console.log('chatRecord', data)
     },
     online(onlineCount) {
       // TODO:
@@ -187,10 +158,6 @@ export default {
       if (data.id === this.currentUser.id) {
         this.message = ''
       }
-    },
-    chatRecord(data) {
-      // TODO:
-      console.log('chatRecord', data)
     }
   },
   computed: {
