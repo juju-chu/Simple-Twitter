@@ -16,7 +16,7 @@
     <div class="chat-room-wrapper">
       <ChatRoom
         class="chat-room"
-        v-for="chatData in chatDatas"
+        v-for="chatData in chatDatas.slice().reverse()"
         :key="chatData.id"
         :chatData="chatData"
       />
@@ -327,7 +327,7 @@ export default {
   grid-column: 3 / 5;
   grid-row: 2 / 3;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   margin: 20px;
   border-bottom: 1px solid #e6ecf0;
   overflow: auto;
