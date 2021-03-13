@@ -22,7 +22,7 @@
       />
     </div>
     <input
-      @keyup.enter="send"
+      @keypress.enter="send"
       class="input-text"
       MessageType="text"
       placeholder="輸入訊息..."
@@ -144,7 +144,8 @@ export default {
     },
     allOnlineUsers(users) {
       // TODO:
-      this.onlineUsers = users
+      console.log('allOnlineUsers', users)
+      //this.onlineUsers = users
     },
     online(onlineCount) {
       // TODO:
@@ -182,7 +183,13 @@ export default {
         avatar: data.avatar,
         time: data.updatedAt
       })
-      this.message = ''
+      if (data.id === this.currentUser.id) {
+        this.message = ''
+      }
+    },
+    chatRecord(data) {
+      // TODO:
+      console.log('chatRecord', data)
     }
   },
   computed: {
