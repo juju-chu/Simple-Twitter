@@ -166,6 +166,8 @@ export default {
           createdAt: time,
         }
       })
+
+      this.afterClick(this.privateUsers[0])
     },
     fetchChatDatas() {
       // TODO:
