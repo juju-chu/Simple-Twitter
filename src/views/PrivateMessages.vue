@@ -23,16 +23,16 @@
         class="private-users"
         v-for="user in privateUsers"
         :key="user.id"
-        :user="user"
+        :initial-user="user"
         @after-click="afterClick"
       />
     </div>
 
-    <div class="header-room" v-show="isChated">
+    <div class="header-room">
       <div class="header-room-name">{{ privateUser.name }}</div>
       <div class="header-room-account">{{ privateUser.account }}</div>
     </div>
-    <div class="chat-room-wrapper" v-show="isChated">
+    <div class="chat-room-wrapper">
       <ChatRoom
         class="chat-room"
         v-for="chatData in chatDatas.slice().reverse()"
@@ -46,9 +46,8 @@
       MessageType="text"
       placeholder="輸入訊息..."
       v-model="message"
-      v-show="isChated"
     />
-    <button @click.stop.prevent="send" class="input-icon" v-show="isChated">
+    <button @click.stop.prevent="send" class="input-icon">
       <svg
         class="svg-inline--fa fa-paper-plane fa-w-16"
         aria-hidden="true"
@@ -131,7 +130,6 @@ export default {
       chatDatas: [],
       message: '',
       privateUser: {},
-      isChated: false,
     }
   },
   created() {
@@ -164,6 +162,7 @@ export default {
           avatar: user.avatar,
           lastMessage: user.lastMessage,
           createdAt: time,
+          isLinked: false,
         }
       })
 
@@ -174,16 +173,20 @@ export default {
       // this.chatDatas = dummyChatDatas
     },
     afterClick(user) {
-      this.isChated = true
       this.privateUser = {
         id: user.id,
         userId: user.userId,
         name: user.name,
         account: user.account,
-        avatar: user.avatar,
-        lastMessage: user.lastMessage,
-        createdAt: user.createdAt,
       }
+      this.privateUsers = this.privateUsers.map((user) => {
+        if (user.id === this.privateUser.id) {
+          user.isLinked = true
+        } else {
+          user.isLinked = false
+        }
+        return user
+      })
     },
   },
   computed: {

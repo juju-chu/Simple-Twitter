@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button class="wrapper" @click.stop.prevent="handleClick">
+    <button
+      class="wrapper"
+      :class="{ linked: user.isLinked }"
+      @click.stop.prevent="handleClick"
+    >
       <router-link :to="{ name: 'user', params: { id: user.userId } }">
         <img class="avatar" :src="user.avatar" />
       </router-link>
@@ -26,14 +30,33 @@
 export default {
   name: 'PrivateUsers',
   props: {
-    user: {
+    initialUser: {
       type: Object,
       required: true,
     },
   },
+  data() {
+    return {
+      user: {},
+    }
+  },
+  watch: {
+    initialUser(newValue) {
+      this.user = {
+        ...this.user,
+        ...newValue,
+      }
+    },
+  },
+  created() {
+    this.fetchData()
+  },
   methods: {
     handleClick() {
       this.$emit('after-click', this.user)
+    },
+    fetchData() {
+      this.user = this.initialUser
     },
   },
 }
@@ -43,8 +66,13 @@ export default {
 .wrapper {
   display: flex;
   align-items: center;
-  margin: 0 10px 0 10px;
+  padding: 0 10px 0 10px;
   height: 80px;
+}
+
+.linked {
+  background: #f5f8fa;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
 }
 
 .user-wrapper {
