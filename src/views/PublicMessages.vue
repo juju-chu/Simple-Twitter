@@ -61,6 +61,7 @@ import OnlineUsers from './../components/OnlineUsers'
 import ChatRecordRoom from './../components/ChatRecordRoom'
 import ChatRoom from './../components/ChatRoom'
 import { mapState } from 'vuex'
+import { Toast } from './../utils/helpers'
 import uuidv4 from 'uuid'
 
 // For vue - socket.io 
@@ -131,11 +132,9 @@ export default {
   },
   sockets: {
     connect() {
-      console.log('socket connected')
+      // console.log('socket connected')
     },
     allOnlineUsers(users) {
-      // TODO:
-      console.log('allOnlineUsers', users)
       this.onlineUsers = users
     },
     online(onlineCount) {
@@ -181,6 +180,10 @@ export default {
     },
     message(data) {
       if (!data.message) {
+        Toast.fire({
+          icon: 'warning',
+          title: '您尚未輸入訊息'
+        })
         return
       }
       const hour = +data.createdAt.substring(11, 13) + 8
