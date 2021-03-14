@@ -98,6 +98,12 @@ const routes = [
     beforeEnter: authorizeIsUser,
   },
   {
+    path: '/notifications',
+    name: 'notifications',
+    component: () => import('../views/Notifications.vue'),
+    beforeEnter: authorizeIsUser,
+  },
+  {
     path: '/public-messages',
     name: 'public-messages',
     component: () => import('../views/PublicMessages.vue'),
