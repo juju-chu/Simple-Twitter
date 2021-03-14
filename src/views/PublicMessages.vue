@@ -126,14 +126,14 @@ export default {
     onlineUser(user) {
       this.chatDatas.push({
         id: uuidv4(),
-        MessageType: "broadcast-online",
+        MessageType: 'broadcast-online',
         name: user.name,
       })
     },
     offlineUser(user) {
       this.chatDatas.push({
         id: uuidv4(),
-        MessageType: "broadcast-offline",
+        MessageType: 'broadcast-offline',
         name: user.name,
       })
     },
@@ -158,7 +158,7 @@ export default {
       if (data.id === this.currentUser.id) {
         this.message = ''
       }
-    }
+    },
   },
   computed: {
     ...mapState(['currentUser']),
@@ -231,7 +231,7 @@ export default {
 .input-text {
   grid-column: 3 / 4;
   grid-row: 3 / 4;
-  margin: 15px 0 0 15px;
+  margin-left: 15px;
   padding-left: 15px;
   height: 50px;
   border-radius: 50px;
@@ -241,7 +241,7 @@ export default {
 .input-icon {
   grid-column: 4 / 5;
   grid-row: 3 / 4;
-  margin: 25px 0 0 10px;
+  margin: 10px 0 0 10px;
   width: 24px;
   height: 24px;
 }
