@@ -145,6 +145,15 @@ export default {
       if (!data.message) {
         return
       }
+      const hour = +data.createdAt.substring(11, 13) + 8
+      const min = +data.createdAt.substring(14, 16)
+      const createdTime = `${
+        hour > 23
+          ? '上午 ' + (hour - 24)
+          : hour > 12
+          ? '下午 ' + (hour - 12)
+          : '上午 ' + hour
+      }:${min < 10 ? '0' + min.toString() : min}`
       this.chatDatas.push({
         id: uuidv4(),
         userId: data.id,
@@ -153,7 +162,7 @@ export default {
           data.id === this.currentUser.id ? 'message-self' : 'message-other',
         name: data.name,
         avatar: data.avatar,
-        time: data.updatedAt,
+        time: createdTime,
       })
       if (data.id === this.currentUser.id) {
         this.message = ''
