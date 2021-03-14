@@ -24,11 +24,15 @@
         v-for="user in privateUsers"
         :key="user.id"
         :user="user"
+        @after-click="afterClick"
       />
     </div>
 
-    <div class="header-room">公開聊天室</div>
-    <div class="chat-room-wrapper">
+    <div class="header-room" v-show="isChated">
+      <div class="header-room-name">{{ privateUser.name }}</div>
+      <div class="header-room-account">{{ privateUser.account }}</div>
+    </div>
+    <div class="chat-room-wrapper" v-show="isChated">
       <ChatRoom
         class="chat-room"
         v-for="chatData in chatDatas.slice().reverse()"
@@ -42,8 +46,9 @@
       MessageType="text"
       placeholder="輸入訊息..."
       v-model="message"
+      v-show="isChated"
     />
-    <button @click.stop.prevent="send" class="input-icon">
+    <button @click.stop.prevent="send" class="input-icon" v-show="isChated">
       <svg
         class="svg-inline--fa fa-paper-plane fa-w-16"
         aria-hidden="true"
@@ -125,6 +130,8 @@ export default {
       privateUsers: [],
       chatDatas: [],
       message: '',
+      privateUser: {},
+      isChated: false,
     }
   },
   created() {
@@ -164,6 +171,18 @@ export default {
       // TODO:
       // this.chatDatas = dummyChatDatas
     },
+    afterClick(user) {
+      this.isChated = true
+      this.privateUser = {
+        id: user.id,
+        userId: user.userId,
+        name: user.name,
+        account: user.account,
+        avatar: user.avatar,
+        lastMessage: user.lastMessage,
+        createdAt: user.createdAt,
+      }
+    },
   },
   computed: {
     ...mapState(['currentUser']),
@@ -192,7 +211,6 @@ export default {
 
 .header-users,
 .header-room {
-  padding: 14px 0 0 15px;
   font-family: 'Noto Sans TC', sans-serif;
   font-weight: 700;
   font-size: 18px;
@@ -203,6 +221,7 @@ export default {
 }
 
 .header-users {
+  padding: 14px 0 0 15px;
   position: relative;
   grid-column: 2 / 3;
   grid-row: 1 / 2;
@@ -227,6 +246,18 @@ export default {
 .header-room {
   grid-column: 3 / 5;
   grid-row: 1 / 2;
+  padding-left: 15px;
+}
+
+.header-room-name {
+  font-weight: 900;
+  font-size: 19px;
+}
+
+.header-room-account {
+  font-weight: 500;
+  font-size: 13px;
+  color: #657786;
 }
 
 .chat-room-wrapper {

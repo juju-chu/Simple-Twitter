@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper">
+    <button class="wrapper" @click.stop.prevent="handleClick">
       <router-link :to="{ name: 'user', params: { id: user.userId } }">
         <img class="avatar" :src="user.avatar" />
       </router-link>
@@ -18,7 +18,7 @@
         </div>
         <div class="user-message">{{ user.lastMessage }}</div>
       </div>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -31,6 +31,11 @@ export default {
       required: true,
     },
   },
+  methods: {
+    handleClick() {
+      this.$emit('after-click', this.user)
+    },
+  },
 }
 </script>
 
@@ -38,7 +43,7 @@ export default {
 .wrapper {
   display: flex;
   align-items: center;
-  margin: 0 15px 0 15px;
+  margin: 0 10px 0 10px;
   height: 80px;
 }
 
@@ -73,5 +78,6 @@ export default {
 .last-time,
 .user-message {
   color: #657786;
+  text-align: start;
 }
 </style>
