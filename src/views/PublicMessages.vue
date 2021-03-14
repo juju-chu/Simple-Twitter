@@ -118,6 +118,7 @@ export default {
         msg: this.message,
         name: this.currentUser.name,
         time: new Date().toString(),
+        avatar: this.currentUser.avatar
       })
       this.text = ''
     },
@@ -157,6 +158,7 @@ export default {
           message: record.message,
           messageType:
             record.UserId === this.currentUser.id ? 'message-self' : 'message-other',
+          avatar: record.avatar,
           time: createdTime,
         }
       })
