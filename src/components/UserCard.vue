@@ -38,9 +38,9 @@
     </div>
     <div class="btn-other" v-else>
       <div class="btn btn-message">
-        <button>
+        <router-link to="/private-messages" class="item">
           <img src="./../assets/btn_messege.svg" />
-        </button>
+        </router-link>
       </div>
       <div class="btn btn-noti">
         <button v-if="!isNoti" @click.stop.prevent="clickNoti">
@@ -195,8 +195,8 @@ export default {
       required: true,
       default: () => ({
         name: '',
-        introduction: ''
-      })
+        introduction: '',
+      }),
     },
   },
   data() {
@@ -205,7 +205,7 @@ export default {
       user: {
         id: -1,
         name: '',
-        introduction: ''
+        introduction: '',
       },
       nameCount: -1,
       introductionCount: -1,
@@ -224,14 +224,14 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function (el) {
+      inserted: function(el) {
         el.focus()
       },
     },
   },
   watch: {
     initialUser: {
-      handler: function (newValue) {
+      handler: function(newValue) {
         this.user = {
           ...this.user,
           ...newValue,
@@ -251,10 +251,10 @@ export default {
         this.checkFollow()
         this.isLoading = false
       },
-      deep: true
+      deep: true,
     },
     user: {
-      handler: function () {
+      handler: function() {
         this.nameCount = this.user.name.length
         if (this.user.introduction !== null) {
           this.introductionCount = this.user.introduction.length
@@ -263,7 +263,7 @@ export default {
         }
       },
       deep: true,
-    }
+    },
   },
   created() {
     this.checkFollow()
