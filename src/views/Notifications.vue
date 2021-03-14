@@ -6,13 +6,14 @@
       <div class="header">
         <div class="header-title">通知</div>
       </div>
-      <!-- Tweet list -->
-      <NotificationList
-        class="notification-list"
-        v-for="notification in notifications"
-        :key="notification.id"
-        :notification="notification"
-      />
+      <div class="notification-wrapper">
+        <NotificationList
+          class="notification-list"
+          v-for="notification in notifications"
+          :key="notification.id"
+          :notification="notification"
+        />
+      </div>
     </div>
 
     <!-- Recommendation -->
@@ -24,44 +25,46 @@
 import SideBar from './../components/SideBar'
 import NotificationList from './../components/NotificationList'
 import Recommendation from '../components/Recommendation'
-//import { Toast } from './../utils/helpers'
 
 const dummyNotifications = [
   {
     id: 1,
-    avatar: 'https://i.imgur.com/4RHubaz.jpg',
-    name: 'name',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.0202522757629793',
+    name: 'John',
     title: 'newTweet',
-    content: 'Vero ut dolor rerum ad. Consectetur assumenda voluptatem cumque hic rerum repellat quae fugit. Et eos ut vel perferendis. Nobis rerum eos.'
+    content:
+      'Vero ut dolor rerum ad. Consectetur assumenda voluptatem cumque hic rerum repellat quae fugit. Et eos ut vel perferendis. Nobis rerum eos.',
   },
   {
     id: 2,
-    avatar: 'https://i.imgur.com/4RHubaz.jpg',
-    name: 'name',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=42.87898512441826',
+    name: 'Mary',
     title: 'newReply',
-    content: 'Vero ut dolor rerum ad. Consectetur assumenda voluptatem cumque hic rerum repellat quae fugit. Et eos ut vel perferendis. Nobis rerum eos.'
+    content:
+      'Vero ut dolor rerum ad. Consectetur assumenda voluptatem cumque hic rerum repellat quae fugit. Et eos ut vel perferendis. Nobis rerum eos.',
   },
   {
     id: 3,
-    avatar: 'https://i.imgur.com/4RHubaz.jpg',
-    name: 'name',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=7.643201110272924',
+    name: 'Michael',
     title: 'newFollow',
-    content: ''
+    content: '',
   },
   {
     id: 4,
-    avatar: 'https://i.imgur.com/4RHubaz.jpg',
-    name: 'name',
-    title: 'newReply',
-    content: 'Vero ut dolor rerum ad. Consectetur assumenda voluptatem cumque hic rerum repellat quae fugit. Et eos ut vel perferendis. Nobis rerum eos.'
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=4.951409888063251',
+    name: '',
+    title: 'newReplySelf',
+    content:
+      'Vero ut dolor rerum ad. Consectetur assumenda voluptatem cumque hic rerum repellat quae fugit. Et eos ut vel perferendis. Nobis rerum eos.',
   },
   {
     id: 5,
-    avatar: 'https://i.imgur.com/4RHubaz.jpg',
-    name: 'name',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=46.034589452628985',
+    name: 'Peter',
     title: 'newLike',
-    content: ''
-  }
+    content: '',
+  },
 ]
 
 export default {
@@ -80,37 +83,13 @@ export default {
     this.fetchNotifications()
   },
   methods: {
-    // async fetchNotifications() {
-    //   try {
-    //     const { data } = await users.getNotifications()
-    //     this.tweets = data.map((tweet) => ({
-    //       id: tweet.id,
-    //       userId: tweet.User.id,
-    //       account: tweet.User.account,
-    //       avatar: tweet.User.avatar,
-    //       name: tweet.User.name,
-    //       time: tweet.time,
-    //       description: tweet.description,
-    //       replyCount: tweet.replyCount,
-    //       likeCount: tweet.likeCount,
-    //       createdAt: tweet.createdAt,
-    //       isLiked: tweet.isLiked,
-    //     }))
-    //   } catch (error) {
-    //     console.log(error)
-    //     Toast.fire({
-    //       icon: 'error',
-    //       title: '無法取得推文，請稍後再試',
-    //     })
-    //   }
-    // },
     fetchNotifications() {
       this.notifications = dummyNotifications
     },
     afterPostTweet() {
       this.fetchTweets()
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -166,16 +145,11 @@ export default {
   color: #1c1c1c;
 }
 
-.post-tweet {
+.notification-wrapper {
   margin-top: 55px;
-  width: 600px;
-  height: 120px;
 }
 
-.divider {
-  width: 600px;
-  height: 10px;
-  margin-bottom: 10px;
-  background: #e6ecf0;
+.notification-list {
+  border-bottom: 1px solid #e6ecf0;
 }
 </style>
