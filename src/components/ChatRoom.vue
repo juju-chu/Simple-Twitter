@@ -21,7 +21,7 @@
           <span class="message-self-text">{{ chatData.message }}</span>
         </div>
         <div class="message-self-time">
-          <div class="message-time">{{ chatData.time | fromNow }}</div>
+          <div class="message-time">{{ chatData.time }}</div>
         </div>
       </div>
     </div>
@@ -29,10 +29,8 @@
 </template>
 
 <script>
-import { fromNowFilter } from './../utils/mixins'
 export default {
   name: 'ChatRoom',
-  mixins: [fromNowFilter],
   props: {
     chatData: {
       type: Object,

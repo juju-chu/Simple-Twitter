@@ -65,42 +65,52 @@
 </template>
 
 <script>
-const dummyUsers = [
+const dummyData = [
+  {
+    id: 1,
+    userId: 2,
+    name: 'Vicki Windler',
+    account: 'user2',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=7.643201110272924',
+    lastMessage:
+      'Deleniti qui mollitia ratione qui. Hic ad consequatur perspiciatis odio inventore rem. Dicta similique ducimus. Aut quaerat et ab.',
+    createdAt: '2021-03-14T11:36:40.000Z',
+  },
   {
     id: 2,
-    name: 'Apple',
-    account: 'apple',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=42.87898512441826',
+    userId: 3,
+    name: 'Phillip Nicolas',
+    account: 'user3',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.7842269503866035',
+    lastMessage:
+      'Sed iure et molestiae. Sed aliquid et rerum. Quia et nulla. Distinctio ex rerum incidunt aut ullam provident. Debitis laboriosam accusantium est eaque doloribus',
+    createdAt: '2021-03-14T03:36:40.000Z',
   },
   {
     id: 3,
-    name: 'Jane',
-    account: 'user2',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=7.643201110272924',
+    userId: 4,
+    name: 'Tommie Ward',
+    account: 'user4',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=35.34804975546177',
+    lastMessage: 'Rerum omnis rerum laborum repudiandae qui amet.',
+    createdAt: '2021-03-12T15:40:40.000Z',
   },
   {
     id: 4,
-    name: 'Wade',
-    account: 'user3',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.7842269503866035',
-  },
-  {
-    id: 5,
-    name: 'Esther',
-    account: 'user4',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=35.34804975546177',
-  },
-  {
-    id: 6,
-    name: 'Ralph',
+    userId: 5,
+    name: 'Erik Pouros',
     account: 'user5',
-    avatar: 'https://loremflickr.com/320/240/dog/?lock=2.0202522757629793',
+    avatar: 'https://loremflickr.com/320/240/dog/?lock=35.00129934402724',
+    lastMessage:
+      'Quod accusamus eius consequatur velit dicta porro praesentium. Quasi beatae ex sequi ea optio omnis. Sapiente facere eos iusto quo itaque reiciendis ut est.',
+    createdAt: '2021-02-10T10:36:40.000Z',
   },
 ]
 
 import SideBar from './../components/SideBar'
 import PrivateUsers from './../components/PrivateUsers'
 import ChatRoom from './../components/ChatRoom'
+import moment from 'moment'
 import { mapState } from 'vuex'
 
 export default {
@@ -124,7 +134,31 @@ export default {
   methods: {
     fetchPrivateUsers() {
       // TODO:
-      this.privateUsers = dummyUsers
+      this.privateUsers = dummyData.map((user) => {
+        if (user.lastMessage.length > 35) {
+          user.lastMessage = user.lastMessage.slice(0, 35) + ' ...'
+        }
+
+        const formNow = moment(user.createdAt).fromNow()
+        let time = ''
+        if (formNow.includes('hours')) {
+          time = formNow
+        } else {
+          let timeArray = user.createdAt.split('T')
+          timeArray = timeArray[0].split('-')
+          time = `${timeArray[1]}月${timeArray[1]}日`
+        }
+
+        return {
+          id: user.id,
+          userId: user.userId,
+          name: user.name,
+          account: user.account,
+          avatar: user.avatar,
+          lastMessage: user.lastMessage,
+          createdAt: time,
+        }
+      })
     },
     fetchChatDatas() {
       // TODO:
@@ -141,7 +175,7 @@ export default {
 .wrapper {
   display: grid;
   height: 100vh;
-  grid-template-columns: 378px 378px 1fr 50px;
+  grid-template-columns: 378px 450px 1fr 50px;
   grid-template-rows: 55px 1fr 80px;
 }
 
@@ -183,7 +217,6 @@ export default {
 .private-users-wrapper {
   grid-column: 2 / 3;
   grid-row: 2 / 4;
-  width: 378px;
   border-right: 1px solid #e6ecf0;
 }
 
