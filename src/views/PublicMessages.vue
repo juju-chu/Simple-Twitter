@@ -28,13 +28,13 @@
       />
     </div>
     <input
-      @keypress.enter="send"
+      @keypress.enter="handleSent"
       class="input-text"
       MessageType="text"
       placeholder="輸入訊息..."
       v-model="message"
     />
-    <button @click.stop.prevent="send" class="input-icon">
+    <button @click.stop.prevent="handleSent" class="input-icon">
       <svg
         class="svg-inline--fa fa-paper-plane fa-w-16"
         aria-hidden="true"
@@ -113,6 +113,18 @@ export default {
     this.connectSever()
   },
   methods: {
+    handleSent() {
+      if (this.message.trim() === '') {
+        Toast.fire({
+          icon: 'warning',
+          title: '尚未輸入訊息或只有空白'
+        })
+        return
+      }
+
+      this.send()
+
+    },
     send() {
       this.$socket.emit('send', {
         id: this.currentUser.id,
@@ -180,10 +192,6 @@ export default {
     },
     message(data) {
       if (!data.message) {
-        Toast.fire({
-          icon: 'warning',
-          title: '您尚未輸入訊息'
-        })
         return
       }
       const hour = +data.createdAt.substring(11, 13) + 8
