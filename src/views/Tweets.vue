@@ -31,34 +31,34 @@ import TweetsList from './../components/TweetsList'
 import Recommendation from '../components/Recommendation'
 import tweetsAPI from './../apis/tweets'
 import { Toast } from './../utils/helpers'
-import { mapState } from 'vuex'
+//import { mapState } from 'vuex'
 
-// For vue - socket.io 
-import Vue from 'vue'
-import store from './../store'
-import VueSocketIO from 'vue-socket.io'
-import SocketIO from 'socket.io-client'
+// // For vue - socket.io 
+// import Vue from 'vue'
+// import store from './../store'
+// import VueSocketIO from 'vue-socket.io'
+// import SocketIO from 'socket.io-client'
 
-const token = localStorage.getItem('token')
+// const token = localStorage.getItem('token')
 
-Vue.use(new VueSocketIO({
-  debug: true,
-  connection: SocketIO('https://mighty-spire-48914.herokuapp.com', {
-    reconnectionDelayMax: 10000,
-    auth: {
-      token: token
-    },
-    query: {
-      "my-key": "my-value"
-    }
-  }),
-  vuex: {
-    store,
-    actionPrefix: "SOCKET_",
-    mutationPrefix: "SOCKET_"
-  }
-})
-)
+// Vue.use(new VueSocketIO({
+//   debug: true,
+//   connection: SocketIO('https://mighty-spire-48914.herokuapp.com', {
+//     reconnectionDelayMax: 10000,
+//     auth: {
+//       token: token
+//     },
+//     query: {
+//       "my-key": "my-value"
+//     }
+//   }),
+//   vuex: {
+//     store,
+//     actionPrefix: "SOCKET_",
+//     mutationPrefix: "SOCKET_"
+//   }
+// })
+// )
 
 export default {
   name: 'Tweets',
@@ -75,7 +75,7 @@ export default {
   },
   created() {
     this.fetchTweets()
-    this.disconnectSever()
+    //this.disconnectSever()
   },
   methods: {
     async fetchTweets() {
@@ -105,14 +105,14 @@ export default {
     afterPostTweet() {
       this.fetchTweets()
     },
-    disconnectSever() {
-      console.log('disconnect')
-      this.$socket.disconnect()
-    }
+    // disconnectSever() {
+    //   console.log('disconnect')
+    //   this.$socket.disconnect()
+    // }
   },
-  computed: {
-    ...mapState(['currentUser'])
-  }
+  // computed: {
+  //   ...mapState(['currentUser'])
+  // }
 }
 </script>
 
