@@ -4,18 +4,14 @@
 
     <div class="center-column">
       <div class="header">
-        <div class="header-title">首頁</div>
+        <div class="header-title">通知</div>
       </div>
-      <PostTweet class="post-tweet" @after-post-tweet="afterPostTweet" />
-
-      <div class="divider"></div>
-
       <!-- Tweet list -->
-      <TweetsList
-        class="tweet-list"
-        v-for="tweet in tweets"
-        :key="tweet.id"
-        :initial-tweet="tweet"
+      <NotificationList
+        class="notification-list"
+        v-for="notification in notifications"
+        :key="notification.id"
+        :notification="notification"
       />
     </div>
 
@@ -26,94 +22,95 @@
 
 <script>
 import SideBar from './../components/SideBar'
-import PostTweet from './../components/PostTweet'
-import TweetsList from './../components/TweetsList'
+import NotificationList from './../components/NotificationList'
 import Recommendation from '../components/Recommendation'
-import tweetsAPI from './../apis/tweets'
-import { Toast } from './../utils/helpers'
-import { mapState } from 'vuex'
+//import { Toast } from './../utils/helpers'
 
-// For vue - socket.io
-import Vue from 'vue'
-import store from './../store'
-import VueSocketIO from 'vue-socket.io'
-import SocketIO from 'socket.io-client'
-
-const token = localStorage.getItem('token')
-
-Vue.use(
-  new VueSocketIO({
-    debug: true,
-    connection: SocketIO('https://mighty-spire-48914.herokuapp.com', {
-      reconnectionDelayMax: 10000,
-      auth: {
-        token: token,
-      },
-      query: {
-        'my-key': 'my-value',
-      },
-    }),
-    vuex: {
-      store,
-      actionPrefix: 'SOCKET_',
-      mutationPrefix: 'SOCKET_',
-    },
-  })
-)
+const dummyNotifications = [
+  {
+    id: 1,
+    avatar: 'https://i.imgur.com/4RHubaz.jpg',
+    name: 'name',
+    title: 'newTweet',
+    content: 'Vero ut dolor rerum ad. Consectetur assumenda voluptatem cumque hic rerum repellat quae fugit. Et eos ut vel perferendis. Nobis rerum eos.'
+  },
+  {
+    id: 2,
+    avatar: 'https://i.imgur.com/4RHubaz.jpg',
+    name: 'name',
+    title: 'newReply',
+    content: 'Vero ut dolor rerum ad. Consectetur assumenda voluptatem cumque hic rerum repellat quae fugit. Et eos ut vel perferendis. Nobis rerum eos.'
+  },
+  {
+    id: 3,
+    avatar: 'https://i.imgur.com/4RHubaz.jpg',
+    name: 'name',
+    title: 'newFollow',
+    content: ''
+  },
+  {
+    id: 4,
+    avatar: 'https://i.imgur.com/4RHubaz.jpg',
+    name: 'name',
+    title: 'newReply',
+    content: 'Vero ut dolor rerum ad. Consectetur assumenda voluptatem cumque hic rerum repellat quae fugit. Et eos ut vel perferendis. Nobis rerum eos.'
+  },
+  {
+    id: 5,
+    avatar: 'https://i.imgur.com/4RHubaz.jpg',
+    name: 'name',
+    title: 'newLike',
+    content: ''
+  }
+]
 
 export default {
   name: 'Notifications',
   components: {
     SideBar,
-    PostTweet,
-    TweetsList,
+    NotificationList,
     Recommendation,
   },
   data() {
     return {
-      tweets: [],
+      notifications: [],
     }
   },
   created() {
-    this.fetchTweets()
-    this.disconnectSever()
+    this.fetchNotifications()
   },
   methods: {
-    async fetchTweets() {
-      try {
-        const { data } = await tweetsAPI.get()
-        this.tweets = data.map((tweet) => ({
-          id: tweet.id,
-          userId: tweet.User.id,
-          account: tweet.User.account,
-          avatar: tweet.User.avatar,
-          name: tweet.User.name,
-          time: tweet.time,
-          description: tweet.description,
-          replyCount: tweet.replyCount,
-          likeCount: tweet.likeCount,
-          createdAt: tweet.createdAt,
-          isLiked: tweet.isLiked,
-        }))
-      } catch (error) {
-        console.log(error)
-        Toast.fire({
-          icon: 'error',
-          title: '無法取得推文，請稍後再試',
-        })
-      }
+    // async fetchNotifications() {
+    //   try {
+    //     const { data } = await users.getNotifications()
+    //     this.tweets = data.map((tweet) => ({
+    //       id: tweet.id,
+    //       userId: tweet.User.id,
+    //       account: tweet.User.account,
+    //       avatar: tweet.User.avatar,
+    //       name: tweet.User.name,
+    //       time: tweet.time,
+    //       description: tweet.description,
+    //       replyCount: tweet.replyCount,
+    //       likeCount: tweet.likeCount,
+    //       createdAt: tweet.createdAt,
+    //       isLiked: tweet.isLiked,
+    //     }))
+    //   } catch (error) {
+    //     console.log(error)
+    //     Toast.fire({
+    //       icon: 'error',
+    //       title: '無法取得推文，請稍後再試',
+    //     })
+    //   }
+    // },
+    fetchNotifications() {
+      this.notifications = dummyNotifications
     },
     afterPostTweet() {
       this.fetchTweets()
-    },
-    disconnectSever() {
-      console.log('disconnect')
-      this.$socket.disconnect()
-    },
-  },
-  computed: {
-    ...mapState(['currentUser']),
-  },
+    }
+  }
 }
 </script>
 
