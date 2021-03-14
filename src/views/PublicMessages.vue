@@ -20,6 +20,12 @@
         :key="chatData.id"
         :chatData="chatData"
       />
+      <ChatRecordRoom
+        class="chat-room"
+        v-for="chatData in chatRecordDatas.slice().reverse()"
+        :key="chatData.id"
+        :chatData="chatData"
+      />
     </div>
     <input
       @keypress.enter="send"
@@ -52,9 +58,37 @@
 <script>
 import SideBar from './../components/SideBar'
 import OnlineUsers from './../components/OnlineUsers'
+import ChatRecordRoom from './../components/ChatRecordRoom'
 import ChatRoom from './../components/ChatRoom'
 import { mapState } from 'vuex'
 import uuidv4 from 'uuid'
+
+// For vue - socket.io 
+import Vue from 'vue'
+import store from './../store'
+import VueSocketIO from 'vue-socket.io'
+import SocketIO from 'socket.io-client'
+
+const token = localStorage.getItem('token')
+
+Vue.use(new VueSocketIO({
+  debug: true,
+  connection: SocketIO('https://mighty-spire-48914.herokuapp.com', {
+    reconnectionDelayMax: 10000,
+    auth: {
+      token: token
+    },
+    query: {
+      "my-key": "my-value"
+    }
+  }),
+  vuex: {
+    store,
+    actionPrefix: "SOCKET_",
+    mutationPrefix: "SOCKET_"
+  }
+})
+)
 
 export default {
   name: 'PublicMessage',
@@ -62,33 +96,22 @@ export default {
     SideBar,
     OnlineUsers,
     ChatRoom,
+    ChatRecordRoom,
   },
   data() {
     return {
       onlineCount: 0,
       onlineUsers: [],
       chatDatas: [],
+      chatRecordDatas: [],
       message: '',
     }
   },
   created() {
-    //this.fetchData()
-    //this.fetchOnlineUsers()
-    //this.fetchChatDatas()
+    this.disconnectSever()
+    this.connectSever()
   },
   methods: {
-    fetchData() {
-      // TODO:
-      //this.onlineCount = dummyUsers.length
-    },
-    fetchOnlineUsers() {
-      // TODO:
-      //this.onlineUsers = dummyUsers
-    },
-    fetchChatDatas() {
-      // TODO:
-      //this.chatDatas = dummyChatDatas
-    },
     send() {
       this.$socket.emit('send', {
         id: this.currentUser.id,
@@ -98,48 +121,61 @@ export default {
       })
       this.text = ''
     },
-    disconnect() {
-      this.$socket.emit('disconnect', {
-        id: this.currentUser.id,
-        name: this.currentUser.name,
-      })
+    disconnectSever() {
+      this.$socket.disconnect()
+    },
+    connectSever() {
+      this.$socket.connect()
     },
   },
   sockets: {
-    connect(data) {
-      console.log('socket connected', data)
+    connect() {
+      console.log('socket connected')
     },
     allOnlineUsers(users) {
       // TODO:
       console.log('allOnlineUsers', users)
       this.onlineUsers = users
     },
-    chatRecord(data) {
-      // TODO:
-      console.log('chatRecord', data)
-    },
     online(onlineCount) {
-      // TODO:
-      console.log('online count', onlineCount)
       this.onlineCount = onlineCount
+    },
+    chatRecord(records) {
+      const tempDatas = records.map(record => {
+        const hour = +record.createdAt.substring(11, 13) + 8
+        const min = +record.createdAt.substring(14, 16)
+        const createdTime = `${hour > 23
+          ? '上午 ' + (hour - 24)
+          : hour > 12
+            ? '下午 ' + (hour - 12)
+            : '上午 ' + hour
+          }:${min < 10 ? '0' + min.toString() : min}`
+
+        return {
+          id: record.id,
+          userId: record.UserId,
+          message: record.message,
+          messageType:
+            record.UserId === this.currentUser.id ? 'message-self' : 'message-other',
+          time: createdTime,
+        }
+      })
+
+      this.chatRecordDatas.push(...tempDatas)
     },
     onlineUser(user) {
       this.chatDatas.push({
         id: uuidv4(),
-        MessageType: 'broadcast-online',
+        messageType: 'broadcast-online',
         name: user.name,
       })
     },
     offlineUser(user) {
       this.chatDatas.push({
         id: uuidv4(),
-        MessageType: 'broadcast-offline',
+        messageType: 'broadcast-offline',
         name: user.name,
       })
-    },
-    fetchChatDatas(datas) {
-      // TODO:
-      this.chatDatas = datas
     },
     message(data) {
       if (!data.message) {
@@ -147,18 +183,17 @@ export default {
       }
       const hour = +data.createdAt.substring(11, 13) + 8
       const min = +data.createdAt.substring(14, 16)
-      const createdTime = `${
-        hour > 23
-          ? '上午 ' + (hour - 24)
-          : hour > 12
+      const createdTime = `${hour > 23
+        ? '上午 ' + (hour - 24)
+        : hour > 12
           ? '下午 ' + (hour - 12)
           : '上午 ' + hour
-      }:${min < 10 ? '0' + min.toString() : min}`
+        }:${min < 10 ? '0' + min.toString() : min}`
       this.chatDatas.push({
         id: uuidv4(),
         userId: data.id,
         message: data.message,
-        MessageType:
+        messageType:
           data.id === this.currentUser.id ? 'message-self' : 'message-other',
         name: data.name,
         avatar: data.avatar,

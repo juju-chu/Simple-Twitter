@@ -29,8 +29,10 @@
 </template>
 
 <script>
+import { fromNowFilter } from './../utils/mixins'
 export default {
-  name: 'ChatRoom',
+  name: 'ChatRecordRoom',
+  mixins: [fromNowFilter],
   props: {
     chatData: {
       type: Object,
