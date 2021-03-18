@@ -140,8 +140,12 @@ export default {
   border-radius: 20px 20px 0 30px;
 }
 
+.message-other-text,
 .message-self-text {
-  max-width: 200px;
+  overflow-wrap: anywhere;
+}
+
+.message-self-text {
   color: #fff;
 }
 
