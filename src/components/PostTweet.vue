@@ -13,8 +13,8 @@
       </div>
       <button
         @click.stop.prevent="postTweet(newTweet)"
-        :disabled="isProcession"
-        :class="{ disabled: isProcession }"
+        :disabled="isProcessing"
+        :class="{ disabled: isProcessing }"
       >
         <span>推文</span>
       </button>
@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       newTweet: '',
-      isProcession: false,
+      isProcessing: false,
     }
   },
   watch: {
@@ -58,14 +58,14 @@ export default {
         return
       }
       try {
-        this.isProcessiong = true
+        this.isProcessing = true
         const { data } = await tweetsAPI.post({ newTweet })
         if (data.status !== 'success') {
           throw new Error(data.message)
         }
         this.newTweet = ''
         this.$emit('after-post-tweet')
-        this.isProcession = false
+        this.isProcessing = false
         this.isShowModal = false
       } catch (error) {
         console.log(error)
@@ -73,7 +73,7 @@ export default {
           icon: 'error',
           title: '無法新增推文，請稍後再試',
         })
-        this.isProcession = false
+        this.isProcessing = false
       }
     },
   },
