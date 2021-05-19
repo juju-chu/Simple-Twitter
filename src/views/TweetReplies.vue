@@ -1,28 +1,30 @@
 <template>
-  <div class="wrapper">
-    <SideBar class="side-bar" />
+  <div class="container">
+    <div class="wrapper">
+      <SideBar class="side-bar" />
 
-    <div class="center-column">
-      <div class="header">
-        <button @click="$router.back()">
-          <img class="header-back-icon" src="./../assets/icon_back.svg" />
-        </button>
-        <div class="header-title">推文</div>
+      <div class="center-column">
+        <div class="header">
+          <button @click="$router.back()">
+            <img class="header-back-icon" src="./../assets/icon_back.svg" />
+          </button>
+          <div class="header-title">推文</div>
+        </div>
+
+        <!-- TweetDetail -->
+        <TweetDetail
+          class="tweet-detail"
+          :initial-tweet="tweet"
+          @after-submit="afterSubmit"
+        />
+
+        <!-- Replies -->
+        <Replies class="replies" :initial-tweet="tweet" :replies="replies" />
       </div>
 
-      <!-- TweetDetail -->
-      <TweetDetail
-        class="tweet-detail"
-        :initial-tweet="tweet"
-        @after-submit="afterSubmit"
-      />
-
-      <!-- Replies -->
-      <Replies class="replies" :initial-tweet="tweet" :replies="replies" />
+      <!-- Recommendation -->
+      <Recommendation class="recommendation-list" />
     </div>
-
-    <!-- Recommendation -->
-    <Recommendation class="recommendation-list" />
   </div>
 </template>
 
@@ -164,10 +166,7 @@ export default {
 
 .recommendation-list {
   position: fixed;
-  top: 15px;
-  left: 1008px;
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
+  margin: 15px 0 0 1008px;
 }
 
 .header {

@@ -1,60 +1,62 @@
 <template>
   <div class="container">
-    <SideBar class="side-bar" @after-post-tweet="afterPostTweet" />
+    <div class="wrapper">
+      <SideBar class="side-bar" @after-post-tweet="afterPostTweet" />
 
-    <div class="center-column">
-      <div class="header">
-        <button @click="$router.back()" v-show="!isLoading">
-          <img class="header-back-icon" src="./../assets/icon_back.svg" />
-        </button>
-        <div class="header-user" v-show="!isLoading">
-          <div class="header-user-name">{{ user.name }}</div>
-          <div class="header-user-tweets-count">
-            {{ user.userTweetsCount }} 推文
+      <div class="center-column">
+        <div class="header">
+          <button @click="$router.back()" v-show="!isLoading">
+            <img class="header-back-icon" src="./../assets/icon_back.svg" />
+          </button>
+          <div class="header-user" v-show="!isLoading">
+            <div class="header-user-name">{{ user.name }}</div>
+            <div class="header-user-tweets-count">
+              {{ user.userTweetsCount }} 推文
+            </div>
           </div>
         </div>
+
+        <UserCard class="User-card" :initial-user="user" />
+
+        <div class="tab">
+          <button
+            class="tab-item"
+            :class="{ active: tab === 'tweets' }"
+            @click.stop.prevent="redirectTab('tweets')"
+          >
+            <span class="tab-item-text">推文</span>
+          </button>
+          <button
+            class="tab-item"
+            :class="{ active: tab === 'replied-tweets' }"
+            @click.stop.prevent="redirectTab('replied-tweets')"
+          >
+            <span class="tab-item-text">推文與回覆</span>
+          </button>
+          <button
+            class="tab-item"
+            :class="{ active: tab === 'likes' }"
+            @click.stop.prevent="redirectTab('likes')"
+          >
+            <span class="tab-item-text">喜歡的內容</span>
+          </button>
+        </div>
+
+        <!-- Tweet list -->
+        <TweetsList
+          class="tweet-list"
+          v-for="tweet in tweets"
+          :key="tweet.id"
+          :initial-tweet="tweet"
+        />
       </div>
 
-      <UserCard class="User-card" :initial-user="user" />
-
-      <div class="tab">
-        <button
-          class="tab-item"
-          :class="{ active: tab === 'tweets' }"
-          @click.stop.prevent="redirectTab('tweets')"
-        >
-          <span class="tab-item-text">推文</span>
-        </button>
-        <button
-          class="tab-item"
-          :class="{ active: tab === 'replied-tweets' }"
-          @click.stop.prevent="redirectTab('replied-tweets')"
-        >
-          <span class="tab-item-text">推文與回覆</span>
-        </button>
-        <button
-          class="tab-item"
-          :class="{ active: tab === 'likes' }"
-          @click.stop.prevent="redirectTab('likes')"
-        >
-          <span class="tab-item-text">喜歡的內容</span>
-        </button>
-      </div>
-
-      <!-- Tweet list -->
-      <TweetsList
-        class="tweet-list"
-        v-for="tweet in tweets"
-        :key="tweet.id"
-        :initial-tweet="tweet"
+      <!-- Recommendation -->
+      <Recommendation
+        @after-top-follow-ship="afterTopFollowShip"
+        class="recommendation-list"
       />
     </div>
-
-    <!-- Recommendation -->
-    <Recommendation
-      @after-top-follow-ship="afterTopFollowShip"
-      class="recommendation-list"
-    />
   </div>
 </template>
 
@@ -276,7 +278,8 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.wrapper {
+  position: relative;
   display: grid;
   margin: 0;
   grid-template-columns: 378px 600px 462px;
@@ -376,9 +379,6 @@ export default {
 
 .recommendation-list {
   position: fixed;
-  top: 15px;
-  left: 1008px;
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
+  margin: 15px 0 0 1008px;
 }
 </style>

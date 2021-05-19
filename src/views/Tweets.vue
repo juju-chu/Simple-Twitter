@@ -1,26 +1,28 @@
 <template>
-  <div class="wrapper">
-    <SideBar class="side-bar" @after-post-tweet="afterPostTweet" />
+  <div class="container">
+    <div class="wrapper">
+      <SideBar class="side-bar" @after-post-tweet="afterPostTweet" />
 
-    <div class="center-column">
-      <div class="header">
-        <div class="header-title">首頁</div>
+      <div class="center-column">
+        <div class="header">
+          <div class="header-title">首頁</div>
+        </div>
+        <PostTweet class="post-tweet" @after-post-tweet="afterPostTweet" />
+
+        <div class="divider"></div>
+
+        <!-- Tweet list -->
+        <TweetsList
+          class="tweet-list"
+          v-for="tweet in tweets"
+          :key="tweet.id"
+          :initial-tweet="tweet"
+        />
       </div>
-      <PostTweet class="post-tweet" @after-post-tweet="afterPostTweet" />
 
-      <div class="divider"></div>
-
-      <!-- Tweet list -->
-      <TweetsList
-        class="tweet-list"
-        v-for="tweet in tweets"
-        :key="tweet.id"
-        :initial-tweet="tweet"
-      />
+      <!-- Recommendation -->
+      <Recommendation class="recommendation-list" />
     </div>
-
-    <!-- Recommendation -->
-    <Recommendation class="recommendation-list" />
   </div>
 </template>
 
@@ -142,10 +144,7 @@ export default {
 
 .recommendation-list {
   position: fixed;
-  top: 15px;
-  left: 1008px;
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
+  margin: 15px 0 0 1008px;
 }
 
 .header {

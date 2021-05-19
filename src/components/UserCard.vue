@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper-user-card">
     <img class="cover" :src="user.cover | emptyImage" />
     <div class="user-info">
       <div v-show="!isLoading" class="name">{{ user.name }}</div>
@@ -224,14 +224,14 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.focus()
       },
     },
   },
   watch: {
     initialUser: {
-      handler: function(newValue) {
+      handler: function (newValue) {
         this.user = {
           ...this.user,
           ...newValue,
@@ -254,7 +254,7 @@ export default {
       deep: true,
     },
     user: {
-      handler: function() {
+      handler: function () {
         this.nameCount = this.user.name.length
         if (this.user.introduction !== null) {
           this.introductionCount = this.user.introduction.length
@@ -398,7 +398,7 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
+.wrapper-user-card {
   display: flex;
   flex-direction: column;
 }

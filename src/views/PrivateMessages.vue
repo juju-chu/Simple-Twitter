@@ -1,70 +1,72 @@
 <template>
-  <div class="wrapper">
-    <SideBar class="side-bar" />
+  <div class="container">
+    <div class="wrapper">
+      <SideBar class="side-bar" />
 
-    <div class="header-users">
-      訊息
-      <svg
-        class="header-icon"
-        width="20"
-        height="19"
-        viewBox="0 0 20 19"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M17.25 0.0180054H2.75C1.233 0.0180054 0 1.25201 0 2.77001V15.265C0 16.783 1.233 18.018 2.75 18.018H17.25C18.767 18.018 20 16.783 20 15.265V2.77001C20 1.25201 18.767 0.0180054 17.25 0.0180054ZM2.75 1.51801H17.25C17.94 1.51801 18.5 2.07801 18.5 2.76801V3.48201L10.45 8.84901C10.177 9.02901 9.824 9.03101 9.55 8.84701L1.5 3.48201V2.76801C1.5 2.07801 2.06 1.51801 2.75 1.51801ZM17.25 16.516H2.75C2.06 16.516 1.5 15.956 1.5 15.266V5.24001L8.74 10.07C9.123 10.326 9.562 10.454 10 10.454C10.44 10.454 10.877 10.326 11.26 10.071L18.5 5.24101V15.263C18.5 15.953 17.94 16.513 17.25 16.513V16.516Z"
-          fill="black"
+      <div class="header-users">
+        訊息
+        <svg
+          class="header-icon"
+          width="20"
+          height="19"
+          viewBox="0 0 20 19"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M17.25 0.0180054H2.75C1.233 0.0180054 0 1.25201 0 2.77001V15.265C0 16.783 1.233 18.018 2.75 18.018H17.25C18.767 18.018 20 16.783 20 15.265V2.77001C20 1.25201 18.767 0.0180054 17.25 0.0180054ZM2.75 1.51801H17.25C17.94 1.51801 18.5 2.07801 18.5 2.76801V3.48201L10.45 8.84901C10.177 9.02901 9.824 9.03101 9.55 8.84701L1.5 3.48201V2.76801C1.5 2.07801 2.06 1.51801 2.75 1.51801ZM17.25 16.516H2.75C2.06 16.516 1.5 15.956 1.5 15.266V5.24001L8.74 10.07C9.123 10.326 9.562 10.454 10 10.454C10.44 10.454 10.877 10.326 11.26 10.071L18.5 5.24101V15.263C18.5 15.953 17.94 16.513 17.25 16.513V16.516Z"
+            fill="black"
+          />
+        </svg>
+      </div>
+      <div class="private-users-wrapper">
+        <PrivateUsers
+          class="private-users"
+          v-for="user in privateUsers"
+          :key="user.id"
+          :initial-user="user"
+          @after-click="afterClick"
         />
-      </svg>
-    </div>
-    <div class="private-users-wrapper">
-      <PrivateUsers
-        class="private-users"
-        v-for="user in privateUsers"
-        :key="user.id"
-        :initial-user="user"
-        @after-click="afterClick"
-      />
-    </div>
+      </div>
 
-    <div class="header-room">
-      <div class="header-room-name">{{ privateUser.name }}</div>
-      <div class="header-room-account">{{ privateUser.account }}</div>
-    </div>
-    <div class="chat-room-wrapper">
-      <ChatRoom
-        class="chat-room"
-        v-for="chatData in chatDatas.slice().reverse()"
-        :key="chatData.id"
-        :chatData="chatData"
+      <div class="header-room">
+        <div class="header-room-name">{{ privateUser.name }}</div>
+        <div class="header-room-account">{{ privateUser.account }}</div>
+      </div>
+      <div class="chat-room-wrapper">
+        <ChatRoom
+          class="chat-room"
+          v-for="chatData in chatDatas.slice().reverse()"
+          :key="chatData.id"
+          :chatData="chatData"
+        />
+      </div>
+      <input
+        @keypress.enter="send"
+        class="input-text"
+        MessageType="text"
+        placeholder="輸入訊息..."
+        v-model="message"
       />
+      <button @click.stop.prevent="send" class="input-icon">
+        <svg
+          class="svg-inline--fa fa-paper-plane fa-w-16"
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="far"
+          data-icon="paper-plane"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          data-fa-i2svg=""
+        >
+          <path
+            fill="currentColor"
+            d="M440 6.5L24 246.4c-34.4 19.9-31.1 70.8 5.7 85.9L144 379.6V464c0 46.4 59.2 65.5 86.6 28.6l43.8-59.1 111.9 46.2c5.9 2.4 12.1 3.6 18.3 3.6 8.2 0 16.3-2.1 23.6-6.2 12.8-7.2 21.6-20 23.9-34.5l59.4-387.2c6.1-40.1-36.9-68.8-71.5-48.9zM192 464v-64.6l36.6 15.1L192 464zm212.6-28.7l-153.8-63.5L391 169.5c10.7-15.5-9.5-33.5-23.7-21.2L155.8 332.6 48 288 464 48l-59.4 387.3z"
+          ></path>
+        </svg>
+      </button>
     </div>
-    <input
-      @keypress.enter="send"
-      class="input-text"
-      MessageType="text"
-      placeholder="輸入訊息..."
-      v-model="message"
-    />
-    <button @click.stop.prevent="send" class="input-icon">
-      <svg
-        class="svg-inline--fa fa-paper-plane fa-w-16"
-        aria-hidden="true"
-        focusable="false"
-        data-prefix="far"
-        data-icon="paper-plane"
-        role="img"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512"
-        data-fa-i2svg=""
-      >
-        <path
-          fill="currentColor"
-          d="M440 6.5L24 246.4c-34.4 19.9-31.1 70.8 5.7 85.9L144 379.6V464c0 46.4 59.2 65.5 86.6 28.6l43.8-59.1 111.9 46.2c5.9 2.4 12.1 3.6 18.3 3.6 8.2 0 16.3-2.1 23.6-6.2 12.8-7.2 21.6-20 23.9-34.5l59.4-387.2c6.1-40.1-36.9-68.8-71.5-48.9zM192 464v-64.6l36.6 15.1L192 464zm212.6-28.7l-153.8-63.5L391 169.5c10.7-15.5-9.5-33.5-23.7-21.2L155.8 332.6 48 288 464 48l-59.4 387.3z"
-        ></path>
-      </svg>
-    </button>
   </div>
 </template>
 

@@ -1,12 +1,14 @@
 <template>
-  <div class="wrapper">
-    <AdminSidebar class="admin-side-bar" />
+  <div class="container-main">
+    <div class="wrapper">
+      <AdminSidebar class="admin-side-bar" />
 
-    <div class="center-column">
-      <div class="header">
-        <div class="header-title">使用者列表</div>
+      <div class="center-column">
+        <div class="header">
+          <div class="header-title">使用者列表</div>
+        </div>
+        <AdminUsersCards class="admin-user-card" />
       </div>
-      <AdminUsersCards class="admin-user-card" />
     </div>
   </div>
 </template>
@@ -27,7 +29,7 @@ export default {
 <style scoped>
 .wrapper {
   display: grid;
-  width: 100vw;
+  width: 100%;
   grid-template-columns: 378px auto;
   grid-template-rows: 100vh;
 }

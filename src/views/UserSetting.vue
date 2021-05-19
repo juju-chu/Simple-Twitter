@@ -1,17 +1,19 @@
 <template>
-  <div class="wrapper">
-    <SideBar class="side-bar" />
+  <div class="container">
+    <div class="wrapper">
+      <SideBar class="side-bar" />
 
-    <div class="center-column">
-      <header>帳戶設定</header>
-      <div class="form-wrapper">
-        <SettingForm
-          :initial-user-data="userData"
-          :isUserSetting="isUserSetting"
-          :is-processing="isProcessing"
-          @after-submit="handleAfterSubmit"
-          class="setting-form"
-        />
+      <div class="center-column">
+        <header>帳戶設定</header>
+        <div class="form-wrapper">
+          <SettingForm
+            :initial-user-data="userData"
+            :isUserSetting="isUserSetting"
+            :is-processing="isProcessing"
+            @after-submit="handleAfterSubmit"
+            class="setting-form"
+          />
+        </div>
       </div>
     </div>
   </div>

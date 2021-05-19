@@ -1,57 +1,59 @@
 <template>
-  <div class="wrapper">
-    <SideBar class="side-bar" />
-    <div class="center-column">
-      <!-- header -->
-      <header>
-        <button
-          @click="$router.push({ name: 'user', params: { id: user.id } })"
-        >
-          <img class="header-back-icon" src="./../assets/icon_back.svg" />
-        </button>
-        <div class="header-user">
-          <div class="header-user-name">{{ user.name }}</div>
-          <div class="header-user-tweets-count" v-show="!isLoading">
-            {{ user.userTweetsCount }} 推文
+  <div class="container">
+    <div class="wrapper">
+      <SideBar class="side-bar" />
+      <div class="center-column">
+        <!-- header -->
+        <header>
+          <button
+            @click="$router.push({ name: 'user', params: { id: user.id } })"
+          >
+            <img class="header-back-icon" src="./../assets/icon_back.svg" />
+          </button>
+          <div class="header-user">
+            <div class="header-user-name">{{ user.name }}</div>
+            <div class="header-user-tweets-count" v-show="!isLoading">
+              {{ user.userTweetsCount }} 推文
+            </div>
           </div>
+        </header>
+
+        <!-- tab -->
+        <div class="tabs">
+          <button
+            @click.stop.prevent="redirectTab('followers')"
+            class="followers-btn"
+            :class="{ active: tab === 'followers' }"
+          >
+            跟隨者
+          </button>
+          <button
+            @click.stop.prevent="redirectTab('followings')"
+            class="followings-btn"
+            :class="{ active: tab === 'followings' }"
+          >
+            正在跟隨
+          </button>
         </div>
-      </header>
 
-      <!-- tab -->
-      <div class="tabs">
-        <button
-          @click.stop.prevent="redirectTab('followers')"
-          class="followers-btn"
-          :class="{ active: tab === 'followers' }"
-        >
-          跟隨者
-        </button>
-        <button
-          @click.stop.prevent="redirectTab('followings')"
-          class="followings-btn"
-          :class="{ active: tab === 'followings' }"
-        >
-          正在跟隨
-        </button>
+        <!-- followship-list -->
+        <div class="followship-list">
+          <FollowCard
+            v-for="follow in followShipData"
+            :key="follow.id"
+            :initial-follow="follow"
+            :new-top-follow-ship="newTopFollowShip"
+            @after-follow-ship="afterFollowShip"
+            class="follow-card"
+          />
+        </div>
       </div>
-
-      <!-- followship-list -->
-      <div class="followship-list">
-        <FollowCard
-          v-for="follow in followShipData"
-          :key="follow.id"
-          :initial-follow="follow"
-          :new-top-follow-ship="newTopFollowShip"
-          @after-follow-ship="afterFollowShip"
-          class="follow-card"
-        />
-      </div>
+      <Recommendation
+        :new-follow-ship="newFollowShip"
+        @after-top-follow-ship="afterTopFollowShip"
+        class="recommendation-list"
+      />
     </div>
-    <Recommendation
-      :new-follow-ship="newFollowShip"
-      @after-top-follow-ship="afterTopFollowShip"
-      class="recommendation-list"
-    />
   </div>
 </template>
 
@@ -308,9 +310,6 @@ div.tabs {
 
 .recommendation-list {
   position: fixed;
-  top: 15px;
-  left: 1008px;
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
+  margin: 15px 0 0 1008px;
 }
 </style>

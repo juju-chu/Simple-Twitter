@@ -1,19 +1,21 @@
 <template>
-  <div class="wrapper">
-    <AdminSidebar class="admin-side-bar" />
+  <div class="container-main">
+    <div class="wrapper">
+      <AdminSidebar class="admin-side-bar" />
 
-    <div class="center-column">
-      <div class="header">
-        <div class="header-title">推文清單</div>
-      </div>
-      <div class="tweet-list">
-        <AminTweetsList
-          v-for="tweet in tweets"
-          :key="tweet.id"
-          :initial-tweet="tweet"
-          class="tweet-list-item"
-          @after-delete-tweet="afterDeleteTweet"
-        />
+      <div class="center-column">
+        <div class="header">
+          <div class="header-title">推文清單</div>
+        </div>
+        <div class="tweet-list">
+          <AminTweetsList
+            v-for="tweet in tweets"
+            :key="tweet.id"
+            :initial-tweet="tweet"
+            class="tweet-list-item"
+            @after-delete-tweet="afterDeleteTweet"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -76,7 +78,7 @@ export default {
 <style scoped>
 .wrapper {
   display: grid;
-  width: 100vw;
+  width: 100%;
   grid-template-columns: 378px auto;
   grid-template-rows: 100vh;
 }
@@ -100,7 +102,7 @@ export default {
 .header {
   position: fixed;
   z-index: 1;
-  width: 100vw;
+  width: 100%;
   height: 55px;
   background: #fff;
   border-bottom: 1px solid #e6ecf0;
@@ -118,5 +120,6 @@ export default {
 
 .tweet-list {
   margin-top: 70px;
+  width: 100%;
 }
 </style>

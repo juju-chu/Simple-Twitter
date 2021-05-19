@@ -7,8 +7,13 @@
   color: #1c1c1c;
   outline: none;
 }
-.container {
+.container-main {
+  margin: 0 auto;
   padding: 0;
+  width: 85%;
+}
+.container {
+  min-width: 1400px;
 }
 button,
 input {

@@ -1,23 +1,25 @@
 <template>
-  <div class="wrapper">
-    <SideBar class="side-bar" @after-post-tweet="afterPostTweet" />
+  <div class="container">
+    <div class="wrapper">
+      <SideBar class="side-bar" @after-post-tweet="afterPostTweet" />
 
-    <div class="center-column">
-      <div class="header">
-        <div class="header-title">通知</div>
+      <div class="center-column">
+        <div class="header">
+          <div class="header-title">通知</div>
+        </div>
+        <div class="notification-wrapper">
+          <NotificationList
+            class="notification-list"
+            v-for="notification in notifications"
+            :key="notification.id"
+            :notification="notification"
+          />
+        </div>
       </div>
-      <div class="notification-wrapper">
-        <NotificationList
-          class="notification-list"
-          v-for="notification in notifications"
-          :key="notification.id"
-          :notification="notification"
-        />
-      </div>
+
+      <!-- Recommendation -->
+      <Recommendation class="recommendation-list" />
     </div>
-
-    <!-- Recommendation -->
-    <Recommendation class="recommendation-list" />
   </div>
 </template>
 
@@ -119,10 +121,7 @@ export default {
 
 .recommendation-list {
   position: fixed;
-  top: 15px;
-  left: 1008px;
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
+  margin: 15px 0 0 1008px;
 }
 
 .header {
