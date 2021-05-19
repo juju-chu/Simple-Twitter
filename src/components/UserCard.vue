@@ -536,7 +536,7 @@ img {
 }
 
 .modal-edit {
-  position: absolute;
+  position: fixed;
   z-index: 2;
   top: 0;
   left: 0;
@@ -547,9 +547,9 @@ img {
 
 .modal-edit-wrapper {
   position: absolute;
-  top: 54px;
-  left: 50vh;
-  transform: translate(0, 0);
+  top: 55px;
+  left: 50%;
+  transform: translate(-50%, 0);
 
   width: 600px;
   height: 654px;
