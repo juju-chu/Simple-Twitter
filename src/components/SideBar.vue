@@ -266,7 +266,7 @@ export default {
   },
   directives: {
     focus: {
-      inserted: function(el) {
+      inserted: function (el) {
         el.focus()
       },
     },
@@ -424,7 +424,7 @@ export default {
 }
 
 .post-tweet {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -435,8 +435,8 @@ export default {
 .post-tweet-modal {
   position: absolute;
   top: 54px;
-  left: 50vh;
-  transform: translate(0, 0);
+  left: 50%;
+  transform: translate(-50%, 0);
 
   width: 600px;
   height: 300px;
