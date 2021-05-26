@@ -1,5 +1,9 @@
 # twitter-frontend
 
+網頁：https://juju-chu.github.io/Twitter-frontend/
+
+心得文：https://jujupp.medium.com/遠距協作專案經驗回顧-45580c8da898
+
 ## 功能
 1. 註冊/登入/登出
 2. 在首頁瀏覽所有的推文
